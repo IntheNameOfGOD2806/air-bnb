@@ -26,8 +26,14 @@ import "./page.scss";
 import CommonModal from "@/components/Modals";
 import { useForm } from "antd/es/form/Form";
 import { signInWithGoogle } from "./auth/components/auth";
+import { toast } from "react-toastify";
+import { showValidationErrors } from "@/lib/helper";
+import { login, signup } from "@/lib/auth";
+import { setUserInfo, selectUserInfo } from "@/lib/features/auth/authSlice";
 const { Header, Content, Sider } = Layout;
-
+import { useAppDispatch } from "@/lib/hooks";
+import { Spin } from "antd";
+import CustomCarousel from "@/components/common/Modal";
 const { Text } = Typography;
 const items1: MenuProps["items"] = [
   {
@@ -44,40 +50,45 @@ const items1: MenuProps["items"] = [
   },
   {
     key: "4",
-    label: "Help",
+    label: "Log out",
   },
 ].map((item) => ({
   ...item,
 }));
 
-const items2: MenuProps["items"] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-].map((icon, index) => {
-  const key = String(index + 1);
+// const items2: MenuProps["items"] = [
+//   UserOutlined,
+//   LaptopOutlined,
+//   NotificationOutlined,
+// ].map((icon, index) => {
+//   const key = String(index + 1);
 
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
+//   return {
+//     key: `sub${key}`,
+//     icon: React.createElement(icon),
+//     label: `subnav ${key}`,
 
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
+//     children: new Array(4).fill(null).map((_, j) => {
+//       const subKey = index * 4 + j + 1;
+//       return {
+//         key: subKey,
+//         label: `option${subKey}`,
+//       };
+//     }),
+//   };
+// });
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [openModalAuth, setOpenModalAuth] = useState(false);
+  const [openModalAuthReg, setOpenModalAuthReg] = useState(false);
+  const [isAuthLoading, setIsAuthLoading] = useState(false);
   const headerRef = React.useRef<HTMLDivElement>(null);
   const [userFounded, setUserFounded] = useState(null);
   const [authForm] = useForm();
+  const [authFormReg] = useForm();
+
   const handleScroll = () => {
     const position = window.scrollY;
     setScrollPosition(position);
@@ -108,8 +119,49 @@ const App: React.FC = () => {
     }
   }, [scrollPosition]);
   const verifyEmail = async () => {};
-  const handleLogin = () => {};
-  const handleSignUp = () => {};
+  const handleLogin = async (values: any) => {
+    try {
+      // alert(1313)
+      // console.log('sadadd',values)
+      setIsAuthLoading(true);
+      const result = await login(values.email, values.password);
+      if (!result?.accessToken) {
+        toast.error(result?.message);
+        setIsAuthLoading(false);
+      } else {
+        toast.success("Đăng nhập thành công");
+        dispatch(setUserInfo(result));
+        setOpenModalAuthReg(false);
+        setIsAuthLoading(false);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+      
+    }
+  };
+  const handleSignUp = async (values: any) => {
+    try {
+      // alert(1313)
+      // console.log('sadadd',values)
+      setIsAuthLoading(true);
+
+      const result = await signup(values);
+      console.log("result", result);
+      if (!result?.accessToken) {
+        toast.error(result?.message);
+        setIsAuthLoading(false);
+      } else if (result?.accessToken) {
+        toast.success("Đăng kí tài khoản thành công");
+        setIsAuthLoading(false);
+        dispatch(setUserInfo(result));
+        setOpenModalAuth(false);
+        setOpenModalAuthReg(true);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+      setIsAuthLoading(false);
+    }
+  };
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <div
@@ -119,12 +171,14 @@ const App: React.FC = () => {
             // width: '100%',
           }
         }
-        className="header  "
+        className="header"
         ref={headerRef}
       >
         <Navbar
           openModalAuth={openModalAuth}
           setOpenModalAuth={setOpenModalAuth}
+          openModalAuthReg={openModalAuthReg}
+          setOpenModalAuthReg={setOpenModalAuthReg}
           items={items1}
         />
       </div>
@@ -139,7 +193,30 @@ const App: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <div className="h-[2000px] "></div>
+            <div className="h-[2000px] ">
+              <CustomCarousel
+                slides={[
+                  <div
+                    key="1"
+                    className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
+                  >
+                    <Text className="text-2xl font-bold">Slide 1</Text>
+                  </div>,
+                  <div
+                    key="2"
+                    className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
+                  >
+                    <Text className="text-2xl font-bold">Slide 2</Text>
+                  </div>,
+                  <div
+                    key="3"
+                    className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
+                  >
+                    <Text className="text-2xl font-bold">Slide 3</Text>
+                  </div>,
+                ]}
+              />
+            </div>
           </Content>
         </Layout>
       </Layout>
@@ -241,6 +318,21 @@ const App: React.FC = () => {
                           rules={[
                             {
                               required: true,
+                              message: "Please input your username!",
+                            },
+                          ]}
+                          name="username"
+                        >
+                          <Input
+                            className=""
+                            size="large"
+                            placeholder="Username"
+                          />
+                        </Form.Item>
+                        <Form.Item
+                          rules={[
+                            {
+                              required: true,
                               message: "Please input your first name!",
                             },
                           ]}
@@ -275,12 +367,38 @@ const App: React.FC = () => {
                             },
                             {
                               min: 6,
-                              message: "Password must be at least 6 characters!",
+                              message:
+                                "Password must be at least 6 characters!",
                             },
                           ]}
                           name="password"
                         >
                           <Input size="large" placeholder="Password" />
+                        </Form.Item>
+                        {/* confirm passwo rd */}
+                        <Form.Item
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please confirm your password!",
+                            },
+                            ({ getFieldValue }) => ({
+                              validator(_, value) {
+                                if (!value || !getFieldValue("password")) {
+                                  return Promise.resolve();
+                                }
+                                if (value !== getFieldValue("password")) {
+                                  return Promise.reject(
+                                    new Error("Passwords do not match!")
+                                  );
+                                }
+                                return Promise.resolve();
+                              },
+                            }),
+                          ]}
+                          name="confirmPassword"
+                        >
+                          <Input size="large" placeholder="Confirm Password" />
                         </Form.Item>
                         <Form.Item>
                           <Button
@@ -291,16 +409,159 @@ const App: React.FC = () => {
                               try {
                                 await authForm.validateFields();
                                 const values = authForm.getFieldsValue();
-                                console.log(values);
-                              } catch (error) {
+                                if (openModalAuth) {
+                                  await handleSignUp(values);
+                                } else {
+                                  // await handleLogin(values);
+                                }
+                                // console.log(values);
+                              } catch (error: any) {
+                                showValidationErrors(error);
                                 console.log(error);
                               }
                             }}
-                            type="primary"
+                            type={!isAuthLoading ? "primary" : "default"}
                             className="w-full"
                             size="large"
                           >
-                            Continue
+                            {isAuthLoading ? <Spin /> : "Continue"}
+                          </Button>
+                        </Form.Item>
+                        <Divider>
+                          <Text className="text-sm font-semibold opacity-50">
+                            Or continue with
+                          </Text>
+                        </Divider>
+                        <Form.Item>
+                          <Button
+                            onClick={() => {
+                              signInWithGoogle();
+                              // userFounded
+                              //   === null ? verifyEmail : userFounded ? handleLogin : handleSignUp
+                            }}
+                            type="primary"
+                            className="w-full bg-[#4285F4]"
+                            size="large"
+                          >
+                            Google
+                          </Button>
+                        </Form.Item>
+                        <Form.Item>
+                          <Button
+                            onClick={() => {
+                              // userFounded
+                              //   === null ? verifyEmail : userFounded ? handleLogin : handleSignUp
+                            }}
+                            type="primary"
+                            className="w-full bg-[#3B5998]"
+                            size="large"
+                          >
+                            Facebook
+                          </Button>
+                        </Form.Item>
+                      </Col>
+                      {/* <Col span={12} className='pl-2'>
+                       
+                       
+                      </Col> */}
+                    </Row>
+                  </Form>
+                </div>
+              </div>
+              <div className="footer"></div>
+            </div>
+          </div>
+        </>
+      </CommonModal>
+      <CommonModal
+        title=""
+        style={{
+          overflowY: "hidden",
+        }}
+        // title='Login or Sign up'
+        visible={openModalAuthReg}
+        onCancel={() => {
+          setOpenModalAuthReg(false);
+        }}
+        onOk={() => {
+          setOpenModalAuthReg(false);
+        }}
+        okText="Login"
+        cancelText="Cancel"
+        width={700}
+      >
+        <>
+          <div className="w-full min-h-[480px] ">
+            <div className="auth-form-wrapper">
+              <div className="header w-full text-center text-2xl font-bold border-b-[1px]  border-b-gray-300">
+                <Text className="relative bottom-2">Sign In</Text>
+              </div>
+              <div className="body w-full p-3 flex flex-col pt-[20px]">
+                <div className="title">
+                  <Text className="text-2xl ">Welcome to VieTrail</Text>
+                </div>
+                <div className="input-group w-full flex flex-col mt-2">
+                  <Form form={authFormReg}>
+                    <Row>
+                      <Col span={24}>
+                        <Form.Item
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please input your email!",
+                            },
+                            {
+                              type: "email",
+                              message: "Please input a valid email!",
+                            },
+                          ]}
+                          name="email"
+                        >
+                          <Input
+                            className=""
+                            size="large"
+                            placeholder="Email"
+                          />
+                        </Form.Item>
+                        <Form.Item
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please input your password!",
+                            },
+                            {
+                              min: 6,
+                              message:
+                                "Password must be at least 6 characters!",
+                            },
+                          ]}
+                          name="password"
+                        >
+                          <Input size="large" placeholder="Password" />
+                        </Form.Item>
+                        {/* confirm passwo rd */}
+                        <Form.Item>
+                          <Button
+                            onClick={async () => {
+                              // userFounded
+                              //   === null ? verifyEmail : userFounded ? handleLogin : handleSignUp
+                              // console.log("values", authForm.getFieldsValue());
+                              try {
+                                await authFormReg.validateFields();
+                                const values = authFormReg.getFieldsValue();
+                                await handleLogin(values);
+                                // toast.info(JSON.stringify(values));
+                                // console.log(values);
+                              } catch (error: any) {
+                                showValidationErrors(error);
+                                console.log(error);
+                              }
+                            }}
+                            type={!isAuthLoading ? "primary" : "default"}
+                            className="w-full"
+                            size="large"
+                          >
+                            {isAuthLoading ? <Spin /> : "Continue"}
                           </Button>
                         </Form.Item>
                         <Divider>

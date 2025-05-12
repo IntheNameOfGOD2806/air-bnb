@@ -33,6 +33,9 @@ const GlobalThemeProvider = ({ children }: { children: React.ReactNode }) => (
         Input: {
           hoverBorderColor: "rgb(6,253,97)",
           activeBorderColor: "rgb(6,253,97)",
+        },
+        Spin: {
+          colorPrimary: "rgb(6,253,97)",
         }
       },
     }}

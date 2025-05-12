@@ -17,18 +17,26 @@ const { Text } = Typography;
 import FavICon from "../../assets/images/airbnb.png";
 import { useAppstore } from "@/store/store";
 import { useEffect } from "react";
+import { selectUserInfo } from "@/lib/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 const Navbar = ({
   items,
   openModalAuth,
+  openModalAuthReg,
+  setOpenModalAuthReg,
   setOpenModalAuth,
 }: {
   items: MenuProps["items"];
   openModalAuth: boolean;
+  openModalAuthReg: boolean;
   setOpenModalAuth: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenModalAuthReg: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { isAuthModalOpen, setAuthModalOpen } = useAppstore();
+  const dispatch = useAppDispatch();
+  const userInfo = useAppSelector(selectUserInfo);
   useEffect(() => {
-   console.log('asdad',isAuthModalOpen)
+    console.log("asdad", isAuthModalOpen);
   }, []);
   return (
     <Header
@@ -82,13 +90,16 @@ const Navbar = ({
                     onClick: (e) => {
                       switch (e.key) {
                         case "1":
-                          setOpenModalAuth(true);
+                          setOpenModalAuthReg(true);
                           break;
                         case "2":
-                          alert("2");
+                          setOpenModalAuth(true);
                           break;
                         case "3":
                           alert("3");
+                          break;
+                        case "4":
+                          alert("4");
                           break;
                         default:
                           break;
@@ -102,7 +113,16 @@ const Navbar = ({
                     <Avatar
                       style={{ backgroundColor: "#000000" }}
                       shape="circle"
-                      icon={<UserOutlined />}
+                      icon={
+                        !!userInfo?.userImage ? (
+                          <Image src={userInfo?.userImage} alt="" />
+                        ) : (
+                          <UserOutlined />
+                          // <Image 
+                          // preview={false}
+                          // src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s'} alt="" />
+                        )
+                      }
                     />
                   </div>
                 </Dropdown>
