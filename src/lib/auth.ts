@@ -1,3 +1,4 @@
+
 import {
   get,
   isStoredJwt,
@@ -7,7 +8,8 @@ import {
   removeStoredJwt,
 } from "./http";
 import { createUrl } from "./http";
-
+import { setStorage } from "@/lib/storage/storage";
+import { STORAGE } from "@/lib/storage/storage";
 export const me = async () => {
   return isStoredJwt()
     ? (await get(createUrl("api/me")).catch(() => null))?.data
@@ -18,6 +20,11 @@ export const login = async (email: string, password: string) => {
   const result = (
     await post(createUrl("api/login"), { email, password }).catch(() => null)
   )?.data;
+  // console.log("result", result);
+  if (!!result?.accessToken) {
+    setStoredJwt(result.accessToken);
+    setStorage(STORAGE.USER_INFO, JSON.stringify(result));
+  }
   return result;
 };
 
@@ -51,8 +58,8 @@ export const signup = async ({
 };
 
 export const logout = async () => {
-  await del(createUrl("/logout")).catch(() => null);
   removeStoredJwt();
+  return true;
 };
 
 export const checkUser = async (email: string) => {

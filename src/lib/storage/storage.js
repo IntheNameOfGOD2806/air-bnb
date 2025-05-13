@@ -1,8 +1,8 @@
 
 
-const STORAGE = {
+export const STORAGE = {
   TOKEN: "token-qlrv_hd",
-  USER_INFO: "user-info-qlrv_hd",
+  USER_INFO: "user-info",
   BROADCAST: "broadcast-qlrv",
   BROADCAST_POPUP: "broadcast-popup-qlrv",
   REMEMBER_LOGIN: "remember-login",

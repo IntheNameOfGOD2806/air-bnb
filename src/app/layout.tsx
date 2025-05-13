@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.scss";
@@ -11,6 +11,12 @@ const geistSans = Geist({
 import { PersistGate } from "redux-persist/integration/react";
 import { ToastContainer } from "react-toastify";
 import { persistor } from "@/lib/configStore";
+import { AuthContextProvider } from "@/context/AuthContext";
+import { useEffect } from "react";
+import { getStorage } from "@/lib/storage/storage";
+import { STORAGE } from "@/lib/storage/storage";
+import { useAppDispatch } from "@/lib/hooks";
+import { setUserInfo } from "@/lib/features/auth/authSlice";
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -26,15 +32,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <StoreProvider>
+        <AuthContextProvider>
           <PersistGate loading={null} persistor={persistor}>
-            <GlobalThemeProvider>{children}</GlobalThemeProvider>
-            <ToastContainer />
+            <StoreProvider>
+              <GlobalThemeProvider>{children}</GlobalThemeProvider>
+              <ToastContainer />
+            </StoreProvider>
           </PersistGate>
-        </StoreProvider>
+        </AuthContextProvider>
       </body>
     </html>
   );

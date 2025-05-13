@@ -19,22 +19,67 @@ import { useAppstore } from "@/store/store";
 import { useEffect } from "react";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+
 const Navbar = ({
-  items,
   openModalAuth,
   openModalAuthReg,
   setOpenModalAuthReg,
   setOpenModalAuth,
+  handleLogout,
 }: {
-  items: MenuProps["items"];
   openModalAuth: boolean;
   openModalAuthReg: boolean;
   setOpenModalAuth: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenModalAuthReg: React.Dispatch<React.SetStateAction<boolean>>;
+  handleLogout: () => void;
 }) => {
   const { isAuthModalOpen, setAuthModalOpen } = useAppstore();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector(selectUserInfo);
+  const isLoggedIn = !!userInfo?.id;
+  const defaultAvatar =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
+  const guestItems: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "Login",
+    },
+    {
+      key: "2",
+      label: "Sign Up",
+    },
+  ];
+
+  const authItems: MenuProps["items"] = [
+    {
+      key: "5",
+      label: (
+        <Flex align="center" gap={10}>
+          <Image
+            preview={false}
+            src={userInfo?.userImage ?? defaultAvatar}
+            style={{
+              width: "30px",
+              height: "30px",
+              borderRadius: "50%",
+            }}
+            alt=""
+          />
+          <Text>{userInfo?.username}</Text>
+        </Flex>
+      ),
+    },
+    {
+      key: "3",
+      label: "AirBnb your home",
+    },
+    {
+      key: "4",
+      label: "Log out",
+    },
+  ];
+
+  const dropdownItems = isLoggedIn ? authItems : guestItems;
   useEffect(() => {
     console.log("asdad", isAuthModalOpen);
   }, []);
@@ -55,7 +100,20 @@ const Navbar = ({
         className="justify-center ml-44 border-transparent"
         mode="horizontal"
         defaultSelectedKeys={["2"]}
-        items={items}
+        items={[
+          {
+            key: "1",
+            label: "Login",
+          },
+          {
+            key: "2",
+            label: "Sign Up",
+          },
+          {
+            key: "3",
+            label: "AirBnb your home",
+          },
+        ]}
         style={{ width: "100%" }}
       />
       <Flex align="center" justify="end" gap={20}>
@@ -86,7 +144,7 @@ const Navbar = ({
                   arrow
                   trigger={["click"]}
                   menu={{
-                    items,
+                    items: dropdownItems,
                     onClick: (e) => {
                       switch (e.key) {
                         case "1":
@@ -99,7 +157,7 @@ const Navbar = ({
                           alert("3");
                           break;
                         case "4":
-                          alert("4");
+                          handleLogout();
                           break;
                         default:
                           break;
@@ -118,7 +176,7 @@ const Navbar = ({
                           <Image src={userInfo?.userImage} alt="" />
                         ) : (
                           <UserOutlined />
-                          // <Image 
+                          // <Image
                           // preview={false}
                           // src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s'} alt="" />
                         )

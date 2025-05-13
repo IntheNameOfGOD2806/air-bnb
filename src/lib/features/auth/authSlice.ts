@@ -1,6 +1,7 @@
 import { createAppSlice } from "@/lib/createAppSlice";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
+import { getStorage } from "@/lib/storage/storage";
+import { STORAGE } from "@/lib/storage/storage";
 export interface UserInfo {
   id: string;
   username: string;
@@ -11,15 +12,9 @@ export interface UserInfo {
   userImage: string | null;
 }
 
-const initialState: UserInfo = {
-  id: "",
-  username: "",
-  roles: [],
-  email: null,
-  firstName: null,
-  lastName: null,
-  userImage: null,
-};
+const initialState: UserInfo = JSON.parse(
+  getStorage(STORAGE.USER_INFO) ?? "{}"
+);
 
 export const userSlice = createAppSlice({
   name: "user",

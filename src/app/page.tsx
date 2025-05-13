@@ -28,35 +28,17 @@ import { useForm } from "antd/es/form/Form";
 import { signInWithGoogle } from "./auth/components/auth";
 import { toast } from "react-toastify";
 import { showValidationErrors } from "@/lib/helper";
-import { login, signup } from "@/lib/auth";
-import { setUserInfo, selectUserInfo } from "@/lib/features/auth/authSlice";
+import { login, logout, signup } from "@/lib/auth";
+import { setUserInfo, selectUserInfo, UserInfo } from "@/lib/features/auth/authSlice";
 const { Header, Content, Sider } = Layout;
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Spin } from "antd";
 import CustomCarousel from "@/components/common/Modal";
-const { Text } = Typography;
-const items1: MenuProps["items"] = [
-  {
-    key: "1",
-    label: "Login",
-  },
-  {
-    key: "2",
-    label: "Sign Up",
-  },
-  {
-    key: "3",
-    label: "AirBnb your home",
-  },
-  {
-    key: "4",
-    label: "Log out",
-  },
-].map((item) => ({
-  ...item,
-}));
+import { getStorage } from "@/lib/storage/storage";
+import { STORAGE } from "@/lib/storage/storage";
 
-// const items2: MenuProps["items"] = [
+const { Text } = Typography;
+
 //   UserOutlined,
 //   LaptopOutlined,
 //   NotificationOutlined,
@@ -88,6 +70,7 @@ const App: React.FC = () => {
   const [userFounded, setUserFounded] = useState(null);
   const [authForm] = useForm();
   const [authFormReg] = useForm();
+  const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
 
   const handleScroll = () => {
     const position = window.scrollY;
@@ -103,7 +86,7 @@ const App: React.FC = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+  // scroll header
   useEffect(() => {
     if (!!scrollPosition && scrollPosition >= 600) {
       if (!!headerRef.current) {
@@ -118,6 +101,11 @@ const App: React.FC = () => {
       }
     }
   }, [scrollPosition]);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setOpenModalAuth(true);
+    }
+  }, [isLoggedIn]);
   const verifyEmail = async () => {};
   const handleLogin = async (values: any) => {
     try {
@@ -135,8 +123,8 @@ const App: React.FC = () => {
         setIsAuthLoading(false);
       }
     } catch (error: any) {
-      toast.error(error.message);
-      
+      toast.error(error?.message ?? error);
+      setIsAuthLoading(false);
     }
   };
   const handleSignUp = async (values: any) => {
@@ -162,6 +150,13 @@ const App: React.FC = () => {
       setIsAuthLoading(false);
     }
   };
+  const handleLogout = async () => {
+    const result = await logout();
+    if (result) {
+      dispatch(setUserInfo({} as UserInfo));
+      toast.success("Đăng xuất thành công");
+    }
+  };
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <div
@@ -179,7 +174,7 @@ const App: React.FC = () => {
           setOpenModalAuth={setOpenModalAuth}
           openModalAuthReg={openModalAuthReg}
           setOpenModalAuthReg={setOpenModalAuthReg}
-          items={items1}
+          handleLogout={handleLogout}
         />
       </div>
       <Layout>
@@ -285,7 +280,7 @@ const App: React.FC = () => {
           <div className="w-full min-h-[480px] ">
             <div className="auth-form-wrapper">
               <div className="header w-full text-center text-2xl font-bold border-b-[1px]  border-b-gray-300">
-                <Text className="relative bottom-2">Login or Sign up</Text>
+                <Text className="relative bottom-2">Sign up</Text>
               </div>
               <div className="body w-full p-3 flex flex-col pt-[20px]">
                 <div className="title">
@@ -415,7 +410,7 @@ const App: React.FC = () => {
                                   // await handleLogin(values);
                                 }
                                 // console.log(values);
-                              } catch (error: any) {
+                              } catch (error) {
                                 showValidationErrors(error);
                                 console.log(error);
                               }
@@ -552,7 +547,7 @@ const App: React.FC = () => {
                                 await handleLogin(values);
                                 // toast.info(JSON.stringify(values));
                                 // console.log(values);
-                              } catch (error: any) {
+                              } catch (error) {
                                 showValidationErrors(error);
                                 console.log(error);
                               }
