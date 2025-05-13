@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = "http://localhost:4000/";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const jwtkey = "accessToken";
 
 axios.interceptors.request.use(
