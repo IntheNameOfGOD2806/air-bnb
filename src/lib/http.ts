@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = "http://localhost:4000/";
+const apiUrl = "https://air-bnb-server.onrender.com/";
 const jwtkey = "accessToken";
 
 axios.interceptors.request.use(
