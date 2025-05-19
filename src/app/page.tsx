@@ -29,13 +29,14 @@ import { signInWithGoogle } from "./auth/components/auth";
 import { toast } from "react-toastify";
 import { showValidationErrors } from "@/lib/helper";
 import { login, logout, signup } from "@/lib/auth";
-import { setUserInfo, selectUserInfo, UserInfo } from "@/lib/features/auth/authSlice";
+import { setUserInfo, selectUserInfo, UserInfo, clearUserInfo } from "@/lib/features/auth/authSlice";
 const { Header, Content, Sider } = Layout;
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Spin } from "antd";
 import CustomCarousel from "@/components/common/Modal";
 import { getStorage } from "@/lib/storage/storage";
 import { STORAGE } from "@/lib/storage/storage";
+import { useRouter } from "next/navigation";
 
 const { Text } = Typography;
 
@@ -71,7 +72,7 @@ const App: React.FC = () => {
   const [authForm] = useForm();
   const [authFormReg] = useForm();
   const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
-
+  const router = useRouter();
   const handleScroll = () => {
     const position = window.scrollY;
     setScrollPosition(position);
@@ -152,9 +153,11 @@ const App: React.FC = () => {
   };
   const handleLogout = async () => {
     const result = await logout();
-    if (result) {
-      dispatch(setUserInfo({} as UserInfo));
+    if (!!result) {
+      dispatch(clearUserInfo());
       toast.success("Đăng xuất thành công");
+      //reload page
+      window.location.reload();
     }
   };
   return (
@@ -593,8 +596,6 @@ const App: React.FC = () => {
                         </Form.Item>
                       </Col>
                       {/* <Col span={12} className='pl-2'>
-                       
-                       
                       </Col> */}
                     </Row>
                   </Form>

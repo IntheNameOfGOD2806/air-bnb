@@ -8,7 +8,7 @@ import {
   removeStoredJwt,
 } from "./http";
 import { createUrl } from "./http";
-import { setStorage } from "@/lib/storage/storage";
+import { deleteStorage, setStorage } from "@/lib/storage/storage";
 import { STORAGE } from "@/lib/storage/storage";
 export const me = async () => {
   return isStoredJwt()
@@ -59,6 +59,7 @@ export const signup = async ({
 
 export const logout = async () => {
   removeStoredJwt();
+  deleteStorage(STORAGE.USER_INFO);
   return true;
 };
 

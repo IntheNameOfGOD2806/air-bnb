@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@cometchat-pro/chat": "^3.0.13",
     "@reduxjs/toolkit": "^2.5.0",
     "antd": "^5.23.1",
     "axios": "^1.8.4",

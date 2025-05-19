@@ -5,7 +5,7 @@ const GlobalThemeProvider = ({ children }: { children: React.ReactNode }) => (
     theme={{
       token: {
         fontSize: 16,
-        colorPrimary: "rgb(6,253,97)",
+        colorPrimary: "#26C485",
         // colorPrimaryHover: "#193229",
         // fontFamily: "'Space Grotesk', sans- serif"
       },
@@ -16,15 +16,7 @@ const GlobalThemeProvider = ({ children }: { children: React.ReactNode }) => (
         //   itemSelectedColor: "rgb(235,32,51)",
         // },
         Button: {
-          // controlHeight: "35px",
-          // borderRadius: 25,
-          // colorBgTextHover: "#FFFFF",
-          // defaultColor: "#000000",
-          // defaultHoverBg: "#28598D",
-          // colorPrimary: "#B4CA96",
-          // // colorPrimaryHover: "#28598D",
-          // defaultHoverBorderColor: "#B4CA96",
-          // defaultHoverColor:'#FFFFFF'
+          // defaultHoverBg: "#26C485",
         },
         // Checkbox: {
         //   colorPrimary: "#ed1a32",
@@ -36,7 +28,9 @@ const GlobalThemeProvider = ({ children }: { children: React.ReactNode }) => (
         },
         Spin: {
           colorPrimary: "rgb(6,253,97)",
-        }
+        },
+
+
       },
     }}
   >
