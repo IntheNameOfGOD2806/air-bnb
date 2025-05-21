@@ -37,12 +37,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AuthContextProvider>
-          <PersistGate loading={null} persistor={persistor}>
+          {/* <PersistGate loading={null} persistor={persistor}> */}
             <StoreProvider>
               <GlobalThemeProvider>{children}</GlobalThemeProvider>
               <ToastContainer />
             </StoreProvider>
-          </PersistGate>
+          {/* </PersistGate> */}
         </AuthContextProvider>
       </body>
     </html>

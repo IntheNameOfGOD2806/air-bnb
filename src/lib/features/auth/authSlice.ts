@@ -24,7 +24,8 @@ export const userSlice = createAppSlice({
       Object.assign(state, action.payload); // Update state in-place
     }),
     clearUserInfo: create.reducer((state) => {
-      Object.assign(state, initialState); // Reset to initial state
+      Object.assign(state, {}); // Reset to initial state
+      localStorage.removeItem(STORAGE.USER_INFO);
     }),
   }),
   selectors: {

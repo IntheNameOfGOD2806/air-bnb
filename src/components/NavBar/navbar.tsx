@@ -37,6 +37,7 @@ const Navbar = ({
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector(selectUserInfo);
   const isLoggedIn = !!userInfo?.id;
+  console.log("check logged in", userInfo);
   const defaultAvatar =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
   const guestItems: MenuProps["items"] = [
