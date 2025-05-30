@@ -26,6 +26,7 @@ const CommonModal: React.FC<CommonModalProps> = ({
 }) => {
   return (
     <Modal
+      footer={null}
       style={style}
       title={title}
       visible={visible}

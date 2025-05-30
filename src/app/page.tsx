@@ -29,13 +29,19 @@ import { signInWithGoogle } from "./auth/components/auth";
 import { toast } from "react-toastify";
 import { showValidationErrors } from "@/lib/helper";
 import { login, logout, signup } from "@/lib/auth";
-import { setUserInfo, selectUserInfo, UserInfo } from "@/lib/features/auth/authSlice";
+import {
+  setUserInfo,
+  selectUserInfo,
+  UserInfo,
+  clearUserInfo,
+} from "@/lib/features/auth/authSlice";
 const { Header, Content, Sider } = Layout;
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Spin } from "antd";
 import CustomCarousel from "@/components/common/Modal";
 import { getStorage } from "@/lib/storage/storage";
 import { STORAGE } from "@/lib/storage/storage";
+import { useRouter } from "next/navigation";
 
 const { Text } = Typography;
 
@@ -71,7 +77,7 @@ const App: React.FC = () => {
   const [authForm] = useForm();
   const [authFormReg] = useForm();
   const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
-
+  const router = useRouter();
   const handleScroll = () => {
     const position = window.scrollY;
     setScrollPosition(position);
@@ -103,7 +109,7 @@ const App: React.FC = () => {
   }, [scrollPosition]);
   useEffect(() => {
     if (!isLoggedIn) {
-      setOpenModalAuth(true);
+      setOpenModalAuthReg(true);
     }
   }, [isLoggedIn]);
   const verifyEmail = async () => {};
@@ -146,15 +152,19 @@ const App: React.FC = () => {
         setOpenModalAuthReg(true);
       }
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error?.message ?? error);
       setIsAuthLoading(false);
     }
   };
   const handleLogout = async () => {
-    const result = await logout();
-    if (result) {
-      dispatch(setUserInfo({} as UserInfo));
+    try {
+      const result = await logout();
+      dispatch(clearUserInfo()); 
       toast.success("Đăng xuất thành công");
+      //reload page
+      window.location.reload();
+    } catch (error: any) {
+      toast.error(error?.message ?? error);
     }
   };
   return (
@@ -593,8 +603,6 @@ const App: React.FC = () => {
                         </Form.Item>
                       </Col>
                       {/* <Col span={12} className='pl-2'>
-                       
-                       
                       </Col> */}
                     </Row>
                   </Form>

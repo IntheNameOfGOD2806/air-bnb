@@ -32,17 +32,27 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css"
+          rel="stylesheet"
+      />
+      <link
+        rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+          type="text/css"
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AuthContextProvider>
-          <PersistGate loading={null} persistor={persistor}>
-            <StoreProvider>
-              <GlobalThemeProvider>{children}</GlobalThemeProvider>
-              <ToastContainer />
-            </StoreProvider>
-          </PersistGate>
+          {/* <PersistGate loading={null} persistor={persistor}> */}
+          <StoreProvider>
+            <GlobalThemeProvider>{children}</GlobalThemeProvider>
+            <ToastContainer />
+          </StoreProvider>
+          {/* </PersistGate> */}
         </AuthContextProvider>
       </body>
     </html>
