@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./step1.css";
 const StepOneStarter = () => {
   return (
     <>

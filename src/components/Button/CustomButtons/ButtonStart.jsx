@@ -1,6 +1,6 @@
 "use client";
 
-export default function ButtonStart({ onClick }) {
+export default function ButtonStart({ onClick, text }) {
   return (
     <button
       className="relative group border-none bg-transparent p-0 outline-none cursor-pointer font-mono font-light uppercase text-base"
@@ -14,7 +14,7 @@ export default function ButtonStart({ onClick }) {
 
       {/* ---- main clickable surface ---- */}
       <div className="relative flex items-center gap-3 px-6 py-3 rounded-lg text-lg text-white -translate-y-1 bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 transition-[transform,filter] duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:-translate-y-1.5 group-hover:duration-[250ms] group-active:-translate-y-0.5 brightness-100 group-hover:brightness-110">
-        <span className="select-none">Bắt đầu Trail</span>
+        <span className="select-none">{text}</span>
 
         <svg
           viewBox="0 0 20 20"

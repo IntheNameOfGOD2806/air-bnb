@@ -1,10 +1,10 @@
-button {
-    padding: 15px 25px;
-    border: unset;
-    border-radius: 15px;
-    color: #212121;
-    z-index: 1;
-    background: #e8e8e8;
+ button.b1 {
+  padding: 15px 25px;
+  border: unset;
+  border-radius: 15px;
+  color: #212121;
+  z-index: 1;
+  background: #e8e8e8;
     position: relative;
     font-weight: 1000;
     font-size: 17px;
@@ -18,7 +18,7 @@ button {
     /* border: 1px solid #26C485; */
    }
    
-   button::before {
+   button.b1::before {
     content: "";
     position: absolute;
     top: 0;
@@ -33,10 +33,10 @@ button {
     transition: all 250ms
    }
    
-   button:hover {
+   button.b1:hover {
     color: #e8e8e8;
    }
    
-   button:hover::before {
+   button.b1:hover::before {
     width: 100%;
    }

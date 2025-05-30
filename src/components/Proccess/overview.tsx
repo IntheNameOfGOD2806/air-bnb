@@ -26,7 +26,7 @@ export default function Overview() {
     },
   ];
   return (
-    <div className="flex mt-7 justify-between items-center px-32 ">
+    <div className="flex  mt-7 justify-between items-center px-32 ">
       <div>
         <strong className="text-5xl max-w-96 leading-normal text-airbnb-light-black text-black">
           <h1>{MainTitle1}</h1>
