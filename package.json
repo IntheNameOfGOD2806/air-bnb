@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@cometchat-pro/chat": "^3.0.13",
+    "@mapbox/mapbox-gl-geocoder": "^5.0.3",
     "@reduxjs/toolkit": "^2.5.0",
     "@types/mapbox-gl": "^3.4.1",
     "antd": "^5.23.1",
