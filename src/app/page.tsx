@@ -78,6 +78,7 @@ const App: React.FC = () => {
   const [authFormReg] = useForm();
   const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
   const router = useRouter();
+  const [selectedKey, setSelectedKey] = useState("1");
   const handleScroll = () => {
     const position = window.scrollY;
     setScrollPosition(position);
@@ -159,7 +160,7 @@ const App: React.FC = () => {
   const handleLogout = async () => {
     try {
       const result = await logout();
-      dispatch(clearUserInfo()); 
+      dispatch(clearUserInfo());
       toast.success("Đăng xuất thành công");
       //reload page
       window.location.reload();
@@ -184,7 +185,8 @@ const App: React.FC = () => {
           setOpenModalAuth={setOpenModalAuth}
           openModalAuthReg={openModalAuthReg}
           setOpenModalAuthReg={setOpenModalAuthReg}
-          handleLogout={handleLogout}
+          selectedKey={selectedKey}
+          setSelectedKey={setSelectedKey}
         />
       </div>
       <Layout>
@@ -198,7 +200,7 @@ const App: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <div className="h-[2000px] ">
+            <div className="h-[500px] ">
               <CustomCarousel
                 slides={[
                   <div
@@ -221,6 +223,17 @@ const App: React.FC = () => {
                   </div>,
                 ]}
               />
+            </div>
+            <h3 className="mt-5 text-green-500 text-2xl font-bold text-center">Tin tức & Sự kiện</h3>
+            <div className="w-full max-h-[500px] overflow-auto scroll ">
+              <script
+                src="https://static.elfsight.com/platform/platform.js"
+                async
+              ></script>
+              <div
+                className="elfsight-app-a672d481-e953-4ab4-be13-92d85b6b1ad9"
+                data-elfsight-app-lazy
+              ></div>
             </div>
           </Content>
         </Layout>

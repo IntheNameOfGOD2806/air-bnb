@@ -14,28 +14,46 @@ import {
 } from "antd";
 const { Header } = Layout;
 const { Text } = Typography;
-import FavICon from "../../assets/images/airbnb.png";
+
+import Logo from "../../assets/images/logo.jpg";
 import { useAppstore } from "@/store/store";
-import { useEffect } from "react";
-import { selectUserInfo } from "@/lib/features/auth/authSlice";
+import { useEffect, useState } from "react";
+import { clearUserInfo, selectUserInfo } from "@/lib/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useRouter } from "next/navigation";
+import { logout } from "@/lib/auth";
+import { toast } from "react-toastify";
 
 const Navbar = ({
   openModalAuth,
   openModalAuthReg,
   setOpenModalAuthReg,
   setOpenModalAuth,
-  handleLogout,
+  selectedKey,
+  setSelectedKey,
 }: {
   openModalAuth: boolean;
   openModalAuthReg: boolean;
   setOpenModalAuth: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenModalAuthReg: React.Dispatch<React.SetStateAction<boolean>>;
-  handleLogout: () => void;
+  selectedKey: string;
+  setSelectedKey: React.Dispatch<React.SetStateAction<string>>;
 }) => {
+  const router = useRouter();
   const { isAuthModalOpen, setAuthModalOpen } = useAppstore();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector(selectUserInfo);
+  const handleLogout = async () => {
+    try {
+      const result = await logout();
+      dispatch(clearUserInfo()); 
+      toast.success("Đăng xuất thành công");
+      //reload page
+      window.location.reload();
+    } catch (error: any) {
+      toast.error(error?.message ?? error);
+    }
+  };
   const isLoggedIn = !!userInfo?.id;
   console.log("check logged in", userInfo);
   const defaultAvatar =
@@ -72,7 +90,7 @@ const Navbar = ({
     },
     {
       key: "3",
-      label: "AirBnb your home",
+      label: "Đăng Bài",
     },
     {
       key: "4",
@@ -89,39 +107,58 @@ const Navbar = ({
       className="border-b-[1px] border-slate-100 transition-all duration-100 bg-white justify-between  "
       style={{ display: "flex", alignItems: "center", paddingInline: "10" }}
     >
-      <div className="demo-logo  flex items-center gap-4 ">
+      <div onClick={() => router.push("/")} className="demo-logo  flex items-center gap-4 ">
         <Image
           className="max-w-[25px] object-contain"
-          src={FavICon.src}
-          alt="FavIcon"
+          src={Logo.src}
+          alt="Logo"
         />
-        <Text className="w-[100px]">VieTrail</Text>
+        <Text onClick={() => router.push("/")} className="w-[100px]">VieTrail</Text>
       </div>
       <Menu
         className="justify-center ml-44 border-transparent"
         mode="horizontal"
-        defaultSelectedKeys={["2"]}
+        defaultSelectedKeys={[selectedKey]}
         items={[
           {
             key: "1",
-            label: "Login",
+            label: "Điểm Lưu Trú",
           },
           {
             key: "2",
-            label: "Sign Up",
+            label: "Phương Tiện",
           },
           {
             key: "3",
-            label: "AirBnb your home",
+            label: "Blog",
           },
+
         ]}
+        onClick={(e) => {
+          switch (e.key) {
+            case "1":
+              router.push("/blog");
+              setSelectedKey("1");
+              break;
+            case "2":
+              router.push("/blog");
+              setSelectedKey("2");
+              break;
+            case "3":
+              router.push("/blog");
+              setSelectedKey("3");
+              break;
+            default:
+              break;
+          }
+        }}
         style={{ width: "100%" }}
       />
       <Flex align="center" justify="end" gap={20}>
         <Space align="start">
           <Flex gap={5}>
-            <Typography className="min-w-[150px] text-sm font-semibold">
-              AirBnb Your Home
+            <Typography onClick={() => router.push("/new-listings")} className="min-w-[150px] text-sm font-semibold cursor-pointer">
+              Đăng Bài
             </Typography>
             <GlobalOutlined />
           </Flex>
