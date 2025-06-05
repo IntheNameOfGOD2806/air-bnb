@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/mapbox__mapbox-gl-geocoder": "^5.0.0",
     "@types/node": "^20",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19",
