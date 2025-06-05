@@ -45,10 +45,10 @@ export default function GeocoderControl(props: GeocoderControlProps) {
         countries
       });
       
-      ctrl.on('loading', props.onLoading);
-      ctrl.on('results', props.onResults);
+      ctrl.on('loading', props.onLoading || noop);
+      ctrl.on('results', props.onResults || noop);
       ctrl.on('result', evt => {
-        props.onResult(evt);
+        props.onResult!(evt);
 
         const {result} = evt;
         const location =
@@ -56,12 +56,13 @@ export default function GeocoderControl(props: GeocoderControlProps) {
           (result.center || (result.geometry?.type === 'Point' && result.geometry.coordinates));
         if (location && props.marker) {
           const markerProps = typeof props.marker === 'object' ? props.marker : {};
+          // @ts-ignore
           setMarker(<Marker {...markerProps} longitude={location[0]} latitude={location[1]} />);
         } else {
           setMarker(null);
         }
       });
-      ctrl.on('error', props.onError);
+      ctrl.on('error', props.onError || noop);
       return ctrl;
     },
     {
