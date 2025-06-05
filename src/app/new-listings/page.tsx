@@ -2,7 +2,7 @@
 
 import { Button, Image, message, theme, Steps, Typography } from "antd";
 import { useState } from "react";
-import FavICon from "../../assets/images/airbnb.png";
+import Logo from "../../assets/images/logo.jpg";
 import Overview from "@/components/Proccess/overview";
 import ButtonB1 from "@/components/Button/CustomButtons/ButtonB1";
 import ButtonStart from "@/components/Button/CustomButtons/ButtonStart";
@@ -11,7 +11,13 @@ import StepOneStarter from "@/components/Proccess/StepOneStarter";
 import ListingTypeSelector from "@/components/Proccess/ListingTypeSelector";
 import ListingPlaceType from "@/components/Proccess/ListingPlaceType";
 import PlaceLocation from "@/components/Proccess/PlaceLocation";
+import PlaceDetails from "@/components/Proccess/PlaceDetail";
+import FloorPlan from "@/components/Proccess/FloorPlan";
+import StepTwoStarter from "@/components/Proccess/StepTwoStarter"
+import ProccessAmenities from "@/components/Proccess/ProccessAmenities"
+import { useRouter } from "next/navigation";
 export default function NewListings() {
+    const router = useRouter();
   const [current, setCurrent] = useState(0);
   const next = () => {
     setCurrent(current + 1);
@@ -41,6 +47,22 @@ export default function NewListings() {
       title: "",
       content: <PlaceLocation/>,
     },
+    {
+      title: "",
+      content: <PlaceDetails />,
+    },
+    {
+      title: "",
+      content: <FloorPlan />,
+    },
+    {
+      title: "",
+      content: <StepTwoStarter />,
+    },
+    {
+      title: "",
+      content: <ProccessAmenities />,
+    }
   ];
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
   const { token } = theme.useToken();
@@ -57,11 +79,11 @@ export default function NewListings() {
   return (
     <div className="flex bg-white px-3 flex-col gap-16 grid-rows-new-listing h-[100vh]">
       <header className="flex mt-4 px-20 justify-between max-h-3">
-        <div className=" flex gap-2 cursor-pointer">
+        <div onClick={() => router.push("/")} className=" flex gap-2 cursor-pointer">
           <Image
             className="max-w-[25px] object-contain"
-            src={FavICon.src}
-            alt="FavIcon"
+            src={Logo.src}
+            alt="Logo"
           />
           <strong className="text-2xl text-airbnb-light-black text-gray-500">
             <h3>Vietrail</h3>

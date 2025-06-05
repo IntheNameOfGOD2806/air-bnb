@@ -4,30 +4,46 @@ import {useControl, Marker, MarkerProps, ControlPosition} from 'react-map-gl/map
 import MapboxGeocoder, {GeocoderOptions} from '@mapbox/mapbox-gl-geocoder';
 
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+type GeocoderControlProps = Omit<GeocoderOptions, 'accessToken' | 'mapboxgl' | 'marker'> & {
+  mapboxAccessToken: string;
+  marker?: boolean | Omit<MarkerProps, 'longitude' | 'latitude'>;
 
-// type GeocoderControlProps = Omit<GeocoderOptions, 'accessToken' | 'mapboxgl' | 'marker'> & {
-//   mapboxAccessToken: string;
-//   marker?: boolean | Omit<MarkerProps, 'longitude' | 'latitude'>;
+  position: ControlPosition;
 
-//   position: ControlPosition;
+  // Extra undocumented props
+  fuzzyMatch?: boolean;
+  countries?: string;
+  language?: string;
 
-//   onLoading?: (e: object) => void;
-//   onResults?: (e: object) => void;
-//   onResult?: (e: object) => void;
-//   onError?: (e: object) => void;
-// };
+  onLoading?: (e: object) => void;
+  onResults?: (e: object) => void;
+  onResult?: (e: object) => void;
+  onError?: (e: object) => void;
+};
+
 
 /* eslint-disable complexity,max-statements */
-export default function GeocoderControl(props) {
+export default function GeocoderControl(props: GeocoderControlProps) {
   const [marker, setMarker] = useState(null);
 
   const geocoder = useControl<MapboxGeocoder>(
     () => {
+      const {
+        fuzzyMatch = true,
+        language = 'vi',
+        countries = 'vn',
+        ...geocoderProps
+      } = props;
+      
       const ctrl = new MapboxGeocoder({
-        ...props,
+        ...geocoderProps,
         marker: false,
-        accessToken: props.mapboxAccessToken
+        accessToken: props.mapboxAccessToken,
+        fuzzyMatch,
+        language,
+        countries
       });
+      
       ctrl.on('loading', props.onLoading);
       ctrl.on('results', props.onResults);
       ctrl.on('result', evt => {
@@ -111,6 +127,9 @@ const noop = () => {};
 
 GeocoderControl.defaultProps = {
   marker: true,
+  language: 'vi',
+  countries: 'vn',
+  fuzzyMatch: true,
   onLoading: noop,
   onResults: noop,
   onResult: noop,
