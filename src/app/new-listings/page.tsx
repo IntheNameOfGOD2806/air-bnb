@@ -62,6 +62,10 @@ export default function NewListings() {
     {
       title: "",
       content: <ProccessAmenities />,
+    },
+    {
+      title:"",
+      content:<Photo/>
     }
   ];
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
