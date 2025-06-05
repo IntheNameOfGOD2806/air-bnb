@@ -15,6 +15,7 @@ import PlaceDetails from "@/components/Proccess/PlaceDetail";
 import FloorPlan from "@/components/Proccess/FloorPlan";
 import StepTwoStarter from "@/components/Proccess/StepTwoStarter"
 import ProccessAmenities from "@/components/Proccess/ProccessAmenities"
+import Photo from "@/components/Proccess/Photo"
 import { useRouter } from "next/navigation";
 export default function NewListings() {
     const router = useRouter();

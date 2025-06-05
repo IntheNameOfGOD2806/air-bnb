@@ -13,6 +13,7 @@ import {
   Divider,
   Dropdown,
   Form,
+  Image,
   Input,
   Layout,
   Row,
@@ -42,7 +43,7 @@ import CustomCarousel from "@/components/common/Modal";
 import { getStorage } from "@/lib/storage/storage";
 import { STORAGE } from "@/lib/storage/storage";
 import { useRouter } from "next/navigation";
-
+import BacKanImage from "../assets/images/backan.png";
 const { Text } = Typography;
 
 //   UserOutlined,
@@ -207,24 +208,38 @@ const App: React.FC = () => {
                     key="1"
                     className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
                   >
-                    <Text className="text-2xl font-bold">Slide 1</Text>
+                    <Image
+                      className="max-w-[25px] object-contain"
+                      src={BacKanImage.src}
+                      alt="Logo"
+                    />
                   </div>,
                   <div
                     key="2"
                     className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
                   >
-                    <Text className="text-2xl font-bold">Slide 2</Text>
+                    <Image
+                      className="max-w-[25px] object-contain"
+                      src={BacKanImage.src}
+                      alt="Logo"
+                    />
                   </div>,
                   <div
                     key="3"
                     className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
                   >
-                    <Text className="text-2xl font-bold">Slide 3</Text>
+                    <Image
+                      className="max-w-[25px] object-contain"
+                      src={BacKanImage.src}
+                      alt="Logo"
+                    />
                   </div>,
                 ]}
               />
             </div>
-            <h3 className="mt-5 text-green-500 text-2xl font-bold text-center">Tin tức & Sự kiện</h3>
+            <h3 className="mt-5 text-green-500 text-2xl font-bold text-center">
+              Tin tức & Sự kiện
+            </h3>
             <div className="w-full max-h-[500px] overflow-auto scroll ">
               <script
                 src="https://static.elfsight.com/platform/platform.js"
