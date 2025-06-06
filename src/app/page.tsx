@@ -45,7 +45,22 @@ import { STORAGE } from "@/lib/storage/storage";
 import { useRouter } from "next/navigation";
 import BacKanImage from "../assets/images/backan.png";
 const { Text } = Typography;
-
+import Slider from "@/components/Carousel/landingCarousel";
+// core version + navigation, pagination modules:
+import Swiper from "swiper";
+import { Navigation, Pagination } from "swiper/modules";
+// import Swiper and modules styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import SwiperCarousel from "@/components/Carousel/landingCarousel";
+import Carousel from "@/components/Carousel/landingCarousel";
+import ImageCarousel from "@/components/Carousel/landingCarousel";
+const swiper = new Swiper(".swiper", {
+  // configure Swiper to use modules
+  modules: [Navigation, Pagination],
+  // ...
+});
 //   UserOutlined,
 //   LaptopOutlined,
 //   NotificationOutlined,
@@ -201,41 +216,36 @@ const App: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <div className="h-[500px] ">
-              <CustomCarousel
+            <div className="h-[500px] w-[100vw] ">
+              {/* <CustomCarousel
                 slides={[
-                  <div
+                  <Image
                     key="1"
-                    className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
-                  >
-                    <Image
-                      className="max-w-[25px] object-contain"
-                      src={BacKanImage.src}
-                      alt="Logo"
-                    />
-                  </div>,
-                  <div
+                    preview={false}
+                    className="w-full h-full object-cover"
+                    src={'https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/14235/production/_100058428_mediaitem100058424.jpg'}
+                    alt="Logo"
+                  />,
+                  <Image
                     key="2"
-                    className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
-                  >
-                    <Image
-                      className="max-w-[25px] object-contain"
-                      src={BacKanImage.src}
-                      alt="Logo"
-                    />
-                  </div>,
-                  <div
+                    preview={false}
+                    className="w-full h-full object-contain"
+                    src={BacKanImage.src}
+                    alt="Logo"
+                  />,
+                  <Image
                     key="3"
-                    className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
-                  >
-                    <Image
-                      className="max-w-[25px] object-contain"
-                      src={BacKanImage.src}
-                      alt="Logo"
-                    />
-                  </div>,
+                    preview={false}
+                    className="w-full h-full object-cover"
+                    src={BacKanImage.src}
+                    alt="Logo"
+                  />,
                 ]}
-              />
+              /> */}
+
+              {/* <Slider /> */}
+              <ImageCarousel />
+          
             </div>
             <h3 className="mt-5 text-green-500 text-2xl font-bold text-center">
               Tin tức & Sự kiện

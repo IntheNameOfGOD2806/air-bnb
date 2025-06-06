@@ -1,26 +1,26 @@
 // components/CustomCarousel.tsx
-import React from 'react';
-import { Carousel } from 'antd';
-import type { CarouselProps } from 'antd';
+import React from "react";
+import { Carousel } from "antd";
+import type { CarouselProps } from "antd";
 
 type CustomCarouselProps = {
   slides: React.ReactNode[]; // array of components or JSX
   autoplay?: boolean;
   dots?: boolean;
-  effect?: CarouselProps['effect'];
+  effect?: CarouselProps["effect"];
   arrows?: boolean;
   className?: string;
-  dotPosition?: CarouselProps['dotPosition'];
+  dotPosition?: CarouselProps["dotPosition"];
 };
 
 const CustomCarousel: React.FC<CustomCarouselProps> = ({
   slides,
   autoplay = true,
   dots = true,
-  effect = 'scrollx',
+  effect = "scrollx",
   arrows = false,
-  className = '',
-  dotPosition = 'bottom',
+  className = "",
+  dotPosition = "bottom",
 }) => {
   return (
     <Carousel
@@ -32,7 +32,10 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
       arrows={arrows}
     >
       {slides.map((slide, index) => (
-        <div key={index} className="h-[500px] flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
+        <div
+          key={index}
+          className="h-[500px] w-full bg-gray-100 rounded-lg overflow-hidden"
+        >
           {slide}
         </div>
       ))}

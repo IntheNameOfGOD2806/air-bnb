@@ -121,6 +121,10 @@ const Navbar = ({
         defaultSelectedKeys={[selectedKey]}
         items={[
           {
+            key: "0",
+            label: "Trang Chủ",
+          },
+          {
             key: "1",
             label: "Điểm Lưu Trú",
           },
