@@ -16,7 +16,7 @@ const AboutUs = () => {
       />
       <div className="bg-white">
         {/* Banner Section */}
-        <div className="relative h-[400px] bg-cover bg-center bg-[url('https://images.unsplash.com/photo-1558959357-685f9a5724e5')] flex items-center justify-center">
+        <div className="relative h-[400px] bg-cover bg-center bg-[url('https://media.istockphoto.com/id/624183176/vi/anh/ru%E1%BB%99ng-b%E1%BA%ADc-thang-%E1%BB%9F-mu-cang-ch%E1%BA%A3i-vi%E1%BB%87t-nam.jpg?b=1&s=612x612&w=0&k=20&c=0WPuwjgw5xt59S4-2Wf5KslcbLOzFqYKdXSqlvlNgz8=')] flex items-center justify-center">
           <div className="bg-black/50 w-full h-full absolute top-0 left-0 z-0" />
           <h1 className="text-4xl md:text-5xl text-white font-bold z-10 relative text-center px-4">
             Giới thiệu về VieTrail
@@ -32,7 +32,7 @@ const AboutUs = () => {
             transition={{ duration: 0.8 }}
           >
             <img
-              src="https://images.unsplash.com/photo-1525879000488-4b1d03e71e8f"
+              src="https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2023/2/18/1149223/6-5.jpg"
               alt="Local Experience"
               className="rounded-2xl shadow-lg"
             />
@@ -53,7 +53,7 @@ const AboutUs = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <img
-              src="https://images.unsplash.com/photo-1600857057600-59c1e3e02fdc"
+              src="https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2023/2/18/1149223/6-5.jpg"
               alt="Vision"
               className="rounded-2xl shadow-lg"
             />
@@ -75,7 +75,7 @@ const AboutUs = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <img
-              src="https://images.unsplash.com/photo-1595791277221-216199e350c5"
+              src="https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2023/2/18/1149223/6-5.jpg"
               alt="Mission"
               className="rounded-2xl shadow-lg"
             />

@@ -4,7 +4,7 @@ import 'antd/dist/reset.css'; // Ant Design v5
 
 const slides = [
   {
-    url: 'https://picsum.photos/id/1015/1920/1080',
+    url: 'https://images.pexels.com/photos/2965773/pexels-photo-2965773.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     title: 'Khám phá thế giới',
     subtitle: 'Hành trình đến những vùng đất tuyệt đẹp',
   },

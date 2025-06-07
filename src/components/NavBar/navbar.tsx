@@ -140,6 +140,10 @@ const Navbar = ({
         ]}
         onClick={(e) => {
           switch (e.key) {
+            case "0":
+              router.push("/");
+              setSelectedKey("0");
+              break;
             case "1":
               router.push("/blog");
               setSelectedKey("1");

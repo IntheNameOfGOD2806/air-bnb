@@ -4,10 +4,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.scss";
 import GlobalThemeProvider from "@/theme/global.theme";
 import { StoreProvider } from "@/app/StoreProvider";
+import Script from "next/script";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 import { PersistGate } from "redux-persist/integration/react";
 import { ToastContainer } from "react-toastify";
 import { persistor } from "@/lib/configStore";
@@ -17,6 +19,7 @@ import { getStorage } from "@/lib/storage/storage";
 import { STORAGE } from "@/lib/storage/storage";
 import { useAppDispatch } from "@/lib/hooks";
 import { setUserInfo } from "@/lib/features/auth/authSlice";
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -56,6 +59,11 @@ export default function RootLayout({
           </StoreProvider>
           {/* </PersistGate> */}
         </AuthContextProvider>
+
+        <TawkMessengerReact
+          propertyId="682ad6ec6392a3190c780686"
+          widgetId="1irjlf3do"
+        />
       </body>
     </html>
   );

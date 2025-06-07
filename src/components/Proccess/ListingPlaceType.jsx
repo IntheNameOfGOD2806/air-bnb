@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import House from "../../svg/lisitngTypes/house";
 import Room from "../../svg/lisitngTypes/room";
 import SharedRoom from "../../svg/lisitngTypes/shared-room";
+import { useAppstore } from "@/store/store";
 const ListingPlaceType = () => {
-  const [placeType, setPlaceType] = useState(null);
+
+    const {placeType, setPlaceType} = useAppstore();
   const data = [
     {
       title: "Nhà ở nguyên căn",

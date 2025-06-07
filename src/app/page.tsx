@@ -49,6 +49,8 @@ import Slider from "@/components/Carousel/landingCarousel";
 // core version + navigation, pagination modules:
 import Swiper from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
+import ListView from "@/components/views/listView";
+import Script from "next/script";
 // import Swiper and modules styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -56,6 +58,8 @@ import "swiper/css/pagination";
 import SwiperCarousel from "@/components/Carousel/landingCarousel";
 import Carousel from "@/components/Carousel/landingCarousel";
 import ImageCarousel from "@/components/Carousel/landingCarousel";
+import { getAllListingsAPI } from "@/lib/listings";
+import { useAppstore } from "@/store/store";
 const swiper = new Swiper(".swiper", {
   // configure Swiper to use modules
   modules: [Navigation, Pagination],
@@ -84,6 +88,7 @@ const swiper = new Swiper(".swiper", {
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
+  const {setListings} = useAppstore()
   const [scrollPosition, setScrollPosition] = useState(0);
   const [openModalAuth, setOpenModalAuth] = useState(false);
   const [openModalAuthReg, setOpenModalAuthReg] = useState(false);
@@ -94,7 +99,7 @@ const App: React.FC = () => {
   const [authFormReg] = useForm();
   const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
   const router = useRouter();
-  const [selectedKey, setSelectedKey] = useState("1");
+  const [selectedKey, setSelectedKey] = useState("0");
   const handleScroll = () => {
     const position = window.scrollY;
     setScrollPosition(position);
@@ -108,6 +113,15 @@ const App: React.FC = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+  }, []);
+  useEffect(() => {
+    const getData = async () => {
+      const result = await getAllListingsAPI();
+      console.log("result", result);
+      setListings(result)
+    };
+
+    getData();
   }, []);
   // scroll header
   useEffect(() => {
@@ -245,7 +259,6 @@ const App: React.FC = () => {
 
               {/* <Slider /> */}
               <ImageCarousel />
-          
             </div>
             <h3 className="mt-5 text-green-500 text-2xl font-bold text-center">
               Tin tức & Sự kiện
@@ -259,6 +272,9 @@ const App: React.FC = () => {
                 className="elfsight-app-a672d481-e953-4ab4-be13-92d85b6b1ad9"
                 data-elfsight-app-lazy
               ></div>
+            </div>
+            <div>
+              <ListView/>
             </div>
           </Content>
         </Layout>
