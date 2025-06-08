@@ -1,51 +1,51 @@
 'use client';
-import React, { useEffect } from "react";
-import { useAppstore } from "@/store/store";
-import { getListing } from "@/lib/listings";
-import { useAppSelector } from "@/lib/hooks";
-import { selectUserInfo } from "@/lib/features/auth/authSlice";
-import { toast } from "react-toastify";
-import AppWrapper from "../../wrapper";
-import { Layout } from "antd";
-const { Content } = Layout;
-import ListingPhoto from "../../../components/ListingPhoto.jsx";
-import ListingAmeneties from "../../../components/ListingAmeneties.jsx";
-import ListingMap from "../../../components/ListingMap.jsx";
-import TripScheduler from "../../../components/TripScheduler.jsx";
+// import React, { useEffect } from "react";
+// import { useAppstore } from "@/store/store";
+// import { getListing } from "@/lib/listings";
+// import { useAppSelector } from "@/lib/hooks";
+// import { selectUserInfo } from "@/lib/features/auth/authSlice";
+// import { toast } from "react-toastify";
+// import AppWrapper from "../../wrapper";
+// import { Layout } from "antd";
+// const { Content } = Layout;
+// import ListingPhoto from "../../../components/ListingPhoto.jsx";
+// import ListingAmeneties from "../../../components/ListingAmeneties.jsx";
+// import ListingMap from "../../../components/ListingMap.jsx";
+// import TripScheduler from "../../../components/TripScheduler.jsx";
 
 
 const Page = ({ params }) => {
     // const { setTabIndex } = useAppstore();
-    const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
-    const { currentListing, setCurrentListing } = useAppstore();
-    const { listing: listingId } = params;
-    console.log('listing', listingId)
+    // const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
+    // const { currentListing, setCurrentListing } = useAppstore();
+    // const { listing: listingId } = params;
+    // console.log('listing', listingId)
 
     // useEffect(() => {
     //     setTabIndex(0);
     // }, []);
 
-    useEffect(() => {
-        if (!isLoggedIn) {
-            toast.error("Vui lòng đăng nhập để xem thông tin điểm lưu trú");
-            return;
-        }
+    // useEffect(() => {
+    //     if (!isLoggedIn) {
+    //         toast.error("Vui lòng đăng nhập để xem thông tin điểm lưu trú");
+    //         return;
+    //     }
 
-        if (!listingId) {
-            toast.error("Không tìm thấy thông tin điểm lưu trú");
-            return;
-        }
+    //     if (!listingId) {
+    //         toast.error("Không tìm thấy thông tin điểm lưu trú");
+    //         return;
+    //     }
 
-        const getData = async () => {
-            const result = await getListing(listingId);
-            setCurrentListing(result);
-        };
-        getData();
-    }, [listingId, isLoggedIn]);
+    //     const getData = async () => {
+    //         const result = await getListing(listingId);
+    //         setCurrentListing(result);
+    //     };
+    //     getData();
+    // }, [listingId, isLoggedIn]);
 
     return (
         <div>
-            <AppWrapper>
+            {/* <AppWrapper>
                 <Content>
                     {
                         currentListing && (
@@ -99,7 +99,7 @@ const Page = ({ params }) => {
                         )
                     }
                 </Content>
-            </AppWrapper>
+            </AppWrapper> */}
         </div>
     );
 };
