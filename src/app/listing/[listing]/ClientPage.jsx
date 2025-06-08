@@ -44,7 +44,7 @@ const ClientPage = ({ listingId }) => {
     return (
         <div>
             <AppWrapper>
-                <Content>
+                {/* <Content>
                     {
                         currentListing && (
                             <div className="px-20 pt-10 text-black grid gap-10 grid-cols-[2fr_1fr]">
@@ -96,7 +96,7 @@ const ClientPage = ({ listingId }) => {
                             </div>
                         )
                     }
-                </Content>
+                </Content> */}
             </AppWrapper>
         </div>
     );
