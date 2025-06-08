@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -9,6 +10,7 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+// @ts-ignore
 import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 import { PersistGate } from "redux-persist/integration/react";
 import { ToastContainer } from "react-toastify";
