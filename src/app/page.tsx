@@ -62,11 +62,6 @@ import Carousel from "@/components/Carousel/landingCarousel";
 import ImageCarousel from "@/components/Carousel/landingCarousel";
 import { getAllListingsAPI } from "@/lib/listings";
 import { useAppstore } from "@/store/store";
-const swiper = new Swiper(".swiper", {
-  // configure Swiper to use modules
-  modules: [Navigation, Pagination],
-  // ...
-});
 //   UserOutlined,
 //   LaptopOutlined,
 //   NotificationOutlined,
