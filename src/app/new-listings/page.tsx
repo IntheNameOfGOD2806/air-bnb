@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Image, message, theme, Steps, Typography } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../../assets/images/logo.jpg";
 import Overview from "@/components/Proccess/overview";
 import ButtonB1 from "@/components/Button/CustomButtons/ButtonB1";
@@ -13,15 +13,46 @@ import ListingPlaceType from "@/components/Proccess/ListingPlaceType";
 import PlaceLocation from "@/components/Proccess/PlaceLocation";
 import PlaceDetails from "@/components/Proccess/PlaceDetail";
 import FloorPlan from "@/components/Proccess/FloorPlan";
-import StepTwoStarter from "@/components/Proccess/StepTwoStarter"
-import ProccessAmenities from "@/components/Proccess/ProccessAmenities"
-import Photo from "@/components/Proccess/Photo"
+import StepTwoStarter from "@/components/Proccess/StepTwoStarter";
+import StepThreeStarter from "@/components/Proccess/StepThreeStarter";
+import ProccessAmenities from "@/components/Proccess/ProccessAmenities";
+import Photo from "@/components/Proccess/Photo";
+import Title from "@/components/Proccess/Title";
+import Description from "@/components/Proccess/Description";
 import { useRouter } from "next/navigation";
+import Price from "@/components/Proccess/Price";
+import ListingCreated from "@/components/Proccess/listingCreated";
+import { useAppstore } from "@/store/store";
+import { toast } from "react-toastify";
 export default function NewListings() {
-    const router = useRouter();
+  const router = useRouter();
+  const proccess = useAppstore();
   const [current, setCurrent] = useState(0);
   const next = () => {
-    setCurrent(current + 1);
+
+    if (current === steps.length - 2) {
+      //check if all fields are filled
+      if (
+        proccess.locationType &&
+        proccess.placeType &&
+        proccess.mapData &&
+        proccess.locationData &&
+        proccess.placeSpace &&
+        proccess.price &&
+        proccess.title &&
+        proccess.description &&
+        proccess.placeAmenities &&
+        proccess.photos
+      ) {
+        setCurrent(current + 1);
+      }
+      else{
+        toast.error("Vui lòng điền đầy đủ thông tin");
+      }
+    }
+    else{
+      setCurrent(current + 1);
+    }
   };
 
   const prev = () => {
@@ -46,7 +77,7 @@ export default function NewListings() {
     },
     {
       title: "",
-      content: <PlaceLocation/>,
+      content: <PlaceLocation />,
     },
     {
       title: "",
@@ -65,10 +96,33 @@ export default function NewListings() {
       content: <ProccessAmenities />,
     },
     {
-      title:"",
-      content:<Photo/>
-    }
+      title: "",
+      content: <Photo />,
+    },
+    {
+      title: "",
+      content: <Title />,
+    },
+    {
+      title: "",
+      content: <Description />,
+    },
+    {
+      title: "",
+      content: <StepThreeStarter />,
+    },
+    //price
+    {
+      title: "",
+      content: <Price />,
+    },
+    //listingCreated
+    {
+      title: "",
+      content: <ListingCreated />,
+    },
   ];
+
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
   const { token } = theme.useToken();
   // const contentStyle: React.CSSProperties = {
@@ -80,11 +134,13 @@ export default function NewListings() {
   //   border: `1px dashed ${token.colorBorder}`,
   //   marginTop: 16,
   // };
-
   return (
     <div className="flex bg-white px-3 flex-col gap-16 grid-rows-new-listing h-[100vh]">
       <header className="flex mt-4 px-20 justify-between max-h-3">
-        <div onClick={() => router.push("/")} className=" flex gap-2 cursor-pointer">
+        <div
+          onClick={() => router.push("/")}
+          className=" flex gap-2 cursor-pointer"
+        >
           <Image
             className="max-w-[25px] object-contain"
             src={Logo.src}
@@ -114,7 +170,8 @@ export default function NewListings() {
       <footer className="px-20 align-top">
         <Steps current={current} items={items} />
         <div
-        //  style={contentStyle}
+          className="min-h-[70vh]"
+          //  style={contentStyle}
         >
           {steps[current].content}
         </div>

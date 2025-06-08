@@ -12,9 +12,17 @@ export const proccessSlice = (set: any, get: any) => ({
     beds:1,
     guests:4
   },
+  price:0,
+  setPrice: (price: any) => set({ price }),
+  title:'',
+  setTitle: (title: any) => set({ title }),
+  description:'',
+  setDescription: (description: any) => set({ description }),
   setPlaceSpace: (placeSpace: any) => set({ placeSpace }),
   placeAmenities: [],
-  setPlaceAmenities: (placeAmenities: any) => set({ placeAmenities })
+  setPlaceAmenities: (placeAmenities: any) => set({ placeAmenities }),
+  photos: [],
+  setPhotos: (photos: any) => set({ photos })
 });
 
 export type ProccessState = ReturnType<typeof proccessSlice>;

@@ -7,6 +7,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+import ViewSwitchBag from "@/components/views/ViewSwitchBag";
 import {
   Button,
   Col,
@@ -45,7 +46,27 @@ import { STORAGE } from "@/lib/storage/storage";
 import { useRouter } from "next/navigation";
 import BacKanImage from "../assets/images/backan.png";
 const { Text } = Typography;
-
+import Slider from "@/components/Carousel/landingCarousel";
+// core version + navigation, pagination modules:
+import Swiper from "swiper";
+import { Navigation, Pagination } from "swiper/modules";
+import ListView from "@/components/views/listView";
+import Script from "next/script";
+// import Swiper and modules styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import MapView from "@/components/views/MapView";
+import SwiperCarousel from "@/components/Carousel/landingCarousel";
+import Carousel from "@/components/Carousel/landingCarousel";
+import ImageCarousel from "@/components/Carousel/landingCarousel";
+import { getAllListingsAPI } from "@/lib/listings";
+import { useAppstore } from "@/store/store";
+const swiper = new Swiper(".swiper", {
+  // configure Swiper to use modules
+  modules: [Navigation, Pagination],
+  // ...
+});
 //   UserOutlined,
 //   LaptopOutlined,
 //   NotificationOutlined,
@@ -69,6 +90,7 @@ const { Text } = Typography;
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { setListings, isMapView, setIsMapView } = useAppstore();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [openModalAuth, setOpenModalAuth] = useState(false);
   const [openModalAuthReg, setOpenModalAuthReg] = useState(false);
@@ -79,7 +101,7 @@ const App: React.FC = () => {
   const [authFormReg] = useForm();
   const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
   const router = useRouter();
-  const [selectedKey, setSelectedKey] = useState("1");
+  const [selectedKey, setSelectedKey] = useState("0");
   const handleScroll = () => {
     const position = window.scrollY;
     setScrollPosition(position);
@@ -94,15 +116,25 @@ const App: React.FC = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  useEffect(() => {
+    const getData = async () => {
+      const result = await getAllListingsAPI();
+      console.log("result", result);
+      setListings(result);
+    };
+
+    getData();
+  }, []);
   // scroll header
   useEffect(() => {
-    if (!!scrollPosition && scrollPosition >= 600) {
+    if (!!scrollPosition && scrollPosition >= 300) {
+      // alert(1313)
       if (!!headerRef.current) {
         headerRef.current.style.position = "fixed";
         headerRef.current.style.width = "100%";
         headerRef.current.className = "header reveal";
       }
-    } else if (!!scrollPosition && scrollPosition < 600) {
+    } else if (!!scrollPosition && scrollPosition < 300) {
       if (!!headerRef.current) {
         headerRef.current.style.position = "relative";
         headerRef.current.className = "header";
@@ -201,41 +233,35 @@ const App: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <div className="h-[500px] ">
-              <CustomCarousel
+            <div className="h-[500px] w-[100vw] ">
+              {/* <CustomCarousel
                 slides={[
-                  <div
+                  <Image
                     key="1"
-                    className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
-                  >
-                    <Image
-                      className="max-w-[25px] object-contain"
-                      src={BacKanImage.src}
-                      alt="Logo"
-                    />
-                  </div>,
-                  <div
+                    preview={false}
+                    className="w-full h-full object-cover"
+                    src={'https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/14235/production/_100058428_mediaitem100058424.jpg'}
+                    alt="Logo"
+                  />,
+                  <Image
                     key="2"
-                    className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
-                  >
-                    <Image
-                      className="max-w-[25px] object-contain"
-                      src={BacKanImage.src}
-                      alt="Logo"
-                    />
-                  </div>,
-                  <div
+                    preview={false}
+                    className="w-full h-full object-contain"
+                    src={BacKanImage.src}
+                    alt="Logo"
+                  />,
+                  <Image
                     key="3"
-                    className="h-full flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden"
-                  >
-                    <Image
-                      className="max-w-[25px] object-contain"
-                      src={BacKanImage.src}
-                      alt="Logo"
-                    />
-                  </div>,
+                    preview={false}
+                    className="w-full h-full object-cover"
+                    src={BacKanImage.src}
+                    alt="Logo"
+                  />,
                 ]}
-              />
+              /> */}
+
+              {/* <Slider /> */}
+              <ImageCarousel />
             </div>
             <h3 className="mt-5 text-green-500 text-2xl font-bold text-center">
               Tin tức & Sự kiện
@@ -250,6 +276,16 @@ const App: React.FC = () => {
                 data-elfsight-app-lazy
               ></div>
             </div>
+
+            {isMapView ? (
+              <div>
+                <MapView />
+              </div>
+            ) : (
+              <div>
+                <ListView />
+              </div>
+            )}
           </Content>
         </Layout>
       </Layout>
@@ -641,6 +677,7 @@ const App: React.FC = () => {
           </div>
         </>
       </CommonModal>
+      <ViewSwitchBag />
     </Layout>
   );
 };
