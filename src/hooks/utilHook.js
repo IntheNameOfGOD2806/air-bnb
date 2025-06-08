@@ -1,4 +1,4 @@
-const DeleteImageCloudinary = () => {
+// const DeleteImageCloudinary = () => {
   
-}
-export default DeleteImage
+// }
+// export default DeleteImage
