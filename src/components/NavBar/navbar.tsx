@@ -153,6 +153,10 @@ const Navbar = ({
             key: "3",
             label: "Blog",
           },
+          {
+            key: "4",
+            label: "Về Chúng Tôi",
+          }
         ]}
         onClick={(e) => {
           switch (e.key) {

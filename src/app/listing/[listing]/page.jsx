@@ -6,22 +6,21 @@ import { getListing } from "@/lib/listings";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { toast } from "react-toastify";
-import AppWrapper from "../wrapper";
+import AppWrapper from "../../wrapper";
 import { Layout } from "antd";
 const { Content } = Layout;
 
-import ListingPhoto from "../../components/ListingPhoto";
-import ListingAmeneties from "../../components/ListingAmeneties";
-import ListingMap from "../../components/ListingMap";
-import TripScheduler from "../../components/TripScheduler";
+import ListingPhoto from "../../../components/ListingPhoto";
+import ListingAmeneties from "../../../components/ListingAmeneties";
+import ListingMap from "../../../components/ListingMap";
+import TripScheduler from "../../../components/TripScheduler";
 
-const Page = () => {
+const Page = ({ params }) => {
     const { setTabIndex } = useAppstore();
     const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
+    const listingId = params?.listing;
     const { currentListing, setCurrentListing } = useAppstore();
 
-
-    const listingId = currentListing?.id || localStorage.getItem("currentListingId");
 
     useEffect(() => {
         setTabIndex(0);
