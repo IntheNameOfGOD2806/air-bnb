@@ -1,57 +1,30 @@
 "use client";
 
 import React from "react";
-import { Button, Space, Table } from "antd";
+import { Button, Space, Table, Modal, Descriptions } from "antd";
 import { getTripsAPI } from "@/lib/trips";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { toast } from "react-toastify";
 import AppWrapper from "../wrapper";
 
-const columns = [
-  {
-    title: "Ngày bắt đầu",
-    dataIndex: ["tripinfo", "startDate"],
-    key: "startDate",
-    align: "center",
-  },
-  {
-    title: "Ngày kết thúc",
-    dataIndex: ["tripinfo", "endDate"],
-    key: "endDate",
-    align: "center",
-  },
-  {
-    title: "Giá tiền",
-    dataIndex: ["tripinfo", "price"],
-    key: "price",
-    align: "center",
-    render: (price: string) => `${Number(price).toLocaleString()}₫`,
-  },
-  {
-    title: "Ngày đặt phòng",
-    dataIndex: "createdAt",
-    key: "createdAt",
-    align: "center",
-    render: (date: string) => new Date(date).toLocaleDateString("vi-VN"),
-  },
-  {
-    title: "Hành động",
-    key: "action",
-    align: "center",
-    render: (text: string, record: any) => (
-      <Space size="middle">
-        <Button type="primary">Xem</Button>
-        <Button type="primary">Xóa</Button>
-      </Space>
-    ),
-  },
-];
-
 const TripTable = () => {
   const userInfo = useAppSelector(selectUserInfo);
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+
+  const [selectedTrip, setSelectedTrip] = React.useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const handleView = (record: any) => {
+    setSelectedTrip(record);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedTrip(null);
+  };
 
   React.useEffect(() => {
     if (!userInfo?.id) {
@@ -74,6 +47,48 @@ const TripTable = () => {
     fetchData();
   }, [userInfo]);
 
+  const columns = [
+    {
+      title: "Ngày bắt đầu",
+      dataIndex: ["tripinfo", "startDate"],
+      key: "startDate",
+      align: "center",
+    },
+    {
+      title: "Ngày kết thúc",
+      dataIndex: ["tripinfo", "endDate"],
+      key: "endDate",
+      align: "center",
+    },
+    {
+      title: "Giá tiền",
+      dataIndex: ["tripinfo", "price"],
+      key: "price",
+      align: "center",
+      render: (price: string) => `${Number(price).toLocaleString()}₫`,
+    },
+    {
+      title: "Ngày đặt phòng",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      align: "center",
+      render: (date: string) => new Date(date).toLocaleDateString("vi-VN"),
+    },
+    {
+      title: "Hành động",
+      key: "action",
+      align: "center",
+      render: (_: string, record: any) => (
+        <Space size="middle">
+          <Button type="primary" onClick={() => handleView(record)}>
+            Xem
+          </Button>
+          <Button danger>Xóa</Button>
+        </Space>
+      ),
+    },
+  ];
+
   return (
     <div className="bg-white shadow-md rounded-xl p-6">
       <Table
@@ -86,6 +101,44 @@ const TripTable = () => {
         pagination={{ pageSize: 5 }}
         bordered
       />
+
+      <Modal
+        title="Chi tiết chuyến đi"
+        open={isModalOpen}
+        onCancel={handleCloseModal}
+        footer={[
+          <Button key="close" onClick={handleCloseModal}>
+            Đóng
+          </Button>,
+        ]}
+      >
+        {selectedTrip && (
+          <Descriptions column={1} bordered size="small">
+            <Descriptions.Item label="Ngày bắt đầu">
+              {new Date(selectedTrip.tripinfo?.startDate).toLocaleDateString(
+                "vi-VN"
+              )}
+            </Descriptions.Item>
+            <Descriptions.Item label="Ngày kết thúc">
+              {new Date(selectedTrip.tripinfo?.endDate).toLocaleDateString(
+                "vi-VN"
+              )}
+            </Descriptions.Item>
+            <Descriptions.Item label="Giá tiền">
+              {Number(selectedTrip.tripinfo?.price).toLocaleString()}₫
+            </Descriptions.Item>
+            <Descriptions.Item label="Ngày đặt phòng">
+              {new Date(selectedTrip.createdAt).toLocaleDateString("vi-VN")}
+            </Descriptions.Item>
+            <Descriptions.Item label="Người dùng đặt">
+              {selectedTrip?.user?.firstName} {selectedTrip?.user?.lastName}
+            </Descriptions.Item>
+            <Descriptions.Item label="Tên phòng">
+              {selectedTrip?.listing?.title}
+            </Descriptions.Item>
+          </Descriptions>
+        )}
+      </Modal>
     </div>
   );
 };
