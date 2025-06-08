@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -10,13 +9,14 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-// @ts-ignore
-// import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 import { PersistGate } from "redux-persist/integration/react";
 import { ToastContainer } from "react-toastify";
 import { persistor } from "@/lib/configStore";
 import { AuthContextProvider } from "@/context/AuthContext";
-
+import { useEffect } from "react";
 import { getStorage } from "@/lib/storage/storage";
 import { STORAGE } from "@/lib/storage/storage";
 import { useAppDispatch } from "@/lib/hooks";
@@ -61,11 +61,14 @@ export default function RootLayout({
           </StoreProvider>
           {/* </PersistGate> */}
         </AuthContextProvider>
-{/* 
-        <TawkMessengerReact
-          propertyId="682ad6ec6392a3190c780686"
-          widgetId="1irjlf3do"
-        /> */}
+        <div >
+        
+          <TawkMessengerReact
+        
+            propertyId="682ad6ec6392a3190c780686"
+            widgetId="1irjlf3do"
+          />
+        </div>
       </body>
     </html>
   );

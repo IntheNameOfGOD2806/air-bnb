@@ -1,8 +1,23 @@
+import { addToWishList } from "@/lib/listings";
 
 export const createListingSlice = (set: any, get: any) => ({
-    listings: [],    
-    isMapView: false,
-    setIsMapView: (isMapView: boolean) => set({ isMapView: !get().isMapView }),
-    setListings: (listings: any) => set({ listings })
-})
-export type ListingState = ReturnType<typeof createListingSlice>
+  listings: [],
+  isMapView: false,
+  userListings: [],
+  wishList: [],
+  wishListPage: [],
+  currentListing: null,
+  setCurrentListing: (currentListing: any) => set({ currentListing }),
+  setUserListings: (userListings: any) => set({ userListings }),
+  setWishList: (wishList: any) => set({ wishList }),
+  setWishListPage: (wishListPage: any) => set({ wishListPage }),
+  setIsMapView: (isMapView: boolean) => set({ isMapView: !get().isMapView }),
+  setListings: (listings: any) => set({ listings }),
+  addToWishList: (id:any) => {
+    const list = get().wishList;
+    list.push(id);
+    set({ wishList: list });
+  },
+//   setWishListPage: (wishListPage: any) => set({ wishListPage }),
+});
+export type ListingState = ReturnType<typeof createListingSlice>;

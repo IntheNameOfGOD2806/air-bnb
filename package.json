@@ -13,6 +13,7 @@
     "@mapbox/mapbox-gl-geocoder": "^5.0.3",
     "@mapbox/search-js-react": "^1.1.0",
     "@reduxjs/toolkit": "^2.5.0",
+    "@tawk.to/tawk-messenger-react": "^2.0.2",
     "@types/mapbox-gl": "^3.4.1",
     "antd": "^5.23.1",
     "axios": "^1.8.4",

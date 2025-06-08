@@ -92,7 +92,7 @@ const MapView = () => {
                                 latitude={popupInfo?.mapData?.latitude}
                                 onClose={() => setPopupInfo(null)}
                             >
-                                <div className="p-2">
+                                <div className="min-w-[200px]">
                                     <ListingCard data={popupInfo} />
                                 </div>
                             </Popup>
