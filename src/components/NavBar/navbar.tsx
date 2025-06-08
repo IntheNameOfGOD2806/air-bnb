@@ -241,7 +241,7 @@ const Navbar = ({
                             );
                             return;
                           }
-                          router.push("/my-trips");
+                          router.push("/trips");
                           break;
                         default:
                           break;

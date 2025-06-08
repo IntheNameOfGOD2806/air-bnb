@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Space, Table } from "antd";
+import { Button, Space, Table } from "antd";
 import { getTripsAPI } from "@/lib/trips";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
@@ -13,31 +13,36 @@ const columns = [
     title: "Ngày bắt đầu",
     dataIndex: ["tripinfo", "startDate"],
     key: "startDate",
+    align: "center",
   },
   {
     title: "Ngày kết thúc",
     dataIndex: ["tripinfo", "endDate"],
     key: "endDate",
+    align: "center",
   },
   {
     title: "Giá tiền",
     dataIndex: ["tripinfo", "price"],
     key: "price",
+    align: "center",
     render: (price: string) => `${Number(price).toLocaleString()}₫`,
   },
   {
     title: "Ngày đặt phòng",
     dataIndex: "createdAt",
     key: "createdAt",
+    align: "center",
     render: (date: string) => new Date(date).toLocaleDateString("vi-VN"),
   },
   {
     title: "Hành động",
     key: "action",
+    align: "center",
     render: (text: string, record: any) => (
       <Space size="middle">
-        <a>Xem</a>
-        <a>Xóa</a>
+        <Button type="primary">Xem</Button>
+        <Button type="primary">Xóa</Button>
       </Space>
     ),
   },
@@ -72,6 +77,8 @@ const TripTable = () => {
   return (
     <div className="bg-white shadow-md rounded-xl p-6">
       <Table
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //   @ts-ignore
         columns={columns}
         dataSource={data}
         rowKey="id"
