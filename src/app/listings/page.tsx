@@ -1,3 +1,4 @@
+"use client";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { listingTypes } from "@/data/listingTypes";
