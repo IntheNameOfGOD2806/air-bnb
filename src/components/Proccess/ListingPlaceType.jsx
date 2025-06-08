@@ -5,7 +5,7 @@ import SharedRoom from "../../svg/lisitngTypes/shared-room";
 import { useAppstore } from "@/store/store";
 const ListingPlaceType = () => {
 
-    const {placeType, setPlaceType} = useAppstore();
+  const { placeType, setPlaceType } = useAppstore();
   const data = [
     {
       title: "Nhà ở nguyên căn",
@@ -31,9 +31,8 @@ const ListingPlaceType = () => {
         {data.map((item, index) => (
           <li
             onClick={() => setPlaceType(item)}
-            className={`flex cursor-pointer p-2 border-gray-100 border-2 rounded-md items-center justify-between ${
-              placeType?.title === item?.title ? "bg-gray-100" : ""
-            }`}
+            className={`flex cursor-pointer p-2 border-gray-100 border-2 rounded-md items-center justify-between ${placeType?.title === item?.title ? "bg-gray-100" : ""
+              }`}
             key={index?.title}
           >
             <div className="">
@@ -43,7 +42,7 @@ const ListingPlaceType = () => {
             <div className="flex items-center justify-center">
               {item?.svg}
             </div>
-          </li>        ))}
+          </li>))}
       </ul>
     </div>
   );

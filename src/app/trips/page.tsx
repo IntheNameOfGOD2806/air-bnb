@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button, Space, Table, Modal, Descriptions } from "antd";
-import { getTripsAPI } from "@/lib/trips";
+import { deleteTripAPI, getTripsAPI } from "@/lib/trips";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { toast } from "react-toastify";
@@ -14,16 +14,43 @@ const TripTable = () => {
   const [loading, setLoading] = React.useState(false);
 
   const [selectedTrip, setSelectedTrip] = React.useState<any>(null);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = React.useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
 
   const handleView = (record: any) => {
     setSelectedTrip(record);
-    setIsModalOpen(true);
+    setIsViewModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseViewModal = () => {
+    setIsViewModalOpen(false);
     setSelectedTrip(null);
+  };
+
+  const handleOpenDeleteModal = (record: any) => {
+    setSelectedTrip(record);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedTrip(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      const result = await deleteTripAPI(selectedTrip.id);
+      if (result) {
+        toast.success("Chuyến đi đã được xóa thành công");
+        const newData = data.filter((item: any) => item.id !== selectedTrip.id);
+        setData(newData);
+      }
+    } catch (err) {
+      toast.error("Không thể xóa chuyến đi");
+      console.log('err', err)
+    } finally {
+      handleCloseDeleteModal();
+    }
   };
 
   React.useEffect(() => {
@@ -83,7 +110,9 @@ const TripTable = () => {
           <Button type="primary" onClick={() => handleView(record)}>
             Xem
           </Button>
-          <Button danger>Xóa</Button>
+          <Button danger onClick={() => handleOpenDeleteModal(record)}>
+            Xóa
+          </Button>
         </Space>
       ),
     },
@@ -93,7 +122,7 @@ const TripTable = () => {
     <div className="bg-white shadow-md rounded-xl p-6">
       <Table
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //   @ts-ignore
+        // @ts-ignore
         columns={columns}
         dataSource={data}
         rowKey="id"
@@ -102,12 +131,13 @@ const TripTable = () => {
         bordered
       />
 
+      {/* Modal chi tiết */}
       <Modal
         title="Chi tiết chuyến đi"
-        open={isModalOpen}
-        onCancel={handleCloseModal}
+        open={isViewModalOpen}
+        onCancel={handleCloseViewModal}
         footer={[
-          <Button key="close" onClick={handleCloseModal}>
+          <Button key="close" onClick={handleCloseViewModal}>
             Đóng
           </Button>,
         ]}
@@ -115,14 +145,10 @@ const TripTable = () => {
         {selectedTrip && (
           <Descriptions column={1} bordered size="small">
             <Descriptions.Item label="Ngày bắt đầu">
-              {new Date(selectedTrip.tripinfo?.startDate).toLocaleDateString(
-                "vi-VN"
-              )}
+              {new Date(selectedTrip.tripinfo?.startDate).toLocaleDateString("vi-VN")}
             </Descriptions.Item>
             <Descriptions.Item label="Ngày kết thúc">
-              {new Date(selectedTrip.tripinfo?.endDate).toLocaleDateString(
-                "vi-VN"
-              )}
+              {new Date(selectedTrip.tripinfo?.endDate).toLocaleDateString("vi-VN")}
             </Descriptions.Item>
             <Descriptions.Item label="Giá tiền">
               {Number(selectedTrip.tripinfo?.price).toLocaleString()}₫
@@ -137,6 +163,30 @@ const TripTable = () => {
               {selectedTrip?.listing?.title}
             </Descriptions.Item>
           </Descriptions>
+        )}
+      </Modal>
+
+      {/* Modal xác nhận xóa */}
+      <Modal
+        title="Xác nhận xóa chuyến đi"
+        open={isDeleteModalOpen}
+        onCancel={handleCloseDeleteModal}
+        onOk={handleConfirmDelete}
+        okText="Xóa"
+        okType="danger"
+        cancelText="Hủy"
+      >
+        {selectedTrip && (
+          <>
+            <p>Bạn có chắc muốn xóa chuyến đi sau?</p>
+            <p>
+              <strong>Phòng:</strong> {selectedTrip?.listing?.title}
+            </p>
+            <p>
+              <strong>Ngày bắt đầu:</strong>{" "}
+              {new Date(selectedTrip.tripinfo?.startDate).toLocaleDateString("vi-VN")}
+            </p>
+          </>
         )}
       </Modal>
     </div>

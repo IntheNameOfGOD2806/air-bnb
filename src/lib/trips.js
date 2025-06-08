@@ -1,4 +1,4 @@
-import { createUrl, post } from "./http";
+import { createUrl, del, post } from "./http";
 import { toast } from "react-toastify";
 
 import { get } from "./http";

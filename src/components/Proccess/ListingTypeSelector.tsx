@@ -2,6 +2,7 @@
 import { useAppstore } from "@/store/store";
 import { useState } from "react";
 import { listingTypes } from "../../data/listingTypes";
+import { listingTypesVi } from "../../data/listingTypes";
 export default function ListingTypeSelector() {
   const { locationType, setLocationType } = useAppstore();
   return (
@@ -16,11 +17,15 @@ export default function ListingTypeSelector() {
               onClick={() => setLocationType(type.name)}
               key={type.name}
               className={`flex border-2  border-gray-400 rounded-md flex-col items-center justify-center ${
-                locationType === type.name ? "bg-green-200 border-green-400" : ""
+                locationType === type.name
+                  ? "bg-green-200 border-green-400"
+                  : ""
               }`}
             >
               {type.svgPath}
-              <span>{type.name}</span>
+              <span>
+                {listingTypesVi[type.name as keyof typeof listingTypesVi]}
+              </span>
             </button>
           ))}
         </div>

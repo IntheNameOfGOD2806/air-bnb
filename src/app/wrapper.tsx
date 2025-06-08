@@ -714,7 +714,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </>
       </CommonModal>
      {
-      pathname === "/" && <ViewSwitchBag />
+      pathname === "/" && scrollPosition > 200 && <ViewSwitchBag />
      }
     </Layout>
   );

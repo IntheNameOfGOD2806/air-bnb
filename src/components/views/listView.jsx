@@ -7,8 +7,8 @@ import { selectUserInfo } from "@/lib/features/auth/authSlice";
 
 const ITEMS_PER_PAGE = 10;
 
-export default function ListView() {
-    const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
+export default function ListView({ type }) {
+  const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
   const { listings } = useAppstore();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -16,10 +16,14 @@ export default function ListView() {
   const totalPages = Math.ceil((listings?.length || 0) / ITEMS_PER_PAGE);
 
   // Lấy dữ liệu trang hiện tại
-  const paginatedListings = listings?.slice(
+  let paginatedListings = listings?.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+  if (!!type) {
+    paginatedListings = paginatedListings?.filter((listing) => listing?.locationType === type);
+  }
+
 
   // Hàm chuyển trang
   const goToPage = (page) => {
@@ -32,11 +36,11 @@ export default function ListView() {
     <div className="px-5 py-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {paginatedListings?.map((listing) => (
-          <ListingCard key={listing.id} data={listing} isMyListing={false} isWishList={false}/>
+          <ListingCard key={listing.id} data={listing} isMyListing={false} isWishList={false} />
         ))}
         {/* No data */}
       </div>
-        {listings?.length === 0 && <p className="mt-32 font-bold text-xl flex items-center justify-center text-center text-gray-500">Không có dữ liệu, hãy sử dụng tính năng "Đăng Bài" để đăng bài</p>}
+      {listings?.length === 0 && <p className="mt-32 font-bold text-xl flex items-center justify-center text-center text-gray-500">Không có dữ liệu, hãy sử dụng tính năng "Đăng Bài" để đăng bài</p>}
 
       {/* Phân trang */}
       {isLoggedIn && <div className="flex justify-center mt-8 gap-2">
@@ -52,9 +56,8 @@ export default function ListView() {
           <button
             key={i}
             onClick={() => goToPage(i + 1)}
-            className={`px-3 py-1 border rounded ${
-              currentPage === i + 1 ? "bg-green-500 text-white" : ""
-            }`}
+            className={`px-3 py-1 border rounded ${currentPage === i + 1 ? "bg-green-500 text-white" : ""
+              }`}
           >
             {i + 1}
           </button>

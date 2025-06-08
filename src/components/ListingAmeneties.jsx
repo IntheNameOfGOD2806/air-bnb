@@ -2,6 +2,7 @@
 import React from 'react';
 import { useAppstore } from '../store/store';
 import { AmenitiesType } from '../data/Amenities';
+import { AmenitiesTypeVi } from '../data/Amenities';
 const ListingAmeneties = () => {
     const { currentListing } = useAppstore();
     function getSvgPathByName(name) {
@@ -22,7 +23,7 @@ const ListingAmeneties = () => {
                     currentListing?.placeAmeneties?.map((amenity) => (
                         <li className='border border-gray-300 p-3 rounded-lg flex flex-col justify-start items-start' key={amenity}>
                             {getSvgPathByName(amenity)}
-                            <span>{amenity}</span>
+                            <span>{AmenitiesTypeVi[amenity]}</span>
                         </li>
                     ))
                 }

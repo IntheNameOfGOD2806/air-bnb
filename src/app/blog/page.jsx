@@ -7,8 +7,9 @@ const Blog = () => {
     return (
         <>
             <AppWrapper>
-                <script src="https://static.elfsight.com/platform/platform.js" async></script>
-                <div class="elfsight-app-a672d481-e953-4ab4-be13-92d85b6b1ad9" data-elfsight-app-lazy></div>
+            {/* Elfsight Blog | Untitled Blog */}
+            <script src="https://static.elfsight.com/platform/platform.js" async></script>
+            <div class="elfsight-app-9c32a411-42aa-4d5a-ae01-c29ba1197f80" data-elfsight-app-lazy></div>
             </AppWrapper>
         </>
     )

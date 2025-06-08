@@ -26,11 +26,11 @@ const ListingMap = () => {
                     latitude: currentListing?.mapData?.latitude,
                     zoom: 11,
                 }}
-                scrollZoom={false}
-                dragPan={false}
-                dragRotate={false}
-                doubleClickZoom={false}
-                touchZoom={false}
+                scrollZoom={true}
+                dragPan={true}
+                dragRotate={true}
+                doubleClickZoom={true}
+                touchZoom={true}
                 mapStyle="mapbox://styles/mapbox/streets-v12"
                 mapboxAccessToken={TOKEN}>
                 {pins}

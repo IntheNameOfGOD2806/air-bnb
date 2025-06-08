@@ -1,19 +1,12 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import Navbar from "@/components/NavBar/navbar";
+import AppWrapper from "../wrapper";
 
 const AboutUs = () => {
   return (
-    <>
-      <Navbar
-        openModalAuth={false}
-        openModalAuthReg={false}
-        setOpenModalAuth={() => {}}
-        setOpenModalAuthReg={() => {}}
-        selectedKey=""
-        setSelectedKey={() => {}}
-      />
+    <AppWrapper>
+     
       <div className="bg-white">
         {/* Banner Section */}
         <div className="relative h-[400px] bg-cover bg-center bg-[url('https://media.istockphoto.com/id/624183176/vi/anh/ru%E1%BB%99ng-b%E1%BA%ADc-thang-%E1%BB%9F-mu-cang-ch%E1%BA%A3i-vi%E1%BB%87t-nam.jpg?b=1&s=612x612&w=0&k=20&c=0WPuwjgw5xt59S4-2Wf5KslcbLOzFqYKdXSqlvlNgz8=')] flex items-center justify-center">
@@ -120,7 +113,7 @@ const AboutUs = () => {
           </motion.div>
         </div>
       </div>
-    </>
+    </AppWrapper>
   );
 };
 

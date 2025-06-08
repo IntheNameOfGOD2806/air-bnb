@@ -22,7 +22,7 @@ export const getAllListingsAPI = async () => {
     const query = qs.stringify(
       {
         orderBy: {
-          createdAt: "asc",
+          createdAt: "desc",
         },
       },
       {

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from "react";
+import { useParams } from "next/navigation"; // ✅ Thêm dòng này
 import { useAppstore } from "@/store/store";
 import { getListing } from "@/lib/listings";
 import { useAppSelector } from "@/lib/hooks";
@@ -9,18 +10,18 @@ import { toast } from "react-toastify";
 import AppWrapper from "../../wrapper";
 import { Layout } from "antd";
 const { Content } = Layout;
-
+import { listingTypesVi } from "@/data/listingTypes";
 import ListingPhoto from "../../../components/ListingPhoto";
 import ListingAmeneties from "../../../components/ListingAmeneties";
 import ListingMap from "../../../components/ListingMap";
 import TripScheduler from "../../../components/TripScheduler";
 
-const Page = ({ params }) => {
-    const { setTabIndex } = useAppstore();
-    const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
+const Page = () => {
+    const params = useParams(); // ✅ Lấy params qua hook
     const listingId = params?.listing;
-    const { currentListing, setCurrentListing } = useAppstore();
 
+    const { setTabIndex, currentListing, setCurrentListing } = useAppstore();
+    const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
 
     useEffect(() => {
         setTabIndex(0);
@@ -43,7 +44,11 @@ const Page = ({ params }) => {
         };
         getData();
     }, [listingId, isLoggedIn]);
-
+    const translatedPlaceSpace = {
+        bathrooms: "Phòng tắm",
+        beds: "Giường",
+        guests: "Số lượng khách",
+    }
     return (
         <div>
             <AppWrapper>
@@ -61,7 +66,7 @@ const Page = ({ params }) => {
                                             <h3 className="text-2xl font-semibold">
                                                 <p className="text-gray-500 flex gap-2">
                                                     <span className="font-bold">
-                                                        {currentListing?.locationType}
+                                                        {listingTypesVi[currentListing?.locationType]}
                                                     </span>
                                                     đăng bởi {' '}
                                                     <span className="font-bold text-green-500">
@@ -78,7 +83,7 @@ const Page = ({ params }) => {
                                                                 {currentListing?.placeSpace[type]}
                                                             </span>
                                                             <span className="capitalize">
-                                                                {type}
+                                                                {translatedPlaceSpace[type]}
                                                             </span>
                                                         </li>
                                                     ))

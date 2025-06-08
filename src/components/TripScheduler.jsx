@@ -8,10 +8,10 @@ import { useAppstore } from "../store/store";
 import { BsFillFlagFill } from "react-icons/bs";
 import { createTripAPI } from "../lib/trips";
 import Diamond from "../svg/daimond";
-
+import { Spin } from "antd";
 
 export default function TripScheduler() {
-
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { currentListing } = useAppstore();
     const userInfo = useAppSelector(selectUserInfo);
@@ -32,6 +32,7 @@ export default function TripScheduler() {
             toast.error("Vui lòng đăng nhập để đặt phòng");
             return;
         } else {
+            setLoading(true);
             const data = {
                 listing: { id: currentListing?.id },
                 user: { id: userInfo?.id },
@@ -42,7 +43,9 @@ export default function TripScheduler() {
                 }
             }
             const res = await createTripAPI(data);
-            res && router.push(`/trips`);
+            // res && router.push(`/trips`);
+            console.log(res);
+            setLoading(false);
         }
 
     }
@@ -87,7 +90,13 @@ export default function TripScheduler() {
                         </div>
                     </div>
                 </div>
-                <button onClick={handleReserve} className="bg-green-500 hover:bg-white hover:text-green-400 text-white w-full font-medium py-3 mt-5 rounded-md cursor-pointer">Đặt phòng</button>
+                {
+                    loading ? (
+                        <Spin/>
+                    ) : (
+                        <button onClick={handleReserve} className="bg-green-500 hover:bg-white hover:text-green-400 text-white w-full font-medium py-3 mt-5 rounded-md cursor-pointer">Đặt phòng</button>
+                    )
+                }
                 <span className="text-center w-full">
                     Bạn sẽ chưa thanh toán cho đến khi chuyến đi bắt đầu
                 </span>

@@ -68,3 +68,39 @@ export const AmenitiesType = [
     ],
   },
 ];
+
+export const AmenitiesTypeVi = {
+  basic: "Tiện nghi cơ bản",
+  advanced: "Tiện nghi nâng cao",
+  safety: "An toàn",
+
+  // Các tiện nghi cụ thể
+  "Wifi": "Wi-Fi",
+  "TV": "Tivi",
+  "Kitchen": "Nhà bếp",
+  "Washing Machine": "Máy giặt",
+  "Free parking on premises": "Chỗ đậu xe miễn phí",
+  "Paid parking on premises": "Chỗ đậu xe có phí",
+  "Air conditioning": "Máy lạnh",
+  "Dedicated workplace": "Khu làm việc riêng",
+
+  "Pool": "Hồ bơi",
+  "Hot tub": "Bồn tắm nước nóng",
+  "Patio": "Sân hiên",
+  "BBQ grill": "Bếp nướng BBQ",
+  "Outdoor dining area": "Khu ăn uống ngoài trời",
+  "Fire pit": "Hố lửa",
+  "Pool table": "Bàn bi-da",
+  "Indoor fireplace": "Lò sưởi trong nhà",
+  "Piano": "Đàn piano",
+  "Exercise equipment": "Dụng cụ thể dục",
+  "Lake access": "Lối ra hồ",
+  "Beach access": "Lối ra bãi biển",
+  "Ski-in/Ski-out": "Khu trượt tuyết",
+  "Outdoor shower": "Vòi tắm ngoài trời",
+
+  "Smoke alarm": "Báo khói",
+  "First aid kit": "Bộ sơ cứu",
+  "Fire extinguisher": "Bình chữa cháy",
+  "Carbon monoxide alarm": "Báo động khí CO"
+};

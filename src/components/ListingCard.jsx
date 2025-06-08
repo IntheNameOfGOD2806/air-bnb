@@ -30,12 +30,12 @@ export const ListingCard = ({ data, isMyListing }) => {
     return (
         <>
             <div
-             onClick={()=>{
-                setCurrentListing(data)
-                // localStorage.setItem("currentListingId", data.id)
-                router.push(`/listing/${data.id}`)
-             }}
-            className="max-w-xs w-full bg-white border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                onClick={() => {
+                    setCurrentListing(data)
+                    // localStorage.setItem("currentListingId", data.id)
+                    router.push(`/listing/${data.id}`)
+                }}
+                className="max-w-xs w-full bg-white border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer">
                 <div className="relative w-full h-48 sm:h-56">
                     {data?.photos?.[0] ? (
                         <Image
@@ -67,7 +67,10 @@ export const ListingCard = ({ data, isMyListing }) => {
                     {!!isMyListing && (
                         <button
                             className="bg-red-500 text-white px-3 py-1 rounded w-full hover:bg-red-600 mt-2"
-                            onClick={() => setIsModalOpen(true)}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setIsModalOpen(true)
+                            }}
                         >
                             Xóa
                         </button>

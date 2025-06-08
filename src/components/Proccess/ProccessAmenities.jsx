@@ -1,5 +1,6 @@
 import React from "react";
 import { AmenitiesType } from "../../data/Amenities";
+import { AmenitiesTypeVi } from "../../data/Amenities";
 import { useAppstore } from "@/store/store";
 const ProccessAmenities = () => {
     const { placeAmenities, setPlaceAmenities } = useAppstore()
@@ -40,7 +41,7 @@ const ProccessAmenities = () => {
                                                     placeAmenities?.includes(name) ? removeAmenity(name) : addAmenity(name)
                                             } key={name} className={`${placeAmenities?.includes(name) && "border-green-500 bg-green-50"} max-h-28 transition-all duration-300 flex flex-col justify-start border font-semibold border-gray-300 rounded-md p-3 hover:bg-green-100 cursor-pointer gap-2`}>
                                             <div className="max-h-28 max-w-10">{svgPath}</div>
-                                            <span className="text-black font-medium">{name}</span>
+                                            <span className="text-black font-medium">{AmenitiesTypeVi[name]}</span>
                                         </button>
                                     ))}
                                 </div>

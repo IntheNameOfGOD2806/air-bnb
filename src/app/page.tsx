@@ -36,7 +36,7 @@ const App: React.FC = ({
   isLiatingLoading,
 }: any) => {
   const isLoggedIn = useAppSelector(selectUserInfo)?.id;
-  const {isMapView, setIsMapView} = useAppstore();
+  const { isMapView, setIsMapView } = useAppstore();
   return (
     <div>
       {/* antd */}
@@ -46,7 +46,7 @@ const App: React.FC = ({
             padding: 24,
             margin: 0,
             minHeight: 280,
-            background: '#fff',
+            background: "#fff",
             borderRadius: borderRadiusLG,
           }}
         >
@@ -57,6 +57,7 @@ const App: React.FC = ({
             Tin tức & Sự kiện
           </h3>
           <div className="w-full max-h-[500px] overflow-auto scroll ">
+            {/* Elfsight Blog | Dattran */}
             <script
               src="https://static.elfsight.com/platform/platform.js"
               async
@@ -74,12 +75,12 @@ const App: React.FC = ({
           ) : (
             <div>
               <h1 className="text-2xl font-bold text-center text-green-500">
-                Các điểm lưu trú
+                Các điểm lưu trú nổi bật
               </h1>
               <h1 className="text-2xl font-bold text-center text-red-500">
                 {!isLoggedIn ? "Đăng nhập để xem các điểm lưu trú" : ""}
               </h1>
-              {isLoggedIn && (
+              {/* {isLoggedIn && (
                 <div className="flex items-center justify-center">
                   <div className="w-[90vw] overflow-x-auto mt-3 px-5 custom-scroll">
                     <ul className="flex gap-5 h-full">
@@ -99,8 +100,8 @@ const App: React.FC = ({
                     </ul>
                   </div>
                 </div>
-              )}
-              {isLiatingLoading ? <Spin /> : <ListView />}
+              )} */}
+              {isLiatingLoading ? <Spin /> : isLoggedIn && <ListView type={null} />}
             </div>
           )}
         </Content>

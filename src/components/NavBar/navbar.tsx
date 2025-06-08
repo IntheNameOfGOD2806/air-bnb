@@ -121,10 +121,10 @@ const Navbar = ({
     >
       <div
         onClick={() => router.push("/")}
-        className="demo-logo  flex items-center gap-4 "
+        className="demo-logo cursor-pointer  flex items-center gap-4 "
       >
         <Image
-          className="max-w-[25px] object-contain"
+          className="max-w-20 object-contain"
           src={Logo.src}
           alt="Logo"
         />
@@ -148,6 +148,7 @@ const Navbar = ({
           {
             key: "2",
             label: "Phương Tiện",
+            disabled: true,
           },
           {
             key: "3",
@@ -165,7 +166,7 @@ const Navbar = ({
               setSelectedKey("0");
               break;
             case "1":
-              router.push("/blog");
+              router.push("/listings");
               setSelectedKey("1");
               break;
             case "2":
@@ -175,6 +176,10 @@ const Navbar = ({
             case "3":
               router.push("/blog");
               setSelectedKey("3");
+              break;
+            case "4":
+              router.push("/about-us");
+              setSelectedKey("4");
               break;
             default:
               break;
