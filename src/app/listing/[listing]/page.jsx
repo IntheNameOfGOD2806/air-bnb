@@ -36,9 +36,23 @@ const Page = ({ params }) => {
     return (
         <div>
             <AppWrapper>
-              <Content>
-                sadadad
-              </Content>
+                <Content>
+                    {
+                        currentListing && (
+                            <div
+                                style={{
+                                    gridTemplateColumns: '70fr 30fr',
+                                }}
+                                className="px-20 pt-10 text-black grid gap-10">
+                                <div className="flex flex-col gap-5">
+                                    <div className="flex flex-col gap-1">
+                                        <h2 className="text-5xl font-bold">{currentListing?.title}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                </Content>
             </AppWrapper>
         </div>
     );
