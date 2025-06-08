@@ -8,14 +8,14 @@ import { toast } from "react-toastify";
 import AppWrapper from "../../wrapper";
 import { Layout } from "antd";
 const { Header, Content, Sider } = Layout;
-import { use } from 'react';
+
 import ListingPhoto from "../../../components/ListingPhoto.jsx";
 import ListingAmeneties from "../../../components/ListingAmeneties.jsx";
 import ListingMap from "../../../components/ListingMap.jsx";
 import TripScheduler from "../../../components/TripScheduler.jsx";
 const Page = ({ params }) => {
-    const unwrappedParams = use(params); // ✅ unwrap Promise
-    const listingId = unwrappedParams.listing;
+    const listingId = params.listing;
+
 
     const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
     const { currentListing, setCurrentListing } = useAppstore()
