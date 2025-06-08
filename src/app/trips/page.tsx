@@ -34,7 +34,7 @@ const columns = [
   {
     title: "Hành động",
     key: "action",
-    render: (text, record) => (
+    render: (text: string, record: any) => (
       <Space size="middle">
         <a>Xem</a>
         <a>Xóa</a>
