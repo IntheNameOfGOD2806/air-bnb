@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Table } from "antd";
+import { Space, Table } from "antd";
 import { getTripsAPI } from "@/lib/trips";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
@@ -30,6 +30,16 @@ const columns = [
     dataIndex: "createdAt",
     key: "createdAt",
     render: (date: string) => new Date(date).toLocaleDateString("vi-VN"),
+  },
+  {
+    title: "Hành động",
+    key: "action",
+    render: (text, record) => (
+      <Space size="middle">
+        <a>Xem</a>
+        <a>Xóa</a>
+      </Space>
+    ),
   },
 ];
 

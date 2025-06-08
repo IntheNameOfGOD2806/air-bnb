@@ -43,7 +43,7 @@ import { Spin } from "antd";
 import CustomCarousel from "@/components/common/Modal";
 import { getStorage } from "@/lib/storage/storage";
 import { STORAGE } from "@/lib/storage/storage";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import BacKanImage from "../assets/images/backan.png";
 const { Text } = Typography;
 import Slider from "@/components/Carousel/landingCarousel";
@@ -85,6 +85,7 @@ import { listingTypes } from "@/data/listingTypes";
 // });
 
 const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const pathname = usePathname(); // ví dụ: "/listings/abc"
   const dispatch = useAppDispatch();
   const { setListings, isMapView, setIsMapView } = useAppstore();
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -712,7 +713,9 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </div>
         </>
       </CommonModal>
-      <ViewSwitchBag />
+     {
+      pathname === "/" && <ViewSwitchBag />
+     }
     </Layout>
   );
 };

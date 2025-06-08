@@ -34,10 +34,10 @@ export const getTripsAPI = async () => {
   const result = await get(createUrl("api/trips"));
   console.log("223424424242", result);
   if (!result?.data?.length) {
-    toast.error("Trip không thể tạo thành công");
+    toast.error("Đã xảy ra lỗi khi lấy danh sách trip");
     return null;
   } else {
-    toast.success("Trip đã được tạo thành công");
+    // toast.success("Trip đã được tạo thành công");
     return result?.data;
   }
 };
