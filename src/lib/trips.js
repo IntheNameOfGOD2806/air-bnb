@@ -1,6 +1,6 @@
-import { createUrl, del, post } from "./http";
+import { createUrl, post } from "./http";
 import { toast } from "react-toastify";
-import qs from "qs";
+
 import { get } from "./http";
 
 export const createListingAPI = async (data) => {
