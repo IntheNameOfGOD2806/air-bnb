@@ -129,21 +129,21 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     setTabIndex(selectedKey);
   }, [selectedKey]);
   // scroll header
-  useEffect(() => {
-    if (!!scrollPosition && scrollPosition >= 300) {
-      // alert(1313)
-      if (!!headerRef.current) {
-        headerRef.current.style.position = "fixed";
-        headerRef.current.style.width = "100%";
-        headerRef.current.className = "header reveal";
-      }
-    } else if (!!scrollPosition && scrollPosition < 300) {
-      if (!!headerRef.current) {
-        headerRef.current.style.position = "relative";
-        headerRef.current.className = "header";
-      }
-    }
-  }, [scrollPosition]);
+  // useEffect(() => {
+  //   if (!!scrollPosition && scrollPosition >= 300) {
+  //     // alert(1313)
+  //     if (!!headerRef.current) {
+  //       headerRef.current.style.position = "fixed";
+  //       headerRef.current.style.width = "100%";
+  //       headerRef.current.className = "header reveal";
+  //     }
+  //   } else if (!!scrollPosition && scrollPosition < 300) {
+  //     if (!!headerRef.current) {
+  //       headerRef.current.style.position = "relative";
+  //       headerRef.current.className = "header";
+  //     }
+  //   }
+  // }, [scrollPosition]);
   useEffect(() => {
     if (!isLoggedIn) {
       setOpenModalAuthReg(true);
@@ -214,7 +214,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             // width: '100%',
           }
         }
-        className="header"
+        className="header z-50"
         ref={headerRef}
       >
         <Navbar

@@ -97,6 +97,10 @@ const Navbar = ({
       label: "Điểm lưu trú của tôi",
     },
     {
+      key: "7",
+      label: "Trip của tôi",
+    },
+    {
       key: "3",
       label: "Đăng Bài",
     },
@@ -112,7 +116,7 @@ const Navbar = ({
   }, []);
   return (
     <Header
-      className="border-b-[1px] border-slate-100 transition-all duration-100 bg-white justify-between  "
+      className="border-b-[1px] border-slate-100 transition-all duration-100 bg-white justify-between z-50 "
       style={{ display: "flex", alignItems: "center", paddingInline: "10" }}
     >
       <div
@@ -229,6 +233,15 @@ const Navbar = ({
                           break;
                         case "6":
                           router.push("/my-listings");
+                          break;
+                        case "7":
+                          if (!isLoggedIn) {
+                            toast.error(
+                              "Vui lòng đăng nhập để xem danh sách trip"
+                            );
+                            return;
+                          }
+                          router.push("/my-trips");
                           break;
                         default:
                           break;
