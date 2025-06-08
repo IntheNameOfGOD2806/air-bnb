@@ -10,10 +10,10 @@ import AppWrapper from "../wrapper";
 import { Layout } from "antd";
 const { Content } = Layout;
 
-import ListingPhoto from "../../components/ListingPhoto.jsx";
-import ListingAmeneties from "../../components/ListingAmeneties.jsx";
-import ListingMap from "../../components/ListingMap.jsx";
-import TripScheduler from "../../components/TripScheduler.jsx";
+import ListingPhoto from "../../components/ListingPhoto";
+import ListingAmeneties from "../../components/ListingAmeneties";
+import ListingMap from "../../components/ListingMap";
+import TripScheduler from "../../components/TripScheduler";
 
 const Page = () => {
     const { setTabIndex } = useAppstore();
