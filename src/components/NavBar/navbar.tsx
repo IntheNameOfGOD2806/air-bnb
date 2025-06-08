@@ -84,9 +84,17 @@ const Navbar = ({
             }}
             alt=""
           />
-          <Text>{userInfo?.username}</Text>
+          <Text className="text-sm font-semibold ellipsis">
+            {userInfo?.username?.length > 10
+              ? userInfo?.username?.slice(0, 10) + "..."
+              : userInfo?.username}
+          </Text>
         </Flex>
       ),
+    },
+    {
+      key: "6",
+      label: "Điểm lưu trú của tôi",
     },
     {
       key: "3",
@@ -131,7 +139,7 @@ const Navbar = ({
           },
           {
             key: "1",
-            label: "Điểm Lưu Trú",
+            label: "Điểm Lưu Trú ",
           },
           {
             key: "2",
@@ -170,7 +178,13 @@ const Navbar = ({
         <Space align="start">
           <Flex gap={5}>
             <Typography
-              onClick={() => router.push("/new-listings")}
+              onClick={() => {
+                if (!isLoggedIn) {
+                  toast.error("Vui lòng đăng nhập để đăng bài");
+                  return;
+                }
+                router.push("/new-listings");
+              }}
               className="text-center min-w-[120px] text-sm font-semibold cursor-pointer text-gray-800 transition-transform duration-300 hover:scale-105 hover:bg-green-500 px-4 py-2 rounded-xl shadow hover:shadow-lg"
             >
               Đăng Bài
@@ -212,6 +226,9 @@ const Navbar = ({
                           break;
                         case "4":
                           handleLogout();
+                          break;
+                        case "6":
+                          router.push("/my-listings");
                           break;
                         default:
                           break;
