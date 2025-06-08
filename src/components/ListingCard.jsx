@@ -8,6 +8,7 @@ export const ListingCard = ({ data, isMyListing }) => {
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { setUserListings, userListings } = useAppstore();
+    const { setCurrentListing } = useAppstore();
     const handleDelete = async () => {
         try {
             const result = await deleteListing(data.id);
@@ -30,7 +31,8 @@ export const ListingCard = ({ data, isMyListing }) => {
         <>
             <div
              onClick={()=>{
-                router.push(`/listing/${data.id}`)
+                setCurrentListing(data)
+                router.push(`/listing/`)
              }}
             className="max-w-xs w-full bg-white border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer">
                 <div className="relative w-full h-48 sm:h-56">
