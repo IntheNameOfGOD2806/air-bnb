@@ -1,6 +1,6 @@
 // lib/cometChat.js
-import { CometChat } from '@cometchat-pro/chat';
-
+import { CometChat } from "@cometchat-pro/chat";
+import { instance } from "./http";
 const appID = "YOUR_APP_ID";
 const region = "YOUR_REGION"; // ví dụ: "us", "eu"
 const authKey = "YOUR_AUTH_KEY";
@@ -37,4 +37,44 @@ export const sendMessageToUser = async (receiverId: string, text: string) => {
   );
 
   return await CometChat.sendMessage(message);
+};
+//create user
+export const createCometChatUser = async ({
+  uid,
+  name,
+  avatar,
+  link,
+  role,
+  statusMessage,
+  metadata,
+  tags,
+  withAuthToken = true,
+}: any) => {
+  try {
+    const response = await instance.post(
+      "https://2767168b2e8a283d.api-us.cometchat.io/v3/users",
+      {
+        uid,
+        name,
+        avatar,
+        link,
+        role,
+        statusMessage,
+        metadata,
+        tags,
+        withAuthToken,
+      },
+      {
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+          apikey: "673569776d47630a5c36598d5db043d58cfd03b8",
+        },
+      }
+    );
+    return response?.data;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error;
+  }
 };

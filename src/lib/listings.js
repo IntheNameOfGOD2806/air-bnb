@@ -108,3 +108,16 @@ export const getListing = async (listingId) => {
     return null;
   }
 }
+export const getTripByListingId = async (listingId) => {
+  try {
+    const result = await get(createUrl(`api/listings/${listingId}/trips`));
+    if (!result?.data) {
+      toast.error("Không thể lấy thông tin chuyến đi");
+      return null;
+    }
+    return result?.data;
+  } catch (error) {
+    console.log(error?.message ?? error);
+    return null;
+  }
+}

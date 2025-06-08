@@ -9,6 +9,10 @@ import AppWrapper from "./wrapper";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { useAppstore } from "@/store/store";
+import { useEffect, useState } from "react";
+import SpinnerDefault from "@/components/common/Spinner";
+import { createCometChatUser } from "@/lib/cometChat";
+
 
 //   LaptopOutlined,
 //   NotificationOutlined,
@@ -37,6 +41,34 @@ const App: React.FC = ({
 }: any) => {
   const isLoggedIn = useAppSelector(selectUserInfo)?.id;
   const { isMapView, setIsMapView } = useAppstore();
+  const [isReady, setIsReady] = useState(false);
+  const UID = 'cometchat-uid-1';
+  //test create user
+  // useEffect(() => {
+  // const test =async () => {
+  //   const result = await createCometChatUser({
+  //     uid: 'wqeqeqweqeqeq4234242424',
+  //     name: 'cometchat-uid-1',
+  //     avatar: 'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg',
+  //     // link: 'cometchat-uid-1',
+  //     // role: 'cometchat-uid-1',
+  //     statusMessage: 'cometchat-uid-1',
+  //     metadata: 'cometchat-uid-1',
+  //     // tags: 'cometchat-uid-1',
+  //     withAuthToken: true,
+  //   });
+  //   console.log('create user result', result);
+  // }
+  // test();
+  // }, []);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsReady(true);
+    }, 500); // delay đúng bằng thời gian layout thường bị "giật"
+
+    return () => clearTimeout(timeout);
+  }, []);
+  if (!isReady) return <SpinnerDefault />;
   return (
     <div>
       {/* antd */}
@@ -101,7 +133,11 @@ const App: React.FC = ({
                   </div>
                 </div>
               )} */}
-              {isLiatingLoading ? <Spin /> : isLoggedIn && <ListView type={null} />}
+              {isLiatingLoading ? (
+                <Spin />
+              ) : (
+                isLoggedIn && <ListView type={null} />
+              )}
             </div>
           )}
         </Content>

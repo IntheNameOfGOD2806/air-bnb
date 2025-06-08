@@ -43,6 +43,12 @@ export default function TripScheduler() {
                 }
             }
             const res = await createTripAPI(data);
+            if (res) {
+                toast.success("Đặt phòng thành công,vui lòng kiểm tra trong mục trip");
+                // router.push(`/trips`);
+            } else {
+                toast.error("Đặt phòng thất bại");
+            }
             // res && router.push(`/trips`);
             console.log(res);
             setLoading(false);

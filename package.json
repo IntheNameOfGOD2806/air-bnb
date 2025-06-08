@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@cometchat-pro/chat": "^3.0.13",
+    "@cometchat-pro/chat": "^3.0.10",
+    "@cometchat/calls-sdk-javascript": "^4.1.0",
+    "@cometchat/chat-uikit-react": "^6.0.6",
     "@mapbox/mapbox-gl-geocoder": "^5.0.3",
     "@mapbox/search-js-react": "^1.1.0",
     "@reduxjs/toolkit": "^2.5.0",
@@ -19,6 +21,7 @@
     "axios": "^1.8.4",
     "firebase": "^11.2.0",
     "framer-motion": "^12.16.0",
+    "keen-slider": "^6.8.6",
     "mapbox-gl": "^3.12.0",
     "next": "15.1.4",
     "next-cloudinary": "^6.16.0",

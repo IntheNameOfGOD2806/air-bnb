@@ -2,7 +2,7 @@ import axios from "axios";
 import { isArray } from "util";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const jwtkey = "accessToken";
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: apiUrl,
   timeout: 10000,
   headers: {

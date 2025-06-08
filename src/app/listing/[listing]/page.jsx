@@ -60,7 +60,9 @@ const Page = () => {
                                     <div className="flex flex-col gap-1">
                                         <h2 className="text-5xl font-bold">{currentListing?.title}</h2>
                                     </div>
-                                    <ListingPhoto />
+                                    <div>
+                                        <ListingPhoto />
+                                    </div>
                                     <div className="flex flex-col gap-5">
                                         <div className="flex flex-col gap-3">
                                             <h3 className="text-2xl font-semibold">
@@ -75,6 +77,7 @@ const Page = () => {
                                                     </span>
                                                 </p>
                                             </h3>
+                                            <h3 className="text-2xl font-semibold">Loại phòng : {currentListing?.placeType}</h3>
                                             <ul className="flex gap-5">
                                                 {
                                                     Object.keys(currentListing?.placeSpace).map((type) => (

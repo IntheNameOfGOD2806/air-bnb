@@ -2,6 +2,7 @@
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { listingTypes } from "@/data/listingTypes";
+import {listingTypesVi} from "@/data/listingTypes";
 import ListView from "@/components/views/listView";
 import AppWrapper from "../wrapper";
 import { useState } from "react";
@@ -20,7 +21,7 @@ const Page = () => {
           </h1>
           <div className="flex items-center justify-center">
             <div className="w-[90vw] overflow-x-auto mt-3 px-5 custom-scroll">
-              <ul className="flex gap-5 h-full">
+              <ul className="flex min-h-28 gap-5 h-full">
                 {listingTypes?.map((data, index) => (
                   <li
                     key={index}
@@ -33,7 +34,7 @@ const Page = () => {
                       {data?.svgPath}
                     </span>
                     <div className="text-gray-500 text-xs font-semibold text-center">
-                      {data?.name}
+                      {listingTypesVi[data?.name as keyof typeof listingTypesVi]}
                     </div>
                   </li>
                 ))}

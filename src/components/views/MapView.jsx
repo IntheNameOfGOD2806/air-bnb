@@ -48,7 +48,7 @@ const MapView = () => {
     }, []);
 
     const pins = useMemo(() => {
-        return listings.map(( data ) => {
+        return listings.map((data) => {
             return (
                 <Marker
                     key={`marker-${data?.id}`}
@@ -71,7 +71,7 @@ const MapView = () => {
     const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
     return (
         <>
-            <div className="h-[80.5vh] max-w-[100vw] pt-2">
+            <div className=" top-0 left-0 h-[90.5vh] max-w-[100vw] pt-2">
                 <Map
                     key={`${initialLatitude}-${initialLongitude}`}
                     initialViewState={{
@@ -84,6 +84,17 @@ const MapView = () => {
                 // onClick={handleMapClick}
                 >
                     {pins}
+                    <GeocoderControl
+                        mapboxAccessToken={TOKEN}
+                        position="top-left"
+                        marker={false} // We handle marker separately
+                        // onResult={handleSearchResult}
+                        language="vi"           // <- Vietnamese language
+                        countries="vn"          // <- Bias to Vietnam
+                        onLoading={() => console.log("Loading...")}
+                        onResults={() => console.log("Results...")}
+                        onError={() => console.log("Error...")}
+                    />
                     {
                         popupInfo && (
                             <Popup
