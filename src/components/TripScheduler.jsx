@@ -1,4 +1,4 @@
-
+'use client'
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "../lib/hooks";
 import { selectUserInfo } from "../lib/features/auth/authSlice";

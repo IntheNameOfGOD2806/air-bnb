@@ -1,3 +1,4 @@
+'use client'
 import React, { useMemo } from 'react';
 import { useAppstore } from '../store/store'; import Map, { Marker, Popup } from "react-map-gl/mapbox";
 import Pin from "../components/common/Pin";

@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { useAppstore } from '../store/store';
 import { AmenitiesType } from '../data/Amenities';

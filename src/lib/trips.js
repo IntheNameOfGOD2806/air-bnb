@@ -46,10 +46,10 @@ export const deleteTripAPI = async (tripId) => {
   const result = await del(createUrl(`api/trips/${tripId}`));
   console.log("223424424242", result);
   if (!result?.data?.createdAt) {
-    toast.error("Trip không thể tạo thành công");
+    toast.error("Trip không thể xóa thành công");
     return null;
   } else {
-    toast.success("Trip đã được tạo thành công");
+    toast.success("Trip đã được xóa thành công");
     return result?.data;
   }
 };
