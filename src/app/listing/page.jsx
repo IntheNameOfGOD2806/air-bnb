@@ -21,7 +21,7 @@ const Page = () => {
     const { currentListing, setCurrentListing } = useAppstore();
 
 
-    const listingId = currentListing?.id;
+    const listingId = currentListing?.id || localStorage.getItem("currentListingId");
 
     useEffect(() => {
         setTabIndex(0);

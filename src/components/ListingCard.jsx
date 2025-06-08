@@ -32,6 +32,7 @@ export const ListingCard = ({ data, isMyListing }) => {
             <div
              onClick={()=>{
                 setCurrentListing(data)
+                localStorage.setItem("currentListingId", data.id)
                 router.push(`/listing/`)
              }}
             className="max-w-xs w-full bg-white border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer">
