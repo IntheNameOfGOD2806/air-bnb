@@ -7,6 +7,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+import ViewSwitchBag from "@/components/views/ViewSwitchBag";
 import {
   Button,
   Col,
@@ -55,6 +56,7 @@ import Script from "next/script";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import MapView from "@/components/views/MapView";
 import SwiperCarousel from "@/components/Carousel/landingCarousel";
 import Carousel from "@/components/Carousel/landingCarousel";
 import ImageCarousel from "@/components/Carousel/landingCarousel";
@@ -88,7 +90,7 @@ const swiper = new Swiper(".swiper", {
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const {setListings} = useAppstore()
+  const { setListings, isMapView, setIsMapView } = useAppstore();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [openModalAuth, setOpenModalAuth] = useState(false);
   const [openModalAuthReg, setOpenModalAuthReg] = useState(false);
@@ -118,20 +120,21 @@ const App: React.FC = () => {
     const getData = async () => {
       const result = await getAllListingsAPI();
       console.log("result", result);
-      setListings(result)
+      setListings(result);
     };
 
     getData();
   }, []);
   // scroll header
   useEffect(() => {
-    if (!!scrollPosition && scrollPosition >= 600) {
+    if (!!scrollPosition && scrollPosition >= 300) {
+      // alert(1313)
       if (!!headerRef.current) {
         headerRef.current.style.position = "fixed";
         headerRef.current.style.width = "100%";
         headerRef.current.className = "header reveal";
       }
-    } else if (!!scrollPosition && scrollPosition < 600) {
+    } else if (!!scrollPosition && scrollPosition < 300) {
       if (!!headerRef.current) {
         headerRef.current.style.position = "relative";
         headerRef.current.className = "header";
@@ -273,9 +276,16 @@ const App: React.FC = () => {
                 data-elfsight-app-lazy
               ></div>
             </div>
-            <div>
-              <ListView/>
-            </div>
+
+            {isMapView ? (
+              <div>
+                <MapView />
+              </div>
+            ) : (
+              <div>
+                <ListView />
+              </div>
+            )}
           </Content>
         </Layout>
       </Layout>
@@ -667,6 +677,7 @@ const App: React.FC = () => {
           </div>
         </>
       </CommonModal>
+      <ViewSwitchBag />
     </Layout>
   );
 };

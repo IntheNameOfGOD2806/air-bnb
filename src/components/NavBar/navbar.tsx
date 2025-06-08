@@ -46,7 +46,7 @@ const Navbar = ({
   const handleLogout = async () => {
     try {
       const result = await logout();
-      dispatch(clearUserInfo()); 
+      dispatch(clearUserInfo());
       toast.success("Đăng xuất thành công");
       //reload page
       window.location.reload();
@@ -107,13 +107,18 @@ const Navbar = ({
       className="border-b-[1px] border-slate-100 transition-all duration-100 bg-white justify-between  "
       style={{ display: "flex", alignItems: "center", paddingInline: "10" }}
     >
-      <div onClick={() => router.push("/")} className="demo-logo  flex items-center gap-4 ">
+      <div
+        onClick={() => router.push("/")}
+        className="demo-logo  flex items-center gap-4 "
+      >
         <Image
           className="max-w-[25px] object-contain"
           src={Logo.src}
           alt="Logo"
         />
-        <Text onClick={() => router.push("/")} className="w-[100px]">VieTrail</Text>
+        <Text onClick={() => router.push("/")} className="w-[100px]">
+          VieTrail
+        </Text>
       </div>
       <Menu
         className="justify-center ml-44 border-transparent"
@@ -136,7 +141,6 @@ const Navbar = ({
             key: "3",
             label: "Blog",
           },
-
         ]}
         onClick={(e) => {
           switch (e.key) {
@@ -165,9 +169,13 @@ const Navbar = ({
       <Flex align="center" justify="end" gap={20}>
         <Space align="start">
           <Flex gap={5}>
-            <Typography onClick={() => router.push("/new-listings")} className="min-w-[150px] text-sm font-semibold cursor-pointer">
+            <Typography
+              onClick={() => router.push("/new-listings")}
+              className="text-center min-w-[120px] text-sm font-semibold cursor-pointer text-gray-800 transition-transform duration-300 hover:scale-105 hover:bg-green-500 px-4 py-2 rounded-xl shadow hover:shadow-lg"
+            >
               Đăng Bài
             </Typography>
+
             <GlobalOutlined />
           </Flex>
         </Space>

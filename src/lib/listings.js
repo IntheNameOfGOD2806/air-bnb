@@ -1,6 +1,6 @@
 import { createUrl, post } from "./http";
 import { toast } from "react-toastify";
-import qs from "querystring";
+import qs from "qs";
 import { get } from "./http";
 export const createListingAPI = async (data) => {
   const result = await post(createUrl("api/listings"), {
@@ -18,13 +18,16 @@ export const createListingAPI = async (data) => {
 
 export const getAllListingsAPI = async () => {
   try {
-    const query = qs.stringify({
-      orderBy:{
-        createdAt:"asc"
+    const query = qs.stringify(
+      {
+        orderBy: {
+          createdAt: "asc",
+        },
       },
-    },{
-     
-    });
+      {
+        encodeValuesOnly: true,
+      }
+    );
     const result = await get(createUrl(`api/listings?${query}`));
 
     if (!result?.data) {
