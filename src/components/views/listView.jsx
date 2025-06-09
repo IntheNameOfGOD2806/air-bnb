@@ -39,6 +39,7 @@ export default function ListView({ type }) {
           <ListingCard key={listing.id} data={listing} isMyListing={false} isWishList={false} />
         ))}
         {/* No data */}
+        {paginatedListings?.length === 0 && <p className="mt-32 font-bold text-xl flex items-center justify-center text-center text-gray-500">Không có dữ liệu</p>}
       </div>
       {listings?.length === 0 && <p className="mt-32 font-bold text-xl flex items-center justify-center text-center text-gray-500">Không có dữ liệu, hãy sử dụng tính năng "Đăng Bài" để đăng bài</p>}
 

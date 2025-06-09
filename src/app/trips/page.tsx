@@ -131,6 +131,9 @@ const TripTable = () => {
           <Button danger onClick={() => handleOpenDeleteModal(record)}>
             Xóa
           </Button>
+          <Button type="default" >
+            Liên hệ
+          </Button>
         </Space>
       ),
     },

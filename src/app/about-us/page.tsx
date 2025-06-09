@@ -46,7 +46,7 @@ const AboutUs = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <img
-              src="https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2023/2/18/1149223/6-5.jpg"
+              src="https://mia.vn/media/uploads/blog-du-lich/canh-dep-ha-giang-1-1722246208.jpg"
               alt="Vision"
               className="rounded-2xl shadow-lg"
             />
