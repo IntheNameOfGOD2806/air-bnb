@@ -2,7 +2,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import AppWrapper from "../wrapper";
-
+import chua from '../../assets/images/chua.jpg'
+import lua from '../../assets/images/lua.jpg'
 const AboutUs = () => {
   return (
     <AppWrapper>
@@ -25,7 +26,7 @@ const AboutUs = () => {
             transition={{ duration: 0.8 }}
           >
             <img
-              src="https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2023/2/18/1149223/6-5.jpg"
+              src={chua.src}
               alt="Local Experience"
               className="rounded-2xl shadow-lg"
             />
@@ -46,7 +47,7 @@ const AboutUs = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <img
-              src="https://mia.vn/media/uploads/blog-du-lich/canh-dep-ha-giang-1-1722246208.jpg"
+              src={lua.src}
               alt="Vision"
               className="rounded-2xl shadow-lg"
             />
