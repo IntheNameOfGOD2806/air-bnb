@@ -49,6 +49,16 @@ const Page = () => {
         beds: "Giường",
         guests: "Số lượng khách",
     }
+    const formatAddress = (location) => {
+        const parts = [
+            location?.locality,        // đường
+            location?.district,        // thị trấn/quận
+            location?.neighborhood,    // tỉnh/thành
+            location?.country          // quốc gia
+        ].filter(Boolean); // loại bỏ phần null/undefined
+        return parts.join(", ");
+    };
+    
     return (
         <div>
             <AppWrapper>
@@ -59,7 +69,11 @@ const Page = () => {
                                 <div className="flex flex-col gap-5">
                                     <div className="flex flex-col gap-1">
                                         <h2 className="text-5xl font-bold">{currentListing?.title}</h2>
+                                        <p className="text-gray-500 text-lg">
+                                            {formatAddress(currentListing?.locationData)}
+                                        </p>
                                     </div>
+
                                     <div>
                                         <ListingPhoto />
                                     </div>
