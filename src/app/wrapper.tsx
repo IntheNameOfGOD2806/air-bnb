@@ -462,7 +462,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           ]}
                           name="password"
                         >
-                          <Input size="large" placeholder="Password" />
+                          <Input.Password size="large" placeholder="Password" />
                         </Form.Item>
                         {/* confirm passwo rd */}
                         <Form.Item
@@ -487,7 +487,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           ]}
                           name="confirmPassword"
                         >
-                          <Input size="large" placeholder="Confirm Password" />
+                          <Input.Password size="large" placeholder="Confirm Password" />
                         </Form.Item>
                         <Form.Item>
                           <Button
@@ -628,7 +628,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           ]}
                           name="password"
                         >
-                          <Input size="large" placeholder="Password" />
+                          <Input.Password size="large" placeholder="Password" />
                         </Form.Item>
                         {/* confirm passwo rd */}
                         <Form.Item>

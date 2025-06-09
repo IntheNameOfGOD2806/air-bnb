@@ -48,7 +48,7 @@ export default function ListUserListingsView({ loading }) {
                 {userListings?.length === 0 || !userListings && !loading && <p className="mt-32 font-bold text-xl flex items-center justify-center text-center text-gray-500">Không có dữ liệu, hãy sử dụng tính năng "Đăng Bài" để đăng bài</p>}
 
                 {/* Phân trang */}
-                {isLoggedIn && <div className=" text-black flex justify-center mt-8 gap-2">
+                {isLoggedIn && <div className="flex justify-center mt-8 gap-2">
                     <button
                         onClick={() => goToPage(currentPage - 1)}
                         disabled={currentPage === 1}
@@ -61,7 +61,7 @@ export default function ListUserListingsView({ loading }) {
                         <button
                             key={i}
                             onClick={() => goToPage(i + 1)}
-                            className={`px-3 py-1 border rounded ${currentPage === i + 1 ? "bg-green-500 text-black" : ""
+                            className={`px-3 py-1 border rounded ${currentPage === i + 1 ? "bg-green-500 text-white" : ""
                                 }`}
                         >
                             {i + 1}
