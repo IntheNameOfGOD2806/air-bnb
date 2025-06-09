@@ -7,8 +7,8 @@ import voucher from '../../assets/images/voucher.jpg'
 const slides = [
   {
     url: voucher.src,
-    title: 'Khám phá thế giới',
-    subtitle: 'Hành trình đến những vùng đất tuyệt đẹp',
+    // title: 'Khám phá thế giới',
+    // subtitle: 'Hành trình đến những vùng đất tuyệt đẹp',
   },
   {
     url: lua.src,
