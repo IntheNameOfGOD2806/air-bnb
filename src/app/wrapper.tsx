@@ -194,7 +194,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         setOpenModalAuthReg(true);
       }
     } catch (error: any) {
-      toast.error(error?.message ?? error);
+      toast.error('Email hoặc tên đăng nhập đã tồn tại');
       setIsAuthLoading(false);
     }
   };
