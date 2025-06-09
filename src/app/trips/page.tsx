@@ -7,11 +7,13 @@ import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { toast } from "react-toastify";
 import AppWrapper from "../wrapper";
+import { useRouter } from "next/navigation";
 
 const TripTable = () => {
   const userInfo = useAppSelector(selectUserInfo);
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
 
   const [selectedTrip, setSelectedTrip] = React.useState<any>(null);
   const [isViewModalOpen, setIsViewModalOpen] = React.useState(false);
@@ -47,7 +49,7 @@ const TripTable = () => {
       }
     } catch (err) {
       toast.error("Không thể xóa chuyến đi");
-      console.log('err', err)
+      console.log("err", err);
     } finally {
       handleCloseDeleteModal();
     }
@@ -102,6 +104,22 @@ const TripTable = () => {
       render: (date: string) => new Date(date).toLocaleDateString("vi-VN"),
     },
     {
+      title: "Tên phòng",
+      dataIndex: ["listing", "title"],
+      key: "listing.title",
+      align: "center",
+      render: (title: string, record: any) => (
+        <span
+          className="text-blue-600 cursor-pointer"
+          onClick={() => {
+            router.push(`/listing/${record?.listing?.id}`);
+          }}
+        >
+          {title}
+        </span>
+      ),
+    },
+    {
       title: "Hành động",
       key: "action",
       align: "center",
@@ -145,10 +163,14 @@ const TripTable = () => {
         {selectedTrip && (
           <Descriptions column={1} bordered size="small">
             <Descriptions.Item label="Ngày bắt đầu">
-              {new Date(selectedTrip.tripinfo?.startDate).toLocaleDateString("vi-VN")}
+              {new Date(selectedTrip.tripinfo?.startDate).toLocaleDateString(
+                "vi-VN"
+              )}
             </Descriptions.Item>
             <Descriptions.Item label="Ngày kết thúc">
-              {new Date(selectedTrip.tripinfo?.endDate).toLocaleDateString("vi-VN")}
+              {new Date(selectedTrip.tripinfo?.endDate).toLocaleDateString(
+                "vi-VN"
+              )}
             </Descriptions.Item>
             <Descriptions.Item label="Giá tiền">
               {Number(selectedTrip.tripinfo?.price).toLocaleString()}₫
@@ -184,7 +206,9 @@ const TripTable = () => {
             </p>
             <p>
               <strong>Ngày bắt đầu:</strong>{" "}
-              {new Date(selectedTrip.tripinfo?.startDate).toLocaleDateString("vi-VN")}
+              {new Date(selectedTrip.tripinfo?.startDate).toLocaleDateString(
+                "vi-VN"
+              )}
             </p>
           </>
         )}
