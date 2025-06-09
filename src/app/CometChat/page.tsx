@@ -1,11 +1,13 @@
-import React from "react";
-import CometChatNoSSR from "../CometChat/CometChatNoSSR/CometChatNoSSR";
-import AppWrapper from "../wrapper";
+// app/CometChat/page.jsx
+"use client";
 
-export default function CometChat() {
-  return (
-    // <AppWrapper>
-      <CometChatNoSSR />
-    // </AppWrapper>
-  );
+import dynamic from "next/dynamic";
+
+// Chỉ render client-side
+const CometChatNoSSR = dynamic(() => import("../CometChat/CometChatNoSSR/CometChatNoSSR"), {
+  ssr: false,
+});
+
+export default function CometChatPage() {
+  return <CometChatNoSSR />;
 }
