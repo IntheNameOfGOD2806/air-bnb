@@ -1,15 +1,16 @@
 import React from 'react';
 import { Carousel } from 'antd';
 import 'antd/dist/reset.css'; // Ant Design v5
-
+import chua from '../../assets/images/chua.jpg'
+import lua from '../../assets/images/lua.jpg'
 const slides = [
   {
-    url: 'https://images.pexels.com/photos/2965773/pexels-photo-2965773.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: chua.src,
     title: 'Khám phá thế giới',
     subtitle: 'Hành trình đến những vùng đất tuyệt đẹp',
   },
   {
-    url: 'https://picsum.photos/id/1016/1920/1080',
+    url: lua.src,
     title: 'Thiên nhiên kỳ diệu',
     subtitle: 'Cảm nhận sự hùng vĩ của tạo hóa',
   },
