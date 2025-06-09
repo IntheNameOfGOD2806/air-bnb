@@ -374,11 +374,11 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="w-full min-h-[480px] ">
             <div className="auth-form-wrapper">
               <div className="header w-full text-center text-2xl font-bold border-b-[1px]  border-b-gray-300">
-                <Text className="relative bottom-2">Sign up</Text>
+                <Text className="relative bottom-2">Đăng Ký</Text>
               </div>
               <div className="body w-full p-3 flex flex-col pt-[20px]">
                 <div className="title">
-                  <Text className="text-2xl ">Welcome to VieTrail</Text>
+                  <Text className="text-2xl ">Chào mừng tới Vietrail</Text>
                 </div>
                 <div className="input-group w-full flex flex-col mt-2">
                   <Form form={authForm}>
@@ -388,7 +388,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           rules={[
                             {
                               required: true,
-                              message: "Please input your email!",
+                              message: "Vui lòng Nhập email!",
                             },
                             {
                               type: "email",
@@ -407,7 +407,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           rules={[
                             {
                               required: true,
-                              message: "Please input your username!",
+                              message: "Vui lòng Nhập username!",
                             },
                           ]}
                           name="username"
@@ -422,7 +422,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           rules={[
                             {
                               required: true,
-                              message: "Please input your first name!",
+                              message: "Vui lòng Nhập first name!",
                             },
                           ]}
                           name="firstName"
@@ -437,7 +437,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           rules={[
                             {
                               required: true,
-                              message: "Please input your last name!",
+                              message: "Vui lòng Nhập last name!",
                             },
                           ]}
                           name="lastName"
@@ -452,7 +452,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           rules={[
                             {
                               required: true,
-                              message: "Please input your password!",
+                              message: "Vui lòng Nhập password!",
                             },
                             {
                               min: 6,
@@ -585,11 +585,11 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="w-full min-h-[480px] ">
             <div className="auth-form-wrapper">
               <div className="header w-full text-center text-2xl font-bold border-b-[1px]  border-b-gray-300">
-                <Text className="relative bottom-2">Sign In</Text>
+                <Text className="relative bottom-2">Đăng Nhập</Text>
               </div>
               <div className="body w-full p-3 flex flex-col pt-[20px]">
                 <div className="title">
-                  <Text className="text-2xl ">Welcome to VieTrail</Text>
+                  <Text className="text-2xl ">Chào mừng tới Vietrail</Text>
                 </div>
                 <div className="input-group w-full flex flex-col mt-2">
                   <Form form={authFormReg}>
@@ -599,7 +599,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           rules={[
                             {
                               required: true,
-                              message: "Please input your email!",
+                              message: "Vui lòng Nhập email!",
                             },
                             {
                               type: "email",
@@ -618,7 +618,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           rules={[
                             {
                               required: true,
-                              message: "Please input your password!",
+                              message: "Vui lòng Nhập password!",
                             },
                             {
                               min: 6,
