@@ -3,9 +3,10 @@ import { Carousel } from 'antd';
 import 'antd/dist/reset.css'; // Ant Design v5
 import chua from '../../assets/images/chua.jpg'
 import lua from '../../assets/images/lua.jpg'
+import voucher from '../../assets/images/voucher.jpg'
 const slides = [
   {
-    url: chua.src,
+    url: voucher.src,
     title: 'Khám phá thế giới',
     subtitle: 'Hành trình đến những vùng đất tuyệt đẹp',
   },
