@@ -181,6 +181,9 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       const result = await signup(values);
       console.log("result", result);
       if (!result?.accessToken) {
+        if(result?.statusCode === 500){
+          toast.error('Email hoặc tên đăng nhập đã tồn tại');
+        }
         toast.error(result?.message);
         setIsAuthLoading(false);
       } else if (result?.accessToken) {
