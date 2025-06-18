@@ -64,6 +64,7 @@ import ImageCarousel from "@/components/Carousel/landingCarousel";
 import { getAllListingsAPI, getTourListings } from "@/lib/listings";
 import { useAppstore } from "@/store/store";
 import { listingTypes } from "@/data/listingTypes";
+import { CometChatUIKit } from "@cometchat/chat-uikit-react";
 //   UserOutlined,
 //   LaptopOutlined,
 //   NotificationOutlined,
@@ -88,7 +89,8 @@ import { listingTypes } from "@/data/listingTypes";
 const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname(); // ví dụ: "/listings/abc"
   const dispatch = useAppDispatch();
-  const { setListings, isMapView, setIsMapView, setTourListings } = useAppstore();
+  const { setListings, isMapView, setIsMapView, setTourListings } =
+    useAppstore();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [openModalAuth, setOpenModalAuth] = useState(false);
   const [openModalAuthReg, setOpenModalAuthReg] = useState(false);
@@ -101,7 +103,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
   const router = useRouter();
   const defaultAvatar =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
   const userInfo = useAppSelector(selectUserInfo);
   const [selectedKey, setSelectedKey] = useState("0");
   const handleScroll = () => {
@@ -187,7 +189,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     const SignUpnCometChat = async () => {
       if (isLoggedIn) {
-        if ( !!isLoggedIn) {
+        if (!!isLoggedIn) {
           const result = await createCometChatUser({
             uid: userInfo?.id,
             name: userInfo?.username,
@@ -196,17 +198,30 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             role: "default",
             statusMessage: "user",
             metadata: "user",
-            tags: [
-              'user'
-            ],
+            tags: ["user"],
             withAuthToken: true,
           });
-          console.log("result create account >>>>>>>>>", result);
+          if (result?.error) {
+            toast.error(result?.error);
+          } else {
+            CometChatUIKit.login(result?.id).then((user: CometChat.User) => {
+              console.log("Login Successful:", user);
+              // Mount your app or perform post-login actions if needed
+            });
+          }
         }
       }
     };
     SignUpnCometChat();
   }, [isLoggedIn]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      CometChatUIKit.login(userInfo?.id).then((user: CometChat.User) => {
+        console.log("Login Successful:", user);
+        // Mount your app or perform post-login actions if needed
+      });
+    }
+  }, [isLoggedIn, userInfo?.id]);
   const handleSignUp = async (values: any) => {
     try {
       // alert(1313)

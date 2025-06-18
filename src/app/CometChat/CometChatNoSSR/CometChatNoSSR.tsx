@@ -39,24 +39,27 @@ const CometChatNoSSR: React.FC = () => {
         const UID = UserInfo?.id;
         console.log("UID", UID); // Replace with your actual UID
 
-        CometChatUIKit.getLoggedinUser().then((user: CometChat.User | null) => {
-          if (user) {
-            // If no user is logged in, proceed with login
-            CometChatUIKit.login(UID)
-              .then((loggedInUser: CometChat.User) => {
-                console.log("Login Successful:", loggedInUser);
-                // Mount your app or perform post-login actions if needed
-                setUser(loggedInUser);
-              })
-              .catch((error) => {
-                toast.error("Login failed:", error);
-                console.error("Login failed:", error);
+        CometChatUIKit.getLoggedinUser().then(
+          (loggedInUser: CometChat.User | null) => {
+            if (!loggedInUser || loggedInUser.getUid() !== UID) {
+              // Nếu chưa login hoặc user hiện tại sai → logout và login lại
+              CometChatUIKit.logout().then(() => {
+                CometChatUIKit.login(UID)
+                  .then((newUser) => {
+                    console.log("Login Successful:", newUser);
+                    setUser(newUser);
+                  })
+                  .catch((error) => {
+                    toast.error("Login failed");
+                    console.error("Login failed:", error);
+                  });
               });
-          } else {
-            console.log("User already logged in:", user);
-            // setUser(user);
+            } else {
+              console.log("User already logged in:", loggedInUser);
+              setUser(loggedInUser);
+            }
           }
-        });
+        );
       })
       .catch((error) => console.error("Initialization failed", error));
   }, []);

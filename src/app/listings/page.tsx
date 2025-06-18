@@ -2,13 +2,17 @@
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { listingTypes } from "@/data/listingTypes";
-import {listingTypesVi} from "@/data/listingTypes";
+import { listingTypesVi } from "@/data/listingTypes";
 import ListView from "@/components/views/listView";
 import AppWrapper from "../wrapper";
 import { useState } from "react";
 const Page = () => {
   const isLoggedIn = useAppSelector(selectUserInfo);
-  const [selectedType, setSelectedType] = useState('');
+  const [selectedType, setSelectedType] = useState("");
+  if (typeof window === "undefined") {
+    // Code chỉ chạy trên client
+    return null;
+  }
   return (
     <AppWrapper>
       <div className="bg-white">
@@ -34,7 +38,11 @@ const Page = () => {
                       {data?.svgPath}
                     </span>
                     <div className="text-gray-500 text-xs font-semibold text-center">
-                      {listingTypesVi[data?.name as keyof typeof listingTypesVi]}
+                      {
+                        listingTypesVi[
+                          data?.name as keyof typeof listingTypesVi
+                        ]
+                      }
                     </div>
                   </li>
                 ))}
