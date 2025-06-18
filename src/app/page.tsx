@@ -40,9 +40,10 @@ const App: React.FC = ({
   isLiatingLoading,
 }: any) => {
   const isLoggedIn = useAppSelector(selectUserInfo)?.id;
+  const UserInfo = useAppSelector(selectUserInfo);
   const { isMapView, setIsMapView } = useAppstore();
   const [isReady, setIsReady] = useState(false);
-  const UID = 'cometchat-uid-1';
+  const UID = UserInfo?.id || 'cometchat-uid-1';
   //test create user
   // useEffect(() => {
   // const test =async () => {

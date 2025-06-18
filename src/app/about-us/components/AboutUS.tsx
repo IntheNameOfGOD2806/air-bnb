@@ -2,8 +2,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import AppWrapper from "../../wrapper";
-import chua from '../../assets/images/chua.jpg'
-import lua from '../../assets/images/lua.jpg'
+import chua from '../../../assets/images/chua.jpg'
+import lua from '../../../assets/images/lua.jpg'
 import Image from "next/image";
 
 const AboutUS = () => {

@@ -187,7 +187,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     const SignUpnCometChat = async () => {
       if (isLoggedIn) {
-        if ((!userInfo?.cometChatId || !userInfo?.id) && !!isLoggedIn) {
+        if ( !!isLoggedIn) {
           const result = await createCometChatUser({
             uid: userInfo?.id,
             name: userInfo?.username,

@@ -45,7 +45,7 @@ const CometChatNoSSR: React.FC = () => {
               .then((loggedInUser: CometChat.User) => {
                 console.log("Login Successful:", loggedInUser);
                 // Mount your app or perform post-login actions if needed
-                setUser(loggedInUser);
+                // setUser(loggedInUser);
               })
               .catch((error) => {
                 toast.error("Login failed:", error);
@@ -53,7 +53,7 @@ const CometChatNoSSR: React.FC = () => {
               });
           } else {
             console.log("User already logged in:", user);
-            setUser(user);
+            // setUser(user);
           }
         });
       })
