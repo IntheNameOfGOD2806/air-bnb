@@ -64,6 +64,11 @@ import ImageCarousel from "@/components/Carousel/landingCarousel";
 import { getAllListingsAPI, getTourListings } from "@/lib/listings";
 import { useAppstore } from "@/store/store";
 import { listingTypes } from "@/data/listingTypes";
+import {
+  CometChatUIKit,
+  UIKitSettingsBuilder,
+} from "@cometchat/chat-uikit-react";
+import { setupLocalization } from "./CometChat/utils/utils";
 //   UserOutlined,
 //   LaptopOutlined,
 //   NotificationOutlined,
@@ -85,10 +90,17 @@ import { listingTypes } from "@/data/listingTypes";
 //   };
 // });
 
+export const COMETCHAT_CONSTANTS = {
+  APP_ID: "2767168b2e8a283d", // Replace with your App ID
+  REGION: "us", // Replace with your App Region
+  AUTH_KEY: "0aeb7339e524e5d5a5b697cc5a9efbd6ae9d9989", // Replace with your Auth Key or leave blank if you are authenticating using Auth Token
+};
+
 const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname(); // ví dụ: "/listings/abc"
   const dispatch = useAppDispatch();
-  const { setListings, isMapView, setIsMapView, setTourListings } = useAppstore();
+  const { setListings, isMapView, setIsMapView, setTourListings } =
+    useAppstore();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [openModalAuth, setOpenModalAuth] = useState(false);
   const [openModalAuthReg, setOpenModalAuthReg] = useState(false);
@@ -101,7 +113,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
   const router = useRouter();
   const defaultAvatar =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
   const userInfo = useAppSelector(selectUserInfo);
   const [selectedKey, setSelectedKey] = useState("0");
   const handleScroll = () => {
@@ -162,6 +174,46 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       setOpenModalAuthReg(true);
     }
   }, [isLoggedIn]);
+  useEffect(() => {
+    const UIKitSettings = new UIKitSettingsBuilder()
+      .setAppId(COMETCHAT_CONSTANTS.APP_ID)
+      .setRegion(COMETCHAT_CONSTANTS.REGION)
+      .setAuthKey(COMETCHAT_CONSTANTS.AUTH_KEY)
+      .subscribePresenceForAllUsers()
+      .build();
+
+    CometChatUIKit.init(UIKitSettings)
+      ?.then(() => {
+        setupLocalization();
+        console.log("Initialization completed successfully");
+
+        const UID = userInfo?.id;
+        console.log("UID", UID); // Replace with your actual UID
+
+        CometChatUIKit.getLoggedinUser().then(
+          (loggedInUser: CometChat.User | null) => {
+            if (!loggedInUser || loggedInUser.getUid() !== UID) {
+              // Nếu chưa login hoặc user hiện tại sai → logout và login lại
+              CometChatUIKit.logout().then(() => {
+                CometChatUIKit.login(UID)
+                  .then((newUser) => {
+                    console.log("Login Successful:", newUser);
+                    // setUser(newUser);
+                  })
+                  .catch((error) => {
+                    toast.error("Login failed");
+                    console.error("Login failed:", error);
+                  });
+              });
+            } else {
+              console.log("User already logged in:", loggedInUser);
+              // setUser(loggedInUser);
+            }
+          }
+        );
+      })
+      .catch((error) => console.error("Initialization failed", error));
+  }, []);
   const verifyEmail = async () => {};
   const handleLogin = async (values: any) => {
     try {
@@ -187,7 +239,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     const SignUpnCometChat = async () => {
       if (isLoggedIn) {
-        if ((!userInfo?.cometChatId || !userInfo?.id) && !!isLoggedIn) {
+        if (!!isLoggedIn) {
           const result = await createCometChatUser({
             uid: userInfo?.id,
             name: userInfo?.username,
@@ -196,17 +248,30 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             role: "default",
             statusMessage: "user",
             metadata: "user",
-            tags: [
-              'user'
-            ],
+            tags: ["user"],
             withAuthToken: true,
           });
-          console.log("result create account >>>>>>>>>", result);
+          if (result?.error) {
+            toast.error(result?.error);
+          } else {
+            CometChatUIKit.login(result?.id).then((user: CometChat.User) => {
+              console.log("Login Successful:", user);
+              // Mount your app or perform post-login actions if needed
+            });
+          }
         }
       }
     };
     SignUpnCometChat();
   }, [isLoggedIn]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      CometChatUIKit.login(userInfo?.id).then((user: CometChat.User) => {
+        console.log("Login Successful:", user);
+        // Mount your app or perform post-login actions if needed
+      });
+    }
+  }, [isLoggedIn, userInfo?.id]);
   const handleSignUp = async (values: any) => {
     try {
       // alert(1313)
