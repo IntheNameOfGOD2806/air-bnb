@@ -7,6 +7,9 @@ import {
 import CometChatApp from "../../CometChat/CometChatApp";
 import { CometChatProvider } from "../../CometChat/context/CometChatContext";
 import { setupLocalization } from "../../CometChat/utils/utils";
+import { useAppSelector } from "@/lib/hooks";
+import { selectUserInfo } from "@/lib/features/auth/authSlice";
+import { toast } from "react-toastify";
 
 export const COMETCHAT_CONSTANTS = {
   APP_ID: "2767168b2e8a283d", // Replace with your App ID
@@ -15,6 +18,7 @@ export const COMETCHAT_CONSTANTS = {
 };
 
 const CometChatNoSSR: React.FC = () => {
+  const UserInfo = useAppSelector(selectUserInfo);
   const [user, setUser] = React.useState<CometChat.User | undefined>(undefined);
   const [group, setGroup] = React.useState<CometChat.Group | undefined>(
     undefined
@@ -32,7 +36,7 @@ const CometChatNoSSR: React.FC = () => {
         setupLocalization();
         console.log("Initialization completed successfully");
 
-        const UID = "cometchat-uid-1"; // Replace with your actual UID
+        const UID = UserInfo?.id; // Replace with your actual UID
 
         CometChatUIKit.getLoggedinUser().then((user: CometChat.User | null) => {
           if (!user) {
@@ -44,6 +48,7 @@ const CometChatNoSSR: React.FC = () => {
                 setUser(loggedInUser);
               })
               .catch((error) => {
+                toast.error("Login failed:", error);
                 console.error("Login failed:", error);
               });
           } else {
