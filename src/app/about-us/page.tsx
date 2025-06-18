@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import AppWrapper from "../wrapper";
 import chua from '../../assets/images/chua.jpg'
 import lua from '../../assets/images/lua.jpg'
+import Image from "next/image";
 const AboutUs = () => {
   return (
     <AppWrapper>
@@ -25,7 +26,9 @@ const AboutUs = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <img
+            <Image
+              width={500}
+              height={500}
               src={chua.src}
               alt="Local Experience"
               className="rounded-2xl shadow-lg"
@@ -46,7 +49,9 @@ const AboutUs = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <img
+            <Image
+              width={500}
+              height={500}
               src={lua.src}
               alt="Vision"
               className="rounded-2xl shadow-lg"
@@ -68,7 +73,9 @@ const AboutUs = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <img
+            <Image
+              width={500}
+              height={500}
               src="https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2023/2/18/1149223/6-5.jpg"
               alt="Mission"
               className="rounded-2xl shadow-lg"

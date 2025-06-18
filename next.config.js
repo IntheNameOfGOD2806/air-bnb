@@ -11,7 +11,7 @@ const nextConfig = {
       "pk.eyJ1IjoiZGF0dHJhbjI4NiIsImEiOiJjbTYxbHNubHowcG04MmpwcjBiZDBsbmdtIn0.FaectDY8Okdg09mdTqo-5w",
   },
   images: {
-    domains: ["res.cloudinary.com"],
+    domains: ["res.cloudinary.com",'media-cdn-v2.laodong.vn'],
   },
 };
 
