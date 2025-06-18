@@ -1,19 +1,20 @@
 'use client'
 import React, { useEffect } from "react";
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Confetti from "react-confetti";
 import { useAppstore } from "@/store/store";
 import { useAppSelector } from "@/lib/hooks";
 import { createListingAPI } from "@/lib/listings";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
-const listingCreated = () => {
+const listingCreated = ({ isTour }) => {
     const router = useRouter();
     const userInfo = useAppSelector(selectUserInfo);
     const [loading, setLoading] = React.useState(false);
     const [isFailed, setIsFailed] = React.useState(false);
     const {
-        locationType,
-        placeType,
+        locationType = "",
+        placeType = "",
         mapData,
         locationData,
         placeSpace,
@@ -36,7 +37,7 @@ const listingCreated = () => {
         const result = await createListingAPI({
             listingCreatedBy: { id: userInfo.id },
             locationType,
-            placeType: placeType?.title,
+            placeType,
             mapData,
             locationData,
             placeSpace,
@@ -44,17 +45,48 @@ const listingCreated = () => {
             title,
             description,
             placeAmeneties: placeAmenities,
-            photos
+            photos,
+            isTour: !!isTour ? true : false
         })
-        if (!result?.createdAt) {
+        if (result?.error) {
             setIsFailed(true);
             toast.error("Đã tạo điểm lưu trú thất bại")
             setLoading(false);
             return
         }
+        else if (result?.createdAt) {
+            toast.success("Đã tạo điểm lưu trú thành công")
+        }
         setIsFailed(false);
         setLoading(false);
     }
+    // const createTour = async () => {
+    //     setLoading(true);
+    //     const result = await create({
+    //         tourCreatedBy: { id: userInfo.id },
+    //         locationType,
+    //         placeType: placeType?.title,
+    //         mapData,
+    //         locationData,
+    //         placeSpace,
+    //         price,
+    //         title,
+    //         description,
+    //         placeAmeneties: placeAmenities,
+    //         photos
+    //     })
+    //     if (result?.error) {
+    //         setIsFailed(true);
+    //         toast.error("Đã tạo tour thất bại")
+    //         setLoading(false);
+    //         return
+    //     }
+    //     else if (result?.createdAt) {
+    //         toast.success("Đã tạo tour thành công")
+    //     }
+    //     setIsFailed(false);
+    //     setLoading(false);
+    // }
     return (
         <>
             {

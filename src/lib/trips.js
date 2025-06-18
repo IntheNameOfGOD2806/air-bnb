@@ -1,6 +1,6 @@
 import { createUrl, del, post } from "./http";
 import { toast } from "react-toastify";
-
+import qs from "qs";
 import { get } from "./http";
 
 export const createListingAPI = async (data) => {
@@ -30,8 +30,20 @@ export const createTripAPI = async (data) => {
     return result?.data;
   }
 };
-export const getTripsAPI = async () => {
-  const result = await get(createUrl("api/trips"));
+export const getTripsAPI = async (userId) => {
+ const query = qs.stringify(
+       {
+         where: {
+           user: {
+             id: userId,
+           },
+         },
+       },
+       {
+         encodeValuesOnly: true,
+       }
+     );
+  const result = await get(createUrl(`api/trips?${query}`));
   console.log("223424424242", result);
   if (!result?.data?.length) {
     toast.error("Đã xảy ra lỗi khi lấy danh sách trip");
@@ -42,7 +54,7 @@ export const getTripsAPI = async () => {
   }
 };
 //delete
-export const deleteTripAPI = async (tripId) => {
+export const deleteTripByAPI = async (tripId) => {
   const result = await del(createUrl(`api/trips/${tripId}`));
   console.log("223424424242", result);
   if (!result?.data?.createdAt) {

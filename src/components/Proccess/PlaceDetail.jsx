@@ -1,5 +1,6 @@
 import { useAppstore } from "@/store/store";
 import { Col, Form, Input, Row } from "antd";
+import { DatePicker } from "antd";
 import FormInput from "../common/FormInput";
 const PlaceDetails = () => {
   const { locationData, setLocationData } = useAppstore();
@@ -10,7 +11,7 @@ const PlaceDetails = () => {
   return (
     <div className="text-black flex justify-center items-center h-full flex-col gap-2 w-full">
       <div className="flex flex-col gap-3">
-        <h2 className="font-semibold text-4xl">Xác định địa điểm</h2>
+        <h2 className="font-semibold text-4xl">Thông tin TOUR của bạn</h2>
         <p className="text-gray-500">
           Địa điểm của bạn chỉ được chia sẻ với khách hàng sau khi đã tiến hành
           đặt phòng
@@ -84,6 +85,30 @@ const PlaceDetails = () => {
                   <Input
                     placeholder="Nhập quận/huyện"
                     onChange={(e) => handleChange("district", e.target.value)}
+                  />
+                </Form.Item>
+                  {/* THOI GIAN TOUR */}
+                  <Form.Item
+                  initialValue={locationData?.tourTime}
+                  label="Thời gian"
+                  name="tourTime"
+                >
+                  <DatePicker
+                    format="DD/MM/YYYY"
+                    placeholder="Nhập thời gian"
+                    onChange={(date, dateString) => handleChange("tourTime", dateString)}
+                  />
+                </Form.Item>
+                  {/* ngay tour gan nhat */}
+                  <Form.Item
+                  initialValue={locationData?.nearestTour}
+                  label="Ngay tour gan nhat"
+                  name="nearestTour"
+                >
+                  <DatePicker
+                    format="DD/MM/YYYY"
+                    placeholder="Nhập ngay tour gan nhat"
+                    onChange={(date, dateString) => handleChange("nearestTour", dateString)}
                   />
                 </Form.Item>
               </Col>

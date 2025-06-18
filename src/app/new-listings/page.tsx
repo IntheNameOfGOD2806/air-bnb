@@ -77,7 +77,7 @@ export default function NewListings() {
     },
     {
       title: "",
-      content: <PlaceLocation />,
+      content: <PlaceLocation isTour={false} />,
     },
     {
       title: "",
@@ -105,7 +105,7 @@ export default function NewListings() {
     },
     {
       title: "",
-      content: <Description />,
+      content: <Description isTour={false} />,
     },
     {
       title: "",
@@ -119,7 +119,7 @@ export default function NewListings() {
     //listingCreated
     {
       title: "",
-      content: <ListingCreated />,
+      content: <ListingCreated isTour={false} />,
     },
   ];
 

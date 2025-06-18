@@ -5,22 +5,28 @@ import { deleteListing } from "@/lib/listings";
 import { useRouter } from "next/navigation";
 import { getTripByListingId } from "@/lib/listings";
 import { useAppstore } from "@/store/store";
-
+import { deleteTripByAPI } from "@/lib/trips";
 const { Panel } = Collapse;
 
-export const ListingCard = ({ data, isMyListing }) => {
+export const ListingCard = ({ data, isMyListing, isTour }) => {
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [tripData, setTripData] = useState(null);
+    const [tripData, setTripData] = useState([]);
     const { setUserListings, userListings } = useAppstore();
     const { setCurrentListing } = useAppstore();
 
     const handleDelete = async () => {
         try {
-            const result = await deleteListing(data.id);
-            if (result?.createdAt) {
-                setIsModalOpen(false);
-                setUserListings(userListings?.filter((listing) => listing.id !== data.id));
+            //disconnect trip
+            const deleteTripPromises = tripData?.length > 0 && tripData.map((trip) => deleteTripByAPI(trip.id));
+            const deleteTripResult = await Promise.all(deleteTripPromises);
+            console.log('delete trip result', deleteTripResult);
+            if (deleteTripResult) {
+                const result = await deleteListing(data.id);
+                if (result?.createdAt) {
+                    setIsModalOpen(false);
+                    setUserListings(userListings?.filter((listing) => listing.id !== data.id));
+                }
             }
         } catch (error) {
             console.log(error);
@@ -50,7 +56,11 @@ export const ListingCard = ({ data, isMyListing }) => {
             <div
                 onClick={() => {
                     setCurrentListing(data);
+                   if(isTour){
+                    router.push(`/tour-detail/${data.id}`);
+                   }else{
                     router.push(`/listing/${data.id}`);
+                   }
                 }}
                 className="max-w-xs w-full bg-white border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
             >
@@ -74,7 +84,11 @@ export const ListingCard = ({ data, isMyListing }) => {
                     <h3 className="text-lg font-semibold text-green-900 truncate" title={data?.title}>
                         {data?.title ?? "Untitled"}
                     </h3>
-                    <p className="text-gray-600 line-clamp-2">{data?.description ?? "No description available."}</p>
+                    {
+                        !isTour && (
+                            <p className="text-gray-600 line-clamp-2">{data?.description ?? "No description available."}</p>
+                        )
+                    }
 
                     <div className="mt-auto flex items-center justify-between">
                         <span className="text-green-700 font-bold text-lg">

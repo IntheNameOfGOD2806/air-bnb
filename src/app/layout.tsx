@@ -9,6 +9,7 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+import { Analytics } from "@vercel/analytics/next";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
@@ -53,6 +54,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <Analytics />
         <AuthContextProvider>
           {/* <PersistGate loading={null} persistor={persistor}> */}
           <StoreProvider>
@@ -61,10 +63,8 @@ export default function RootLayout({
           </StoreProvider>
           {/* </PersistGate> */}
         </AuthContextProvider>
-        <div >
-        
+        <div>
           <TawkMessengerReact
-        
             propertyId="682ad6ec6392a3190c780686"
             widgetId="1irjlf3do"
           />

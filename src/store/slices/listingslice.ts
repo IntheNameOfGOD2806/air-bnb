@@ -2,6 +2,7 @@ import { addToWishList } from "@/lib/listings";
 
 export const createListingSlice = (set: any, get: any) => ({
   listings: [],
+  tourListings: [],
   isMapView: false,
   userListings: [],
   wishList: [],
@@ -13,6 +14,7 @@ export const createListingSlice = (set: any, get: any) => ({
   setWishListPage: (wishListPage: any) => set({ wishListPage }),
   setIsMapView: (isMapView: boolean) => set({ isMapView: !get().isMapView }),
   setListings: (listings: any) => set({ listings }),
+  setTourListings: (tourListings: any) => set({ tourListings }),
   addToWishList: (id:any) => {
     const list = get().wishList;
     list.push(id);

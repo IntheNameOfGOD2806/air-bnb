@@ -115,7 +115,7 @@ const Page = () => {
                                 </div>
                                 <div className="relative">
                                     <div className="sticky top-20">
-                                        <TripScheduler />
+                                        <TripScheduler listingId={currentListing?.id} />
                                     </div>
                                 </div>
                             </div>

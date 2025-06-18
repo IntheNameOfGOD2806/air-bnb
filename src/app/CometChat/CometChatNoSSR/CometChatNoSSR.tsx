@@ -15,6 +15,10 @@ export const COMETCHAT_CONSTANTS = {
 };
 
 const CometChatNoSSR: React.FC = () => {
+  const [user, setUser] = React.useState<CometChat.User | undefined>(undefined);
+  const [group, setGroup] = React.useState<CometChat.Group | undefined>(
+    undefined
+  );
   useEffect(() => {
     const UIKitSettings = new UIKitSettingsBuilder()
       .setAppId(COMETCHAT_CONSTANTS.APP_ID)
@@ -37,12 +41,14 @@ const CometChatNoSSR: React.FC = () => {
               .then((loggedInUser: CometChat.User) => {
                 console.log("Login Successful:", loggedInUser);
                 // Mount your app or perform post-login actions if needed
+                setUser(loggedInUser);
               })
               .catch((error) => {
                 console.error("Login failed:", error);
               });
           } else {
             console.log("User already logged in:", user);
+            setUser(user);
           }
         });
       })
@@ -52,7 +58,11 @@ const CometChatNoSSR: React.FC = () => {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <CometChatProvider>
-        <CometChatApp />
+        {user ? (
+          <CometChatApp user={user} group={group} />
+        ) : (
+          <div>Đang đăng nhập...</div>
+        )}
       </CometChatProvider>
     </div>
   );

@@ -147,8 +147,8 @@ const Navbar = ({
           },
           {
             key: "2",
-            label: "Phương Tiện",
-            disabled: true,
+            label: "Tour",
+            // disabled: true,
           },
           {
             key: "3",
@@ -170,7 +170,7 @@ const Navbar = ({
               setSelectedKey("1");
               break;
             case "2":
-              router.push("/blog");
+              router.push("/tours");
               setSelectedKey("2");
               break;
             case "3":

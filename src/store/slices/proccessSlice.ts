@@ -1,7 +1,7 @@
 export const proccessSlice = (set: any, get: any) => ({
-  locationType: undefined,
+  locationType: "",
   setLocationType: (locationType: any) => set({ locationType }),
-  placeType: undefined,
+  placeType: "",
   setPlaceType: (placeType: any) => set({ placeType }),
   mapData: undefined,
   setMapData: (mapData: any) => set({ mapData }),

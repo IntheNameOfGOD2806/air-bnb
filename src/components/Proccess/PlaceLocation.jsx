@@ -5,7 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { Spin } from "antd";
 import { useAppstore } from "@/store/store";
 
-const PlaceLocation = () => {
+const PlaceLocation = ({isTour}) => {
   const { setMapData, setLocationData } = useAppstore();
   const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 

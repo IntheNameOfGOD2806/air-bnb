@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { isArray } from "util";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const jwtkey = "accessToken";
@@ -32,7 +33,28 @@ instance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+// Interceptor response: Xử lý lỗi 401
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+    const message = error.response?.data?.message || "Có lỗi xảy ra";
 
+    if (status === 401) {
+      toast.error("Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.");
+
+      // Xoá token
+      removeStoredJwt();
+
+      // Redirect về trang login (nếu đang không ở đó)
+      // if (typeof window !== "undefined" && !window.location.pathname.includes("/login")) {
+      //   Router.push("/login");
+      // }
+    }
+
+    return Promise.reject(error);
+  }
+);
 export const createUrl = (endpoint: string) => new URL(endpoint, apiUrl).href;
 export const isStoredJwt = () =>
   localStorage.getItem(jwtkey) !== null ||

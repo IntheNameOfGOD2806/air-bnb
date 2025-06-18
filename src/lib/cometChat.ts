@@ -1,5 +1,5 @@
 // lib/cometChat.js
-import { CometChat } from "@cometchat-pro/chat";
+import { CometChat } from "@cometchat/chat-sdk-javascript";
 import { instance } from "./http";
 const appID = "YOUR_APP_ID";
 const region = "YOUR_REGION"; // ví dụ: "us", "eu"
@@ -75,6 +75,17 @@ export const createCometChatUser = async ({
     return response?.data;
   } catch (error) {
     console.error("Error creating user:", error);
+    throw error;
+  }
+};
+
+export const getUserByUid = async (uid: string) => {
+  try {
+    const user = await CometChat.getUser(uid);
+    console.log("User found:", user);
+    return user;
+  } catch (error) {
+    console.error("Error getting user:", error);
     throw error;
   }
 };
