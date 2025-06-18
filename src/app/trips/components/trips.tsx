@@ -13,9 +13,12 @@ import {
   CometChatMessageComposer,
   CometChatMessageHeader,
   CometChatMessageList,
+  CometChatUIKit,
 } from "@cometchat/chat-uikit-react";
-import '../../CometChat/CometChatNoSSR/CometChatNoSSR.css';
+import "../../CometChat/CometChatNoSSR/CometChatNoSSR.css";
+import { createCometChatUser } from "@/lib/cometChat";
 const TripTableComponent = () => {
+  const isLoggedIn = useAppSelector(selectUserInfo)?.id;
   const userInfo = useAppSelector(selectUserInfo);
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -25,9 +28,39 @@ const TripTableComponent = () => {
   const [isViewModalOpen, setIsViewModalOpen] = React.useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = React.useState(false);
-  const openChatWithUser = async (uid: string) => {
+  const defaultAvatar =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
+  const SignUpnCometChat = async (
+    uid: string,
+    name: string,
+    avatar: string
+  ) => {
+    const result = await createCometChatUser({
+      uid: uid,
+      name: name,
+      avatar: avatar || defaultAvatar,
+      // link: userInfo?.username || defaultAvatar,
+      role: "default",
+      statusMessage: "user",
+      metadata: "user",
+      tags: ["user"],
+      withAuthToken: true,
+    });
+    if (result?.error) {
+      toast.error(result?.error);
+    } else {
+      //   CometChatUIKit.login(result?.id).then((user: CometChat.User) => {
+      //     console.log("Login Successful:", user);
+      //     // Mount your app or perform post-login actions if needed
+      //   });
+    }
+  };
+  const openChatWithUser = async (
+    uid: string,
+    name: string,
+    avatar: string
+  ) => {
     try {
-      console.log("asdadd");
       const UID = uid;
       CometChat.getUser(UID).then(
         (user) => {
@@ -35,6 +68,18 @@ const TripTableComponent = () => {
         },
         (error) => {
           console.log("User fetching failed with error:", error);
+          //
+          SignUpnCometChat(uid, name, avatar).then((user) => {
+            //   openChatWithUser(uid,name,avatar);
+            CometChat.getUser(UID).then(
+              (user) => {
+                setChatUser(user);
+              },
+              (error) => {
+                console.log("User fetching failed with error:", error);
+              }
+            );
+          });
         }
       );
       setIsContactModalOpen(true);
@@ -162,7 +207,13 @@ const TripTableComponent = () => {
             Xóa
           </Button>
           <Button
-            onClick={() => openChatWithUser(record?.user?.id)}
+            onClick={() =>
+              openChatWithUser(
+                record?.listing?.listingCreatedBy?.id,
+                record?.listing?.listingCreatedBy?.firstName,
+                record?.listing?.listingCreatedBy?.userImage
+              )
+            }
             type="default"
           >
             Liên hệ
@@ -171,7 +222,65 @@ const TripTableComponent = () => {
       ),
     },
   ];
-
+  const columnstour = [
+    {
+      title: "Giá tiền",
+      dataIndex: ["tripinfo", "price"],
+      key: "price",
+      align: "center",
+      render: (price: string) => `${Number(price).toLocaleString()}₫`,
+    },
+    {
+      title: "Tên tour",
+      dataIndex: ["listing", "title"],
+      key: "listing.title",
+      align: "center",
+      render: (title: string, record: any) => (
+        <span
+          className="text-blue-600 cursor-pointer"
+          onClick={() => {
+            router.push(`/listing/${record?.listing?.id}`);
+          }}
+        >
+          {title}
+        </span>
+      ),
+    },
+    {
+        title: "Ngày đặt tour",
+        dataIndex: "createdAt",
+        key: "createdAt",
+        align: "center",
+        render: (date: string) => new Date(date).toLocaleDateString("vi-VN"),
+      },
+    {
+      title: "Hành động",
+      key: "action",
+      align: "center",
+      render: (_: string, record: any) => (
+        <Space size="middle">
+          <Button type="primary" onClick={() => handleView(record)}>
+            Xem
+          </Button>
+          <Button danger onClick={() => handleOpenDeleteModal(record)}>
+            Xóa
+          </Button>
+          <Button
+            onClick={() =>
+              openChatWithUser(
+                record?.listing?.listingCreatedBy?.id,
+                record?.listing?.listingCreatedBy?.firstName,
+                record?.listing?.listingCreatedBy?.userImage
+              )
+            }
+            type="default"
+          >
+            Liên hệ
+          </Button>
+        </Space>
+      ),
+    },
+  ];
   return (
     <div className="bg-white shadow-md rounded-xl p-6">
       <Table
@@ -184,7 +293,18 @@ const TripTableComponent = () => {
         pagination={{ pageSize: 5 }}
         bordered
       />
-
+      
+      <Table
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        columns={columnstour}
+        dataSource={data.filter((item: any) => item?.tripinfo?.isTour === true)}
+        rowKey="id"
+        loading={loading}
+        title={() => <p className="text-center text-2xl font-bold text-blue-600">Các Tour đã đăng ký</p>}
+        pagination={{ pageSize: 5 }}
+        bordered
+      />
       {/* Modal chi tiết */}
       <Modal
         title="Chi tiết chuyến đi"
@@ -214,7 +334,7 @@ const TripTableComponent = () => {
             <Descriptions.Item label="Ngày đặt phòng">
               {new Date(selectedTrip.createdAt).toLocaleDateString("vi-VN")}
             </Descriptions.Item>
-            <Descriptions.Item label="Người dùng đặt">
+            <Descriptions.Item label="Người đăng tin">
               {selectedTrip?.user?.firstName} {selectedTrip?.user?.lastName}
             </Descriptions.Item>
             <Descriptions.Item label="Tên phòng">

@@ -26,7 +26,7 @@ const listingCreated = ({ isTour }) => {
     } = useAppstore();
     useEffect(() => {
         if (!userInfo) {
-            toast.error("Vui lòng đăng nhập để tạo điểm lưu trú");
+            toast.error("Vui lòng đăng nhập để thao tác");
             return
         };
         createListing()
@@ -37,25 +37,25 @@ const listingCreated = ({ isTour }) => {
         const result = await createListingAPI({
             listingCreatedBy: { id: userInfo.id },
             locationType,
-            placeType,
+            placeType: placeType?.title || "",
             mapData,
             locationData,
             placeSpace,
             price,
             title,
-            description,
+            description : isTour ? JSON.stringify(description) : description,
             placeAmeneties: placeAmenities,
             photos,
             isTour: !!isTour ? true : false
         })
         if (result?.error) {
             setIsFailed(true);
-            toast.error("Đã tạo điểm lưu trú thất bại")
+            toast.error("Đã tạo thất bại")
             setLoading(false);
             return
         }
         else if (result?.createdAt) {
-            toast.success("Đã tạo điểm lưu trú thành công")
+            toast.success("Đã tạo thành công")
         }
         setIsFailed(false);
         setLoading(false);
@@ -92,24 +92,28 @@ const listingCreated = ({ isTour }) => {
             {
                 loading ?
                     <div>
-                        <h2>Đang tạo điểm lưu trú...</h2>
+                        <h2>Đang tạo...</h2>
                     </div>
                     :
                     isFailed ?
                         <div className="mt-36 text-black flex flex-col gap-5 items-center justify-center h-full">
-                            <p className="text-red-500 font-semibold text-4xl">Đã tạo điểm lưu trú thất bại</p>
+                            <p className="text-red-500 font-semibold text-4xl">Đã tạo thất bại</p>
                         </div>
                         :
                         <div className="mt-36 text-black flex flex-col gap-5 items-center justify-center h-full">
                             <div className="flex flex-col gap-2 items-center justify-center">
                                 <h2 className="font-semibold text-4xl text-center">Đã tạo thành công</h2>
                                 <p>
-                                    Bây giờ bạn có thể quản lý điểm lưu trú của bạn.
+                                    {
+                                        isTour ? "Bây giờ bạn có thể quản lý tour của bạn" : "Bây giờ bạn có thể quản lý điểm lưu trú của bạn"
+                                    }
                                 </p>
                                 <div className="flex gap-5">
                                     <button className="bg-green-500 text-white p-2 rounded-lg" onClick={() => router.push("/")}>Quay lại trang chủ</button>
                                     <button className="bg-green-500 text-white p-2 rounded-lg" onClick={() => router.push("/my-listings")}>
-                                        Xem điểm lưu trú vừa tạo
+                                        {
+                                            isTour ? "Xem tour vừa tạo" : "Xem điểm lưu trú vừa tạo"
+                                        }
                                     </button>
                                 </div>
                                 <Confetti width={window.innerWidth} height={window.innerHeight} />

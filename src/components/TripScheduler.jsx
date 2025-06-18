@@ -86,28 +86,30 @@ export default function TripScheduler({ listingId, isTour }) {
         }
 
         const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
-        if (state.startDate < today || state.endDate < today) {
-            toast.error("Không thể chọn ngày trong quá khứ");
-            return;
-        }
+        if (!isTour) {
+            if (state.startDate < today || state.endDate < today) {
+                toast.error("Không thể chọn ngày trong quá khứ");
+                return;
+            }
 
-        if (state.endDate <= state.startDate) {
-            toast.error("Ngày kết thúc phải sau ngày bắt đầu");
-            return;
-        }
+            if (state.endDate <= state.startDate) {
+                toast.error("Ngày kết thúc phải sau ngày bắt đầu");
+                return;
+            }
 
-        if (tripData && isOverlapping(state.startDate, state.endDate, tripData)) {
-            toast.error("Khoảng thời gian bạn chọn đã có người đặt trước");
-            return;
-        }
+            if (tripData && isOverlapping(state.startDate, state.endDate, tripData)) {
+                toast.error("Khoảng thời gian bạn chọn đã có người đặt trước");
+                return;
+            }
 
+        }
         setLoading(true);
         const data = {
             listing: { id: currentListing?.id },
             user: { id: userInfo?.id },
             tripinfo: {
-                startDate: state.startDate,
-                endDate: state.endDate,
+                startDate: isTour ? '' : state.startDate,
+                endDate: isTour ? '' : state.endDate,
                 price: `${isTour ? currentListing?.price : currentListing?.price * calculateDateDiff()}`,
                 isTour: isTour
             }
@@ -127,14 +129,33 @@ export default function TripScheduler({ listingId, isTour }) {
     return (
         <div className="sticky top-0 w-full flex flex-col gap-6 items-center justify-start">
             <div className="border border-gray-400 rounded-lg shadow-lg flex p-4 gap-2 items-start px-8 flex-col w-full">
-                <div className="flex gap-1 text-lg">
-                    <span className="font-bold">{currentListing?.price} vnĐ</span>
+                <div className="w-full flex items-center justify-between">
+
+                    <div className="flex gap-1 text-lg">
+                        <span className="font-bold">{currentListing?.price} vnĐ</span>
+                        {
+                            !isTour && (
+                                <span>1 đêm</span>
+                            )
+                        }
+                    </div>
                     {
-                        !isTour && (
-                            <span>1 đêm</span>
+                        isTour && (
+                            <span>Tour diễn ra trong
+                                <span className="font-bold text-green-500 text-lg">{
+                                    currentListing?.locationData?.tourTime
+                                }</span>
+                                ngày</span>
                         )
                     }
                 </div>
+                {
+                    isTour && (
+                        <div className="">
+                            <span className="font-semibold text-green-500 mr-2">Ngày Tour gần nhất:</span>
+                            : {currentListing?.locationData?.nearestTour}</div>
+                    )
+                }
                 {
                     !isTour && (
                         <div className="flex flex-col w-full">
@@ -189,25 +210,34 @@ export default function TripScheduler({ listingId, isTour }) {
                 </span>
                 <div className="flex justify-between w-full">
                     <span className="">
-                        {isTour ? currentListing?.price : currentListing?.price}vnĐ x {calculateDateDiff()} đêm
+                        {isTour ? currentListing?.price : currentListing?.price}vnĐ
+                        {!isTour && (
+                            <span>
+                                {currentListing?.price}vnĐ x {calculateDateDiff()} đêm
+                            </span>
+                        )}
                     </span>
                     <span className="">
                         {isTour ? currentListing?.price : currentListing?.price * calculateDateDiff()}vnĐ
                     </span>
                 </div>
             </div>
-            <div className="flex border border-gray-400 rounded-lg p-4 gap-2 items-start px-8">
-                <span className="flex flex-col">
-                    <p></p>
-                    <strong>Giá tốt nhất</strong>
-                    Điểm lưu trú của {currentListing?.listingCreatedBy?.firstName} thường được đánh giá cao
-                </span>
+            {
+                !isTour && (
+                    <div className="flex border border-gray-400 rounded-lg p-4 gap-2 items-start px-8">
+                        <span className="flex flex-col">
+                            <p></p>
+                            <strong>Giá tốt nhất</strong>
+                            Điểm lưu trú của {currentListing?.listingCreatedBy?.firstName} thường được đánh giá cao
+                        </span>
 
-                <span>
-                    {isTour ? currentListing?.price : currentListing?.price * calculateDateDiff()}vnĐ
-                </span>
-                <Diamond />
-            </div>
+                        <span>
+                            {isTour ? currentListing?.price : currentListing?.price * calculateDateDiff()}vnĐ
+                        </span>
+                        <Diamond />
+                    </div>
+                )
+            }
             {
                 tripData?.length > 0 && !!tripData?.length && !isTour && (
                     <>

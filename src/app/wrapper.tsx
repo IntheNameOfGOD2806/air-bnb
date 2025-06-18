@@ -310,7 +310,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   };
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ minHeight: "100vh", overflow: "auto" }}>
       <div
         style={
           {

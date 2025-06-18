@@ -2,7 +2,7 @@ import React from "react";
 import { useAppstore } from "../../store/store";
 import { Input } from "antd";
 import { SimpleEditor } from "../tiptap-templates/simple/simple-editor";
-const Description = ({ isTour }) => {
+const Description = ({ isTour ,isView}) => {
     const { description, setDescription } = useAppstore();
     return (
         <>
@@ -24,7 +24,7 @@ const Description = ({ isTour }) => {
                     </div>
                 ) : (
                     <div className="flex flex-col gap-4">
-                        <SimpleEditor />
+                        <SimpleEditor isView={isView} />
                     </div>
                 )
             }
