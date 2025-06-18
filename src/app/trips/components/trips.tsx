@@ -1,16 +1,20 @@
 "use client";
-
+import "@cometchat/chat-uikit-react/css-variables.css";
 import React from "react";
 import { Button, Space, Table, Modal, Descriptions } from "antd";
-import { getTripsAPI,deleteTripByAPI } from "@/lib/trips";
+import { getTripsAPI, deleteTripByAPI } from "@/lib/trips";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { toast } from "react-toastify";
 import AppWrapper from "../../wrapper";
 import { useRouter } from "next/navigation";
 import { CometChat } from "@cometchat/chat-sdk-javascript";
-import { CometChatMessages } from "@/app/CometChat/components/CometChatMessages/CometChatMessages"; 
-
+import {
+  CometChatMessageComposer,
+  CometChatMessageHeader,
+  CometChatMessageList,
+} from "@cometchat/chat-uikit-react";
+import '../../CometChat/CometChatNoSSR/CometChatNoSSR.css';
 const TripTableComponent = () => {
   const userInfo = useAppSelector(selectUserInfo);
   const [data, setData] = React.useState([]);
@@ -20,18 +24,31 @@ const TripTableComponent = () => {
   const [selectedTrip, setSelectedTrip] = React.useState<any>(null);
   const [isViewModalOpen, setIsViewModalOpen] = React.useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = React.useState(false);
   const openChatWithUser = async (uid: string) => {
     try {
-      const user = await CometChat.getUser(uid);
-      if (user) {
-        setChatUser(user);
-      } else {
-        console.warn("User not found");
-      }
+      console.log("asdadd");
+      const UID = uid;
+      CometChat.getUser(UID).then(
+        (user) => {
+          setChatUser(user);
+        },
+        (error) => {
+          console.log("User fetching failed with error:", error);
+        }
+      );
+      setIsContactModalOpen(true);
     } catch (error) {
+      setIsContactModalOpen(false);
       console.error("Failed to fetch user:", error);
     }
   };
+
+  const handleCloseContactModal = () => {
+    setIsContactModalOpen(false);
+    setChatUser(null);
+  };
+
   const handleView = (record: any) => {
     setSelectedTrip(record);
     setIsViewModalOpen(true);
@@ -77,9 +94,7 @@ const TripTableComponent = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const result = await getTripsAPI(
-          userInfo?.id
-        );
+        const result = await getTripsAPI(userInfo?.id);
         setData(result);
       } catch (err) {
         toast.error("Không thể tải dữ liệu");
@@ -90,17 +105,6 @@ const TripTableComponent = () => {
 
     fetchData();
   }, [userInfo]);
-
-  const handleOpenContactModal = (record: any) => {
-    const userToChatId = record?.user?.id;
-    setSelectedTrip(record);
-    // setIsContactModalOpen(true);
-  };
-
-  const handleCloseContactModal = () => {
-    // setIsContactModalOpen(false);
-    setSelectedTrip(null);
-  };
 
   const columns = [
     {
@@ -157,7 +161,10 @@ const TripTableComponent = () => {
           <Button danger onClick={() => handleOpenDeleteModal(record)}>
             Xóa
           </Button>
-          <Button onClick={() => handleOpenContactModal(record)} type="default" >
+          <Button
+            onClick={() => openChatWithUser(record?.user?.id)}
+            type="default"
+          >
             Liên hệ
           </Button>
         </Space>
@@ -240,6 +247,23 @@ const TripTableComponent = () => {
               )}
             </p>
           </>
+        )}
+      </Modal>
+      <Modal
+        title="Liên hệ"
+        open={isContactModalOpen}
+        onCancel={handleCloseContactModal}
+        onOk={handleConfirmDelete}
+        okText="Xóa"
+        okType="danger"
+        cancelText="Hủy"
+      >
+        {chatUser && (
+          <div className="messages-wrapper">
+            <CometChatMessageHeader user={chatUser} />
+            <CometChatMessageList user={chatUser} />
+            <CometChatMessageComposer user={chatUser} />
+          </div>
         )}
       </Modal>
     </div>

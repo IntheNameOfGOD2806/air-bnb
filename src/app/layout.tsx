@@ -22,7 +22,7 @@ import { getStorage } from "@/lib/storage/storage";
 import { STORAGE } from "@/lib/storage/storage";
 import { useAppDispatch } from "@/lib/hooks";
 import { setUserInfo } from "@/lib/features/auth/authSlice";
-
+import { CometChatProvider } from "./CometChat/context/CometChatContext";
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -56,11 +56,13 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Analytics />
         <AuthContextProvider>
-          {/* <PersistGate loading={null} persistor={persistor}> */}
-          <StoreProvider>
-            <GlobalThemeProvider>{children}</GlobalThemeProvider>
-            <ToastContainer />
-          </StoreProvider>
+          <CometChatProvider>
+            {/* <PersistGate loading={null} persistor={persistor}> */}
+            <StoreProvider>
+              <GlobalThemeProvider>{children}</GlobalThemeProvider>
+              <ToastContainer />
+            </StoreProvider>
+          </CometChatProvider>
           {/* </PersistGate> */}
         </AuthContextProvider>
         <div>

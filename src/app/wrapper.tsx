@@ -64,7 +64,11 @@ import ImageCarousel from "@/components/Carousel/landingCarousel";
 import { getAllListingsAPI, getTourListings } from "@/lib/listings";
 import { useAppstore } from "@/store/store";
 import { listingTypes } from "@/data/listingTypes";
-import { CometChatUIKit } from "@cometchat/chat-uikit-react";
+import {
+  CometChatUIKit,
+  UIKitSettingsBuilder,
+} from "@cometchat/chat-uikit-react";
+import { setupLocalization } from "./CometChat/utils/utils";
 //   UserOutlined,
 //   LaptopOutlined,
 //   NotificationOutlined,
@@ -85,6 +89,12 @@ import { CometChatUIKit } from "@cometchat/chat-uikit-react";
 //     }),
 //   };
 // });
+
+export const COMETCHAT_CONSTANTS = {
+  APP_ID: "2767168b2e8a283d", // Replace with your App ID
+  REGION: "us", // Replace with your App Region
+  AUTH_KEY: "0aeb7339e524e5d5a5b697cc5a9efbd6ae9d9989", // Replace with your Auth Key or leave blank if you are authenticating using Auth Token
+};
 
 const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname(); // ví dụ: "/listings/abc"
@@ -164,6 +174,46 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       setOpenModalAuthReg(true);
     }
   }, [isLoggedIn]);
+  useEffect(() => {
+    const UIKitSettings = new UIKitSettingsBuilder()
+      .setAppId(COMETCHAT_CONSTANTS.APP_ID)
+      .setRegion(COMETCHAT_CONSTANTS.REGION)
+      .setAuthKey(COMETCHAT_CONSTANTS.AUTH_KEY)
+      .subscribePresenceForAllUsers()
+      .build();
+
+    CometChatUIKit.init(UIKitSettings)
+      ?.then(() => {
+        setupLocalization();
+        console.log("Initialization completed successfully");
+
+        const UID = userInfo?.id;
+        console.log("UID", UID); // Replace with your actual UID
+
+        CometChatUIKit.getLoggedinUser().then(
+          (loggedInUser: CometChat.User | null) => {
+            if (!loggedInUser || loggedInUser.getUid() !== UID) {
+              // Nếu chưa login hoặc user hiện tại sai → logout và login lại
+              CometChatUIKit.logout().then(() => {
+                CometChatUIKit.login(UID)
+                  .then((newUser) => {
+                    console.log("Login Successful:", newUser);
+                    // setUser(newUser);
+                  })
+                  .catch((error) => {
+                    toast.error("Login failed");
+                    console.error("Login failed:", error);
+                  });
+              });
+            } else {
+              console.log("User already logged in:", loggedInUser);
+              // setUser(loggedInUser);
+            }
+          }
+        );
+      })
+      .catch((error) => console.error("Initialization failed", error));
+  }, []);
   const verifyEmail = async () => {};
   const handleLogin = async (values: any) => {
     try {
