@@ -36,16 +36,17 @@ const CometChatNoSSR: React.FC = () => {
         setupLocalization();
         console.log("Initialization completed successfully");
 
-        const UID = UserInfo?.id; // Replace with your actual UID
+        const UID = UserInfo?.id;
+        console.log("UID", UID); // Replace with your actual UID
 
         CometChatUIKit.getLoggedinUser().then((user: CometChat.User | null) => {
-          if (!user) {
+          if (user) {
             // If no user is logged in, proceed with login
             CometChatUIKit.login(UID)
               .then((loggedInUser: CometChat.User) => {
                 console.log("Login Successful:", loggedInUser);
                 // Mount your app or perform post-login actions if needed
-                // setUser(loggedInUser);
+                setUser(loggedInUser);
               })
               .catch((error) => {
                 toast.error("Login failed:", error);
