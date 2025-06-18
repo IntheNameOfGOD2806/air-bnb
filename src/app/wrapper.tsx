@@ -7,6 +7,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+import { createCometChatUser } from "@/lib/cometChat";
 import ViewSwitchBag from "@/components/views/ViewSwitchBag";
 import {
   Button,
@@ -60,7 +61,7 @@ import MapView from "@/components/views/MapView";
 import SwiperCarousel from "@/components/Carousel/landingCarousel";
 import Carousel from "@/components/Carousel/landingCarousel";
 import ImageCarousel from "@/components/Carousel/landingCarousel";
-import { getAllListingsAPI } from "@/lib/listings";
+import { getAllListingsAPI, getTourListings } from "@/lib/listings";
 import { useAppstore } from "@/store/store";
 import { listingTypes } from "@/data/listingTypes";
 //   UserOutlined,
@@ -87,7 +88,7 @@ import { listingTypes } from "@/data/listingTypes";
 const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname(); // ví dụ: "/listings/abc"
   const dispatch = useAppDispatch();
-  const { setListings, isMapView, setIsMapView } = useAppstore();
+  const { setListings, isMapView, setIsMapView, setTourListings } = useAppstore();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [openModalAuth, setOpenModalAuth] = useState(false);
   const [openModalAuthReg, setOpenModalAuthReg] = useState(false);
@@ -99,6 +100,9 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [authFormReg] = useForm();
   const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
   const router = useRouter();
+  const defaultAvatar =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
+  const userInfo = useAppSelector(selectUserInfo);
   const [selectedKey, setSelectedKey] = useState("0");
   const handleScroll = () => {
     const position = window.scrollY;
@@ -123,8 +127,16 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       setListings(result);
       setLiatingLoading(false);
     };
+    const getTourData = async () => {
+      setLiatingLoading(true);
+      const result = await getTourListings();
+      console.log("result", result);
+      setTourListings(result);
+      setLiatingLoading(false);
+    };
 
     getData();
+    getTourData();
   }, []);
   useEffect(() => {
     setTabIndex(selectedKey);
@@ -172,6 +184,29 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       setIsAuthLoading(false);
     }
   };
+  useEffect(() => {
+    const SignUpnCometChat = async () => {
+      if (isLoggedIn) {
+        if ((!userInfo?.cometChatId || !userInfo?.id) && !!isLoggedIn) {
+          const result = await createCometChatUser({
+            uid: userInfo?.id,
+            name: userInfo?.username,
+            avatar: userInfo?.userImage || defaultAvatar,
+            // link: userInfo?.username || defaultAvatar,
+            role: "default",
+            statusMessage: "user",
+            metadata: "user",
+            tags: [
+              'user'
+            ],
+            withAuthToken: true,
+          });
+          console.log("result create account >>>>>>>>>", result);
+        }
+      }
+    };
+    SignUpnCometChat();
+  }, [isLoggedIn]);
   const handleSignUp = async (values: any) => {
     try {
       // alert(1313)
@@ -181,8 +216,8 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       const result = await signup(values);
       console.log("result", result);
       if (!result?.accessToken) {
-        if(result?.statusCode === 500){
-          toast.error('Email hoặc tên đăng nhập đã tồn tại');
+        if (result?.statusCode === 500) {
+          toast.error("Email hoặc tên đăng nhập đã tồn tại");
         }
         toast.error(result?.message);
         setIsAuthLoading(false);
@@ -194,7 +229,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         setOpenModalAuthReg(true);
       }
     } catch (error: any) {
-      toast.error('Email hoặc tên đăng nhập đã tồn tại');
+      toast.error("Email hoặc tên đăng nhập đã tồn tại");
       setIsAuthLoading(false);
     }
   };
@@ -490,7 +525,10 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           ]}
                           name="confirmPassword"
                         >
-                          <Input.Password size="large" placeholder="Confirm Password" />
+                          <Input.Password
+                            size="large"
+                            placeholder="Confirm Password"
+                          />
                         </Form.Item>
                         <Form.Item>
                           <Button
@@ -658,7 +696,9 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             {isAuthLoading ? <Spin /> : "Continue"}
                           </Button>
                         </Form.Item>
-                        <p className=" w-full  text-gray-400 text-center">Chưa có tài khoản? Đăng ký ngay !!</p>
+                        <p className=" w-full  text-gray-400 text-center">
+                          Chưa có tài khoản? Đăng ký ngay !!
+                        </p>
                         <Form.Item>
                           <Button
                             className="w-full"
@@ -667,12 +707,12 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                               setOpenModalAuth(true);
                             }}
                           >
-                          Đăng ký
+                            Đăng ký
                           </Button>
                         </Form.Item>
                         <Divider>
                           <Text className="text-sm font-semibold opacity-50">
-                           Hoặc Đăng Nhập bằng
+                            Hoặc Đăng Nhập bằng
                           </Text>
                         </Divider>
                         <Form.Item>
@@ -716,9 +756,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </div>
         </>
       </CommonModal>
-     {
-      pathname === "/" && <ViewSwitchBag />
-     }
+      {pathname === "/" && <ViewSwitchBag />}
     </Layout>
   );
 };

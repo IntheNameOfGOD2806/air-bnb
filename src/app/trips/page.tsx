@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button, Space, Table, Modal, Descriptions } from "antd";
-import { deleteTripAPI, getTripsAPI } from "@/lib/trips";
+import { getTripsAPI,deleteTripByAPI } from "@/lib/trips";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { toast } from "react-toastify";
@@ -41,7 +41,7 @@ const TripTable = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      const result = await deleteTripAPI(selectedTrip.id);
+      const result = await deleteTripByAPI(selectedTrip.id);
       if (result) {
         toast.success("Chuyến đi đã được xóa thành công");
         const newData = data.filter((item: any) => item.id !== selectedTrip.id);
@@ -64,7 +64,9 @@ const TripTable = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const result = await getTripsAPI();
+        const result = await getTripsAPI(
+          userInfo?.id
+        );
         setData(result);
       } catch (err) {
         toast.error("Không thể tải dữ liệu");

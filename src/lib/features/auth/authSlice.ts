@@ -10,6 +10,7 @@ export interface UserInfo {
   firstName: string | null;
   lastName: string | null;
   userImage: string | null;
+  cometChatId?: string | null;
 }
 
 const initialState: UserInfo = JSON.parse(
