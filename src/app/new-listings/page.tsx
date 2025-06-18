@@ -61,7 +61,7 @@ export default function NewListings() {
   const steps = [
     {
       title: "",
-      content: <Overview />,
+      content: <Overview isTour={false} />,
     },
     {
       title: "",
@@ -81,7 +81,7 @@ export default function NewListings() {
     },
     {
       title: "",
-      content: <PlaceDetails />,
+      content: <PlaceDetails isTour={false} />,
     },
     {
       title: "",
@@ -101,11 +101,11 @@ export default function NewListings() {
     },
     {
       title: "",
-      content: <Title />,
+      content: <Title isTour={false}  />,
     },
     {
       title: "",
-      content: <Description isTour={false} />,
+      content: <Description isTour={false} isView={false} />,
     },
     {
       title: "",
