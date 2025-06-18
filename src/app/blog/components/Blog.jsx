@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from "react";
-import NavBar from "../../components/NavBar/navbar";
-import AppWrapper from "../wrapper";
+import AppWrapper from "../../wrapper";
 const Blog = () => {
     const [selectedKey, setSelectedKey] = useState("3");
     return (
