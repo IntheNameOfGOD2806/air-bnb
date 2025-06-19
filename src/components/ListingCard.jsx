@@ -2,7 +2,7 @@
 import "@cometchat/chat-uikit-react/css-variables.css";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { Modal, Collapse, Button } from "antd";
+import { Modal, Collapse, Button, Spin } from "antd";
 import { deleteListing } from "@/lib/listings";
 import { useRouter } from "next/navigation";
 import { getTripByListingId } from "@/lib/listings";
@@ -252,12 +252,16 @@ export const ListingCard = ({ data, isMyListing }) => {
                 okType="danger"
                 cancelText="Hủy"
             >
-                {chatUser && (
+                {chatUser ? (
                     <div className="w-full   min-w-[100%] messages-wrapper">
                         <CometChatMessageHeader user={chatUser} />
                         <CometChatMessageList user={chatUser} />
                         <CometChatMessageComposer user={chatUser} />
                     </div>
+                ) : (
+                    <p>
+                        <Spin/>
+                    </p>
                 )}
             </Modal>
         </>
