@@ -114,7 +114,7 @@ export default function NewListings() {
     //price
     {
       title: "",
-      content: <Price />,
+      content: <Price isTour={false} />,
     },
     //listingCreated
     {
