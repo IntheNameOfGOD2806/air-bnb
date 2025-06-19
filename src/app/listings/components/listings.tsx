@@ -24,7 +24,7 @@ const Listings = () => {
           </h1>
           <div className="flex items-center justify-center">
             <div className="w-[90vw] overflow-x-auto mt-3 px-5 custom-scroll">
-              <ul className="flex min-h-28 gap-5 h-full">
+              <ul className="flex min-h-28 gap-5 h-full justify-center">
                 {listingTypes?.map((data, index) => (
                   <li
                     key={index}

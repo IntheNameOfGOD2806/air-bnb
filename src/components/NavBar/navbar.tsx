@@ -98,11 +98,11 @@ const Navbar = ({
     },
     {
       key: "6",
-      label: "Điểm lưu trú của tôi",
+      label: "Điểm lưu trú và tour của tôi",
     },
     {
       key: "7",
-      label: "Trip và Tour của tôi",
+      label: "Trip và tour của tôi",
     },
     {
       key: "3",
@@ -238,6 +238,9 @@ const Navbar = ({
                 }}
               >
                 <Dropdown
+                  overlayStyle={{
+                    width: "230px",
+                  }}
                   arrow
                   trigger={["click"]}
                   menu={{

@@ -5,8 +5,8 @@ import { useAppstore } from "@/store/store";
 export default function ViewSwitchBag() {
     const { isMapView, setIsMapView } = useAppstore();
     return (
-        <div className="fixed flex justify-center items-center bottom-16 left-0 right-0 cursor-pointer" onClick={() => setIsMapView()}>
-            <div className="bg-black p-4 text-white rounded-full">
+        <div className="fixed z-50 flex justify-center items-center bottom-16 left-0 right-0 cursor-pointer" onClick={() => setIsMapView()}>
+            <div className="bg-green-500 p-4 text-white rounded-full">
                 <span className="flex items-center gap-2 text-sm">
                     {
                         !isMapView ? (

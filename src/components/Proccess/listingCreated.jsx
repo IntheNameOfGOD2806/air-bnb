@@ -21,8 +21,9 @@ const listingCreated = ({ isTour }) => {
         price,
         title,
         description,
+        setDescription,
         placeAmenities,
-        photos
+        photos,
     } = useAppstore();
     useEffect(() => {
         if (!userInfo) {
@@ -56,6 +57,8 @@ const listingCreated = ({ isTour }) => {
         }
         else if (result?.createdAt) {
             toast.success("Đã tạo thành công")
+            setDescription('')
+            
         }
         setIsFailed(false);
         setLoading(false);

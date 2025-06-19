@@ -218,7 +218,7 @@ export function SimpleEditor({ isView ,content:CT}: { isView: boolean ,content?:
       TrailingNode,
       Link.configure({ openOnClick: false }),
     ],
-    content: !!isView ? JSON.parse(CT) : (description ?? content),
+    content: !!isView ? JSON.parse(CT) : (!!description ? description : content),
   });
   React.useEffect(() => {
     setDescription(editor?.getJSON());

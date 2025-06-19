@@ -379,7 +379,7 @@ const TripTableComponent = () => {
         cancelText="Hủy"
       >
         {chatUser && (
-          <div className="messages-wrapper">
+          <div className="messages-wrapper min-w-[100%]">
             <CometChatMessageHeader user={chatUser} />
             <CometChatMessageList user={chatUser} />
             <CometChatMessageComposer user={chatUser} />
