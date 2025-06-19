@@ -61,11 +61,11 @@ const Navbar = ({
   const guestItems: MenuProps["items"] = [
     {
       key: "1",
-      label: "Login",
+      label: "Đăng nhập",
     },
     {
       key: "2",
-      label: "Sign Up",
+      label: "Đăng ký",
     },
   ];
 

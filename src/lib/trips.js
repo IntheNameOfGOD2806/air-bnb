@@ -18,15 +18,24 @@ export const createListingAPI = async (data) => {
 };
 
 export const createTripAPI = async (data) => {
+  const isTour = data?.tripinfo?.isTour;
   const result = await post(createUrl("api/trips"), {
     ...data,
   });
   console.log("223424424242", result);
   if (!result?.data?.createdAt) {
-    toast.error("Trip không thể tạo thành công");
+    if (!isTour) {
+      toast.error("Trip không thể đăng ký thành công");
+    } else {
+      toast.error("Tour không thể đăng ký thành công");
+    }
     return null;
   } else {
-    toast.success("Trip đã được tạo thành công");
+    if (!isTour) {
+      toast.success("Trip đã được đăng ký thành công");
+    } else {
+      toast.success("Tour đã được đăng ký thành công");
+    }
     return result?.data;
   }
 };

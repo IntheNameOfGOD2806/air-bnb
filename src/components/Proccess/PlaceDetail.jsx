@@ -104,6 +104,7 @@ const PlaceDetails = ({ isTour }) => {
                         ]}
                       >
                         <InputNumber
+                          suffix="ngày"
                           className="w-[100%]"
                           placeholder="Tour diễn ra trong bao nhiêu ngày"
                           onChange={(value) => handleChange("tourTime", value)}
