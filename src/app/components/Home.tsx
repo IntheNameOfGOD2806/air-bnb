@@ -89,7 +89,7 @@ const Home: React.FC = ({
           <h3 className="mt-5 text-green-500 text-2xl font-bold text-center">
             Tin tức & Sự kiện
           </h3>
-          <div className="w-full max-h-[500px] overflow-auto scroll ">
+          <div className="w-full max-h-[1000px] h-[1000px] overflow-auto scroll ">
             {/* Elfsight Blog | Dattran */}
             <script
               src="https://static.elfsight.com/platform/platform.js"

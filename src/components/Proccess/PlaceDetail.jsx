@@ -106,7 +106,7 @@ const PlaceDetails = ({ isTour }) => {
                         <InputNumber
                           className="w-[100%]"
                           placeholder="Tour diễn ra trong bao nhiêu ngày"
-                          onChange={(e) => handleChange("tourTime", e.target.value)}
+                          onChange={(value) => handleChange("tourTime", value)}
                         />
                       </Form.Item>
                       {/* ngay tour gan nhat */}
