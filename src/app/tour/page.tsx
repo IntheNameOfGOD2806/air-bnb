@@ -99,7 +99,7 @@ export default function NewTour() {
     // },
     {
       title: "",
-      content: <Photo />,
+      content: <Photo isTour={true} />,
     },
     {
       title: "",

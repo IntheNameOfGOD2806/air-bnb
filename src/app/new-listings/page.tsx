@@ -97,7 +97,7 @@ export default function NewListings() {
     },
     {
       title: "",
-      content: <Photo />,
+      content: <Photo isTour={false} />,
     },
     {
       title: "",
