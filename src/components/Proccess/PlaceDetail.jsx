@@ -113,13 +113,13 @@ const PlaceDetails = ({ isTour }) => {
                       {/* ngay tour gan nhat */}
                       <Form.Item
                         initialValue={locationData?.nearestTour}
-                        label="Ngay tour gan nhat"
+                        label="Ngày tour gần nhất"
                         name="nearestTour"
 
                       >
                         <DatePicker
                           format="DD/MM/YYYY"
-                          placeholder="Nhập ngay tour gan nhat"
+                          placeholder="Nhập Ngày tour gần nhất"
                           onChange={(date, dateString) => handleChange("nearestTour", dateString)}
                         />
                       </Form.Item>
