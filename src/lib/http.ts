@@ -37,7 +37,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    const status = error.response?.status;
+    const status = error.response?.statusCode;
     const message = error.response?.data?.message || "Có lỗi xảy ra";
 
     if (status === 401) {
@@ -47,9 +47,9 @@ instance.interceptors.response.use(
       removeStoredJwt();
 
       // Redirect về trang login (nếu đang không ở đó)
-      // if (typeof window !== "undefined" && !window.location.pathname.includes("/login")) {
-      //   Router.push("/login");
-      // }
+      if (typeof window !== "undefined" ) {
+        window.location.href = "/";
+      }
     }
 
     return Promise.reject(error);
