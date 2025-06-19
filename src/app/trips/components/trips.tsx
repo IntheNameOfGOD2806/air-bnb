@@ -118,7 +118,7 @@ const TripTableComponent = () => {
     try {
       const result = await deleteTripByAPI(selectedTrip.id);
       if (result) {
-        toast.success("Chuyến đi đã được xóa thành công");
+        // toast.success("Chuyến đi đã được xóa thành công");
         const newData = data.filter((item: any) => item.id !== selectedTrip.id);
         setData(newData);
       }
