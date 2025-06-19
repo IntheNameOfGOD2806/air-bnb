@@ -1,3 +1,5 @@
+'use client'
+import "@cometchat/chat-uikit-react/css-variables.css";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Modal, Collapse, Button } from "antd";
@@ -6,15 +8,50 @@ import { useRouter } from "next/navigation";
 import { getTripByListingId } from "@/lib/listings";
 import { useAppstore } from "@/store/store";
 import { deleteTripByAPI } from "@/lib/trips";
+import { CometChat } from "@cometchat/chat-sdk-javascript";
 const { Panel } = Collapse;
-
+import {
+    CometChatMessageComposer,
+    CometChatMessageHeader,
+    CometChatMessageList,
+    CometChatUIKit,
+} from "@cometchat/chat-uikit-react";
+import "../app/CometChat/CometChatNoSSR/CometChatNoSSR.css";
 export const ListingCard = ({ data, isMyListing, isTour }) => {
+    const defaultAvatar =
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
+    const SignUpnCometChat = async (
+        uid,
+        name,
+        avatar
+    ) => {
+        const result = await createCometChatUser({
+            uid: uid,
+            name: name,
+            avatar: avatar || defaultAvatar,
+            // link: userInfo?.username || defaultAvatar,
+            role: "default",
+            statusMessage: "user",
+            metadata: "user",
+            tags: ["user"],
+            withAuthToken: true,
+        });
+        if (result?.error) {
+            toast.error(result?.error);
+        } else {
+            //   CometChatUIKit.login(result?.id).then((user: CometChat.User) => {
+            //     console.log("Login Successful:", user);
+            //     // Mount your app or perform post-login actions if needed
+            //   });
+        }
+    };
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [tripData, setTripData] = useState([]);
     const { setUserListings, userListings } = useAppstore();
     const { setCurrentListing } = useAppstore();
-
+    const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+    const [chatUser, setChatUser] = React.useState(null);
     const handleDelete = async () => {
         try {
             //disconnect trip
@@ -31,10 +68,47 @@ export const ListingCard = ({ data, isMyListing, isTour }) => {
         } catch (error) {
             console.log(error);
         } finally {
+            const result = await deleteListing(data.id);
+            if (result?.createdAt) {
+                setIsModalOpen(false);
+                setUserListings(userListings?.filter((listing) => listing.id !== data.id));
+            }
             setIsModalOpen(false);
         }
     };
-
+    const openChatWithUser = async (
+        uid,
+        name,
+        avatar
+    ) => {
+        try {
+            const UID = uid;
+            CometChat.getUser(UID).then(
+                (user) => {
+                    setChatUser(user);
+                },
+                (error) => {
+                    console.log("User fetching failed with error:", error);
+                    //
+                    SignUpnCometChat(uid, name, avatar).then((user) => {
+                        //   openChatWithUser(uid,name,avatar);
+                        CometChat.getUser(UID).then(
+                            (user) => {
+                                setChatUser(user);
+                            },
+                            (error) => {
+                                console.log("User fetching failed with error:", error);
+                            }
+                        );
+                    });
+                }
+            );
+            setIsContactModalOpen(true);
+        } catch (error) {
+            setIsContactModalOpen(false);
+            console.error("Failed to fetch user:", error);
+        }
+    };
     const handleGetTrip = async (listingId) => {
         try {
             const result = await getTripByListingId(listingId);
@@ -50,17 +124,21 @@ export const ListingCard = ({ data, isMyListing, isTour }) => {
     useEffect(() => {
         handleGetTrip(data.id);
     }, [data.id]);
-
+    const handleCloseContactModal = () => {
+        setIsContactModalOpen(false);
+        setChatUser(null);
+      };
+    
     return (
         <>
             <div
                 onClick={() => {
                     setCurrentListing(data);
-                   if(isTour){
-                    router.push(`/tour-detail/${data.id}`);
-                   }else{
-                    router.push(`/listing/${data.id}`);
-                   }
+                    if (isTour) {
+                        router.push(`/tour-detail/${data.id}`);
+                    } else {
+                        router.push(`/listing/${data.id}`);
+                    }
                 }}
                 className="max-w-xs w-full bg-white border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
             >
@@ -134,6 +212,15 @@ export const ListingCard = ({ data, isMyListing, isTour }) => {
                                         <p><strong>Ngày kết thúc:</strong> {trip?.tripinfo?.endDate}</p>
                                         <p><strong>Khách hàng:</strong> {trip?.user?.firstName} {trip?.user?.lastName}</p>
                                         <p><strong>Email:</strong> {trip?.user?.email}</p>
+                                        <Button
+                                            type="primary"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                openChatWithUser(trip?.user?.id, trip?.user?.firstName, trip?.user?.avatar);
+                                            }}
+                                        >
+                                            liên hệ
+                                        </Button>
                                     </Panel>
                                 ))}
                             </Collapse>
@@ -153,6 +240,23 @@ export const ListingCard = ({ data, isMyListing, isTour }) => {
                 okButtonProps={{ danger: true }}
             >
                 <p>Bạn có chắc chắn muốn xóa bài đăng này không?</p>
+            </Modal>
+            <Modal
+                title="Liên hệ"
+                open={isContactModalOpen}
+                onCancel={handleCloseContactModal}
+                // onOk={handleConfirmDelete}
+                okText="Xóa"
+                okType="danger"
+                cancelText="Hủy"
+            >
+                {chatUser && (
+                    <div className="messages-wrapper">
+                        <CometChatMessageHeader user={chatUser} />
+                        <CometChatMessageList user={chatUser} />
+                        <CometChatMessageComposer user={chatUser} />
+                    </div>
+                )}
             </Modal>
         </>
     );
