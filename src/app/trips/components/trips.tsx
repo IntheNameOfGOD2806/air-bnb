@@ -185,7 +185,7 @@ const TripTableComponent = () => {
       align: "center",
       render: (title: string, record: any) => (
         <span
-          className="text-blue-600 cursor-pointer"
+          className="text-blue-600 cursor-pointer "
           onClick={() => {
             router.push(`/listing/${record?.listing?.id}`);
           }}
@@ -239,7 +239,7 @@ const TripTableComponent = () => {
         <span
           className="text-blue-600 cursor-pointer"
           onClick={() => {
-            router.push(`/listing/${record?.listing?.id}`);
+            router.push(`/tour-detail/${record?.listing?.id}`);
           }}
         >
           {title}
@@ -253,6 +253,13 @@ const TripTableComponent = () => {
         align: "center",
         render: (date: string) => new Date(date).toLocaleDateString("vi-VN"),
       },
+      // {
+      //   title: "Tour",
+      //   dataIndex: ["tripinfo", "isTour"],
+      //   key: "isTour",
+      //   align: "center",
+      //   render: (isTour: boolean) => (isTour ? "Tour" : "Trip"),
+      // },
     {
       title: "Hành động",
       key: "action",
