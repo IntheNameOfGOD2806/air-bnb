@@ -70,9 +70,9 @@ const PlaceLocation = ({isTour}) => {
 
   return (
     <div className="flex text-black flex-col items-center justify-center h-full gap-5">
-      <h2 className="font-semibold text-4xl">Location Based Map</h2>
+      <h2 className="font-semibold text-4xl">Bản đồ tương tác</h2>
       <p className="text-center">
-        Search or click the map to pick a location.
+        {isTour ? "Nhập thông tin vị trí tour của bạn" : "Nhập thông tin vị trí điểm lưu trú của bạn"}
       </p>
       <div className="h-[400px] w-[800px] relative">
         {!loadingLocation ? (

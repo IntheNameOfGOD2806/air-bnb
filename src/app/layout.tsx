@@ -56,13 +56,13 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Analytics />
         <AuthContextProvider>
-          <CometChatProvider>
+          {/* <CometChatProvider> */}
             {/* <PersistGate loading={null} persistor={persistor}> */}
             <StoreProvider>
               <GlobalThemeProvider>{children}</GlobalThemeProvider>
               <ToastContainer />
             </StoreProvider>
-          </CometChatProvider>
+          {/* </CometChatProvider> */}
           {/* </PersistGate> */}
         </AuthContextProvider>
         <div>

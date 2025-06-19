@@ -93,12 +93,16 @@ const Navbar = ({
       ),
     },
     {
+      key: "55",
+      label: "Chat",
+    },
+    {
       key: "6",
       label: "Điểm lưu trú của tôi",
     },
     {
       key: "7",
-      label: "Trip của tôi",
+      label: "Trip và Tour của tôi",
     },
     {
       key: "3",
@@ -202,6 +206,18 @@ const Navbar = ({
             >
               Đăng Bài
             </Typography>
+            <Typography
+              onClick={() => {
+                if (!isLoggedIn) {
+                  toast.error("Vui lòng đăng nhập để đăng bài");
+                  return;
+                }
+                router.push("/tour");
+              }}
+              className="text-center min-w-[120px] text-sm font-semibold cursor-pointer text-gray-800 transition-transform duration-300 hover:scale-105 hover:bg-green-500 px-4 py-2 rounded-xl shadow hover:shadow-lg"
+            >
+              Đăng Tour
+            </Typography>
 
             <GlobalOutlined />
           </Flex>
@@ -239,6 +255,9 @@ const Navbar = ({
                           break;
                         case "4":
                           handleLogout();
+                          break;
+                        case "55":
+                          router.push("/Chat");
                           break;
                         case "6":
                           router.push("/my-listings");

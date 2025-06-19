@@ -63,12 +63,12 @@ export default function NewTour() {
   const steps = [
     {
       title: "",
-      content: <Overview />,
+      content: <Overview  isTour={true}/>,
     },
-    {
-      title: "",
-      content: <StepOneStarter />,
-    },
+    // {
+    //   title: "",
+    //   content: <StepOneStarter />,
+    // },
     // {
     //   title: "",
     //   content: <ListingTypeSelector />,
@@ -83,16 +83,16 @@ export default function NewTour() {
     },
     {
       title: "",
-      content: <PlaceDetails />,
+      content: <PlaceDetails isTour={true}/>,
     },
     // {
     //   title: "",
     //   content: <FloorPlan />,
     // },
-    {
-      title: "",
-      content: <StepTwoStarter />,
-    },
+    // {
+    //   title: "",
+    //   content: <StepTwoStarter />,
+    // },
     // {
     //   title: "",
     //   content: <ProccessAmenities />,
@@ -103,16 +103,16 @@ export default function NewTour() {
     },
     {
       title: "",
-      content: <Title />,
+      content: <Title isTour={true} />,
     },
     {
       title: "",
-      content: <Description isTour={true}/>,
+      content: <Description isView={false} isTour={true}/>,
     },
-    {
-      title: "",
-      content: <StepThreeStarter />,
-    },
+    // {
+    //   title: "",
+    //   content: <StepThreeStarter />,
+    // },
     //price
     {
       title: "",

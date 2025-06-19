@@ -1,12 +1,12 @@
 import React from "react";
 import { useAppstore } from "@/store/store";
 import { Input } from "antd";
-const Title = () => {
+const Title = ({isTour}) => {
     const { title, setTitle } = useAppstore();
     return (
         <div className="flex flex-col gap-5 items-center justify-center text-black h-full ">
             <div className="flex flex-col gap-2">
-                <h2 className="font-semibold text-4xl text-center">Tiêu đề cuả điểm lưu trú</h2>
+                <h2 className="font-semibold text-4xl text-center">{isTour ? "Tiêu đề cuả tour của bạn" : "Tiêu đề cuả điểm lưu trú"}</h2>
                 <p className="text-center">Một tiêu đề hấp dẫn có thể thu hút khách hàng và giúp họ hiểu rõ hơn về điểm lưu trú của bạn.</p>
             </div>
             <div className="flex flex-col gap-4">

@@ -12,13 +12,13 @@ import { Layout } from "antd";
 const { Content } = Layout;
 import { listingTypesVi } from "@/data/listingTypes";
 import ListingPhoto from "../../../components/ListingPhoto";
-import ListingAmeneties from "../../../components/ListingAmeneties";
 import ListingMap from "../../../components/ListingMap";
 import TripScheduler from "../../../components/TripScheduler";
+import { SimpleEditor } from "../../../components/tiptap-templates/simple/simple-editor";
 
-const Page = () => {
+const Tour = () => {
     const params = useParams(); // ✅ Lấy params qua hook
-    const listingId = params?.listing;
+    const listingId = params?.tour;
 
     const { setTabIndex, currentListing, setCurrentListing } = useAppstore();
     const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
@@ -44,11 +44,7 @@ const Page = () => {
         };
         getData();
     }, [listingId, isLoggedIn]);
-    const translatedPlaceSpace = {
-        bathrooms: "Phòng tắm",
-        beds: "Giường",
-        guests: "Số lượng khách",
-    }
+
     const formatAddress = (location) => {
         const parts = [
             location?.locality,        // đường
@@ -58,7 +54,7 @@ const Page = () => {
         ].filter(Boolean); // loại bỏ phần null/undefined
         return parts.join(", ");
     };
-    
+
     return (
         <div>
             <AppWrapper>
@@ -91,31 +87,16 @@ const Page = () => {
                                                     </span>
                                                 </p>
                                             </h3>
-                                            <h3 className="text-2xl font-semibold">Loại phòng : {currentListing?.placeType}</h3>
-                                            <ul className="flex gap-5">
-                                                {
-                                                    Object.keys(currentListing?.placeSpace).map((type) => (
-                                                        <li key={type} className="border border-gray-200 p-2 rounded-lg flex flex-col justify-start items-start w-32">
-                                                            <span className="font-bold text-2xl font-semibold">
-                                                                {currentListing?.placeSpace[type]}
-                                                            </span>
-                                                            <span className="capitalize">
-                                                                {translatedPlaceSpace[type]}
-                                                            </span>
-                                                        </li>
-                                                    ))
-                                                }
-                                            </ul>
-                                            <h3 className="text-2xl font-bold">Mô tả</h3>
-                                            <p>{currentListing?.description}</p>
-                                            <ListingAmeneties />
+                                            <h3 className="text-2xl text-green-500 text-center font-bold">Thông tin tour</h3>
+                                            <SimpleEditor isView={true} content={currentListing?.description} />
+                    
                                             <ListingMap />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="relative">
                                     <div className="sticky top-20">
-                                        <TripScheduler listingId={currentListing?.id} isTour={false} />
+                                        <TripScheduler listingId={currentListing?.id} isTour={true} />
                                     </div>
                                 </div>
                             </div>
@@ -127,4 +108,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default Tour;

@@ -2,7 +2,7 @@
 
 import { Image } from "antd";
 
-export default function Overview() {
+export default function Overview({ isTour }: { isTour: boolean }) {
   const MainTitle1 = "Bắt đầu trải nghiệm";
   const MainTitle2 = " với vietrail";
   const data = [
@@ -26,38 +26,50 @@ export default function Overview() {
     },
   ];
   return (
-    <div className="flex  mt-7 justify-between items-center px-32 ">
-      <div>
-        <strong className="text-5xl max-w-96 leading-normal text-airbnb-light-black text-black">
-          <h1>{MainTitle1}</h1>
-          <h1>{MainTitle2}</h1>
-        </strong>
-      </div>
-      <ul className="flex flex-col gap-16">
-        {data.map((item, index) => (
-          <li
-            key={item.title}
-            className="flex items-center min-h-32 justify-start gap-6"
-          >
-            <strong className="text-2xl pt-5 text-black">
-              <h3>{index + 1}</h3>
-            </strong>
-            <div className="pt-5">
-              <strong className="text-2xl text-black">
-                <h3>{item.title}</h3>
+    <>
+      {!isTour ? (
+        <>
+          <div className="flex  mt-7 justify-between items-center px-32 ">
+            <div>
+              <strong className="text-5xl max-w-96 leading-normal text-airbnb-light-black text-black">
+                <h1>{MainTitle1}</h1>
+                <h1>{MainTitle2}</h1>
               </strong>
-              <p className="text-gray-500">{item.description}</p>
             </div>
-            <div className="relative w-48 h-32 object-cover">
-              <Image
-                src={item.image}
-                alt={item.title}
-                className="object-cover"
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+            <ul className="flex flex-col gap-16">
+              {data.map((item, index) => (
+                <li
+                  key={item.title}
+                  className="flex items-center min-h-32 justify-start gap-6"
+                >
+                  <strong className="text-2xl pt-5 text-black">
+                    <h3>{index + 1}</h3>
+                  </strong>
+                  <div className="pt-5">
+                    <strong className="text-2xl text-black">
+                      <h3>{item.title}</h3>
+                    </strong>
+                    <p className="text-gray-500">{item.description}</p>
+                  </div>
+                  <div className="relative w-48 h-32 object-cover">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      className="object-cover"
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="flex text-center text-4xl font-semibold h-[60vh]   mt-7 justify-center items-center px-32 ">
+            Đăng tải tour du lịch của bạn
+          </div>
+        </>
+      )}
+    </>
   );
 }

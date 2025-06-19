@@ -271,7 +271,7 @@ function CometChatApp({ user, group }: CometChatHomeProps) {
   }, []);
 
   return (
-    <div className="CometChatApp">
+    <div className="CometChatApp h-screen">
       <AppContextProvider>
         {loggedInUser ? (
           <CometChatHome defaultGroup={group} defaultUser={user} />

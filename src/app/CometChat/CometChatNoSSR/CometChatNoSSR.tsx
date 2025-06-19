@@ -10,7 +10,9 @@ import { setupLocalization } from "../../CometChat/utils/utils";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
 import { toast } from "react-toastify";
-
+import AppWrapper from "@/app/wrapper";
+import { Layout } from "antd";
+const { Content } = Layout;
 export const COMETCHAT_CONSTANTS = {
   APP_ID: "2767168b2e8a283d", // Replace with your App ID
   REGION: "us", // Replace with your App Region
@@ -65,14 +67,25 @@ const CometChatNoSSR: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
-      <CometChatProvider>
-        {user ? (
-          <CometChatApp user={user} group={group} />
-        ) : (
-          <div>Đang đăng nhập...</div>
-        )}
-      </CometChatProvider>
+    <div className="min-h-screen" style={{ width: "100vw", height: "100vh" }}>
+      <AppWrapper>
+        <Content
+          style={{
+            padding: 24,
+            margin: 0,
+            minHeight: 280,
+            background: "#fff",
+          }}
+        >
+        <CometChatProvider>
+          {user ? (
+            <CometChatApp user={user} group={group} />
+          ) : (
+            <div>Đang đăng nhập...</div>
+          )}
+        </CometChatProvider>
+        </Content>
+      </AppWrapper>{" "}
     </div>
   );
 };
