@@ -1,7 +1,7 @@
 "use client";
 import "@cometchat/chat-uikit-react/css-variables.css";
 import React from "react";
-import { Button, Space, Table, Modal, Descriptions } from "antd";
+import { Button, Space, Table, Modal, Descriptions, Spin } from "antd";
 import { getTripsAPI, deleteTripByAPI } from "@/lib/trips";
 import { useAppSelector } from "@/lib/hooks";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
@@ -385,12 +385,16 @@ const TripTableComponent = () => {
         okType="danger"
         cancelText="Hủy"
       >
-        {chatUser && (
+        {chatUser ? (
           <div className="messages-wrapper min-w-[100%]">
             <CometChatMessageHeader user={chatUser} />
             <CometChatMessageList user={chatUser} />
             <CometChatMessageComposer user={chatUser} />
           </div>
+        ) : (
+          <p>
+            <Spin />
+          </p>
         )}
       </Modal>
     </div>
