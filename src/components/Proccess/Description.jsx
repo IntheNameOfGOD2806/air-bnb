@@ -2,7 +2,7 @@ import React from "react";
 import { useAppstore } from "../../store/store";
 import { Input } from "antd";
 import { SimpleEditor } from "../tiptap-templates/simple/simple-editor";
-const Description = ({ isTour ,isView}) => {
+const Description = ({ isTour, isView }) => {
     const { description, setDescription } = useAppstore();
     return (
         <>
@@ -24,6 +24,7 @@ const Description = ({ isTour ,isView}) => {
                     </div>
                 ) : (
                     <div className="flex flex-col gap-4">
+                        <h2 className="font-semibold text-4xl text-center"> Điền mô tả cho {isTour ? "tour" : "điểm lưu trú"} của bạn</h2>
                         <SimpleEditor isView={isView} />
                     </div>
                 )
