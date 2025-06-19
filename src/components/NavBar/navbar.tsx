@@ -94,7 +94,7 @@ const Navbar = ({
     },
     {
       key: "55",
-      label: "Chat",
+      label: "Hộp thư",
     },
     {
       key: "6",
