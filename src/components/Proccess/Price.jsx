@@ -13,8 +13,11 @@ const Price = () => {
                 <InputNumber className="border  border-gray-400 h-40 w-[500px] rounded-lg active:border-gray-950 p-6 no-scrollbar text-4xl"
                     value={price || 0}
                     suffix="vnđ"
-                    min={0}
+                    min={1}
+                    // pattern="^[0-9]*$"
                     max={10000000}
+                    accept="^[0-9]*$"
+                    // precision={0}
                     onChange={(value) => { if (value) { setPrice(Number(value)) } else { setPrice(0) } }}
                 />
             </div>
