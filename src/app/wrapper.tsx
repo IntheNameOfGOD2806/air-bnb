@@ -518,7 +518,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           <Input
                             className=""
                             size="large"
-                            placeholder="Username"
+                            placeholder="Tên đăng nhập"
                           />
                         </Form.Item>
                         <Form.Item
@@ -533,7 +533,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           <Input
                             className=""
                             size="large"
-                            placeholder="First Name"
+                            placeholder="Tên"
                           />
                         </Form.Item>
                         <Form.Item
@@ -548,7 +548,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           <Input
                             className=""
                             size="large"
-                            placeholder="Last Name"
+                            placeholder="Họ"
                           />
                         </Form.Item>
                         <Form.Item
@@ -565,7 +565,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                           ]}
                           name="password"
                         >
-                          <Input.Password size="large" placeholder="Password" />
+                          <Input.Password size="large" placeholder="Mật khẩu" />
                         </Form.Item>
                         {/* confirm passwo rd */}
                         <Form.Item
@@ -592,7 +592,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                         >
                           <Input.Password
                             size="large"
-                            placeholder="Confirm Password"
+                            placeholder="Xác nhận mật khẩu"
                           />
                         </Form.Item>
                         <Form.Item>
