@@ -117,9 +117,11 @@ export default function TripScheduler({ listingId, isTour }) {
 
         const res = await createTripAPI(data);
         if (res) {
-            toast.success("Đặt phòng thành công, vui lòng kiểm tra trong mục trip");
+            !isTour && toast.success("Đặt phòng thành công, vui lòng kiểm tra trong mục trip");
+            isTour && toast.success("Đặt tour thành công, vui lòng kiểm tra trong mục trip");
         } else {
-            toast.error("Đặt phòng thất bại");
+            !isTour && toast.error("Đặt phòng thất bại");
+            isTour && toast.error("Đặt tour thất bại");
         }
 
         console.log(res);
@@ -210,7 +212,7 @@ export default function TripScheduler({ listingId, isTour }) {
                 </span>
                 <div className="flex justify-between w-full">
                     <span className="">
-                        {isTour ? currentListing?.price : currentListing?.price}vnĐ
+                        {isTour && currentListing?.price + "vnĐ"}
                         {!isTour && (
                             <span>
                                 {currentListing?.price}vnĐ x {calculateDateDiff()} đêm

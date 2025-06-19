@@ -23,6 +23,7 @@ export const proccessSlice = (set: any, get: any) => ({
   setPlaceAmenities: (placeAmenities: any) => set({ placeAmenities }),
   photos: [],
   setPhotos: (photos: any) => set({ photos })
+  
 });
 
 export type ProccessState = ReturnType<typeof proccessSlice>;

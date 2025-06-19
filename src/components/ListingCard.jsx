@@ -17,7 +17,8 @@ import {
     CometChatUIKit,
 } from "@cometchat/chat-uikit-react";
 import "../app/CometChat/CometChatNoSSR/CometChatNoSSR.css";
-export const ListingCard = ({ data, isMyListing, isTour }) => {
+export const ListingCard = ({ data, isMyListing }) => {
+    const isTour = data?.isTour;
     const defaultAvatar =
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
     const SignUpnCometChat = async (
@@ -212,6 +213,7 @@ export const ListingCard = ({ data, isMyListing, isTour }) => {
                                         <p><strong>Ngày kết thúc:</strong> {trip?.tripinfo?.endDate}</p>
                                         <p><strong>Khách hàng:</strong> {trip?.user?.firstName} {trip?.user?.lastName}</p>
                                         <p><strong>Email:</strong> {trip?.user?.email}</p>
+                                        <p><strong>Username:</strong> {trip?.user?.username}</p>
                                         <Button
                                             type="primary"
                                             onClick={(e) => {
@@ -251,7 +253,7 @@ export const ListingCard = ({ data, isMyListing, isTour }) => {
                 cancelText="Hủy"
             >
                 {chatUser && (
-                    <div className="messages-wrapper">
+                    <div className="w-full   min-w-[100%] messages-wrapper">
                         <CometChatMessageHeader user={chatUser} />
                         <CometChatMessageList user={chatUser} />
                         <CometChatMessageComposer user={chatUser} />
