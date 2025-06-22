@@ -17,6 +17,16 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-shadow": "off",
+      "unicorn/consistent-function-scoping": "off",
+      "@typescript-eslint/ban-types": [
+        "error",
+        {
+          "types": {
+            "{}": false
+          },
+          "extendDefaults": true
+        }
+      ]
     },
   },
 ];
