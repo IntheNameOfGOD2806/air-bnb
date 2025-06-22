@@ -30,12 +30,12 @@ declare module "@mui/material/styles" {
     level2: string;
     level3: string;
   }
-
-  interface Theme {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Theme {
     // Add custom properties here if needed
   }
-
-  interface ThemeOptions {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ThemeOptions {
     // Add custom properties here if needed
   }
 }
