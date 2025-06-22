@@ -26,7 +26,7 @@ export default function DashBoard(): React.JSX.Element {
           xs: 12,
         }}
       >
-        <Budget diff={12} trend="up" sx={{ height: '100%' }} value="124" />
+        <Budget diff={12} trend="up" sx={{ height: '100%' }} value="797" />
       </Grid>
       <Grid
         size={{
@@ -35,7 +35,7 @@ export default function DashBoard(): React.JSX.Element {
           xs: 12,
         }}
       >
-        <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value="101" />
+        <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value="65" />
       </Grid>
       <Grid
         size={{
@@ -44,7 +44,7 @@ export default function DashBoard(): React.JSX.Element {
           xs: 12,
         }}
       >
-        <TasksProgress sx={{ height: '100%' }} value="10" trend="up" diff={16} />
+        <TasksProgress sx={{ height: '100%' }} value="20" trend="up" diff={16} />
       </Grid>
       <Grid
         size={{
@@ -53,7 +53,7 @@ export default function DashBoard(): React.JSX.Element {
           xs: 12,
         }}
       >
-        <TotalProfit sx={{ height: '100%' }} value="18" />
+        <TotalProfit sx={{ height: '100%' }} value="50" />
       </Grid>
       <Grid
         size={{
@@ -76,7 +76,7 @@ export default function DashBoard(): React.JSX.Element {
           xs: 12,
         }}
       >
-        <Traffic chartSeries={[63, 15, 22]} labels={['Desktop', 'Tablet', 'Phone']} sx={{ height: '100%' }} />
+        <Traffic chartSeries={[502, 103, 175]} labels={['Desktop', 'Tablet', 'Phone']} sx={{ height: '100%' }} />
       </Grid>
       <Grid
         size={{

@@ -35,7 +35,7 @@ export function TasksProgress({ diff, trend, sx, value }: TotalCustomersProps): 
               <UsersIcon fontSize="var(--icon-fontSize-lg)" />
             </Avatar>
           </Stack>
-          {diff ? (
+          {/* {diff ? (
             <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
               <Stack sx={{ alignItems: 'center' }} direction="row" spacing={0.5}>
                 <TrendIcon color={trendColor} fontSize="var(--icon-fontSize-md)" />
@@ -47,7 +47,7 @@ export function TasksProgress({ diff, trend, sx, value }: TotalCustomersProps): 
                 So với tháng trước
               </Typography>
             </Stack>
-          ) : null}
+          ) : null} */}
         </Stack>
       </CardContent>
     </Card>
