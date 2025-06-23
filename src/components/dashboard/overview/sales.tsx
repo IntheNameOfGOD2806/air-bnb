@@ -46,6 +46,33 @@ export function Sales({ chartSeries, sx }: SalesProps): React.JSX.Element {
   );
 }
 
+export function BookingsThisWeek({ chartSeries, sx }: any): React.JSX.Element {
+  const chartOptions = useBookingChartOptions();
+
+  return (
+    <Card sx={sx}>
+      <CardHeader
+        action={
+          <Button color="inherit" size="small" startIcon={<ArrowClockwiseIcon fontSize="var(--icon-fontSize-md)" />}>
+            Sync
+          </Button>
+        }
+        title="Lượt Booking Trong Tuần"
+      />
+      <CardContent>
+        <Chart height={350} options={chartOptions} series={chartSeries} type="bar" width="100%" />
+      </CardContent>
+      <Divider />
+      <CardActions sx={{ justifyContent: 'flex-end' }}>
+        <Button color="inherit" endIcon={<ArrowRightIcon fontSize="var(--icon-fontSize-md)" />} size="small">
+          Xem chi tiết
+        </Button>
+      </CardActions>
+    </Card>
+  );
+}
+
+
 function useChartOptions(): ApexOptions {
   const theme = useTheme();
 
@@ -67,12 +94,45 @@ function useChartOptions(): ApexOptions {
     xaxis: {
       axisBorder: { color: theme.palette.divider, show: true },
       axisTicks: { color: theme.palette.divider, show: true },
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
       labels: { offsetY: 5, style: { colors: theme.palette.text.secondary } },
     },
     yaxis: {
       labels: {
         formatter: (value) => (value > 0 ? `${value}K` : `${value}`),
+        offsetX: -10,
+        style: { colors: theme.palette.text.secondary },
+      },
+    },
+  };
+}
+function useBookingChartOptions(): ApexOptions {
+  const theme = useTheme();
+
+  return {
+    chart: { background: 'transparent', stacked: false, toolbar: { show: false } },
+    colors: [theme.palette.success.main, alpha(theme.palette.success.main, 0.25)],
+    dataLabels: { enabled: false },
+    fill: { opacity: 1, type: 'solid' },
+    grid: {
+      borderColor: theme.palette.divider,
+      strokeDashArray: 2,
+      xaxis: { lines: { show: false } },
+      yaxis: { lines: { show: true } },
+    },
+    legend: { show: false },
+    plotOptions: { bar: { columnWidth: '50%' } },
+    stroke: { colors: ['transparent'], show: true, width: 2 },
+    theme: { mode: theme.palette.mode },
+    xaxis: {
+      categories: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
+      axisBorder: { color: theme.palette.divider, show: true },
+      axisTicks: { color: theme.palette.divider, show: true },
+      labels: { offsetY: 5, style: { colors: theme.palette.text.secondary } },
+    },
+    yaxis: {
+      labels: {
+        formatter: (value) => (value > 0 ? `${value}` : '0'),
         offsetX: -10,
         style: { colors: theme.palette.text.secondary },
       },

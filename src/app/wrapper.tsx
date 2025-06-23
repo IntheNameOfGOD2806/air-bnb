@@ -201,7 +201,7 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     // setUser(newUser);
                   })
                   .catch((error) => {
-                    toast.error("Login failed");
+                    // toast.error("Login failed");
                     console.error("Login failed:", error);
                   });
               });
