@@ -160,7 +160,7 @@ const Page = () => {
                                 </div>
                                 <div>
                                     <h2 className="text-5xl font-bold">Danh sách xe</h2>
-                                    <div className="grid grid-cols-2 gap-5">
+                                    <div className="mt-5 grid grid-cols-2 gap-5">
                                         {
                                             foundedVehicleListings?.length === 0 && (
                                                 <p className="mt-32 font-bold text-xl flex items-center justify-center text-center text-gray-500">Không có dữ liệu,hiện tại không có xe nào</p>
@@ -185,6 +185,15 @@ const Page = () => {
                                                         </h3>
                                                         <p className="text-gray-500 text-sm">
                                                             {formatAddress(listing?.locationData)}
+                                                        </p>
+                                                        <label htmlFor="" className="font-semibold">Giá:</label>
+                                                        <p className="text-gray-500 text-sm">
+                                                            {listing?.price} vnd/h
+                                                        </p>
+                                                        {/* sdt */}
+                                                        <label htmlFor="" className="font-semibold">Số điện thoại liên hệ:</label>
+                                                        <p className="text-gray-500 text-sm">
+                                                            {listing?.locationData?.phone}
                                                         </p>
                                                     </div>
                                                 </div>

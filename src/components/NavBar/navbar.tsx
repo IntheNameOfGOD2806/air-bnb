@@ -104,6 +104,10 @@ const Navbar = ({
       key: "7",
       label: "Trip và tour của tôi",
     },
+    // {
+    //   key: "8",
+    //   label: "Phương tiện",
+    // },
     {
       key: "3",
       label: "Đăng Bài",
@@ -155,6 +159,10 @@ const Navbar = ({
             // disabled: true,
           },
           {
+            key: "8",
+            label: "Phương tiện",
+          },
+          {
             key: "3",
             label: "Blog",
           },
@@ -184,6 +192,10 @@ const Navbar = ({
             case "4":
               router.push("/about-us");
               setSelectedKey("4");
+              break;
+            case "8":
+              router.push("/vehicles");
+              setSelectedKey("8");
               break;
             default:
               break;
