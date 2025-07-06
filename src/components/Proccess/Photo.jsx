@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useAppstore } from "@/store/store";
 import { CldUploadButton } from "next-cloudinary";
 import { Image } from "antd";
-const Photo = ({isTour}) => {
+const Photo = ({isTour, isVehicle}) => {
     const { photos, setPhotos } = useAppstore();
     const [PhotosArray, setPhotosArray] = React.useState([...photos]);
     console.log('check', photos)
@@ -16,8 +16,9 @@ const Photo = ({isTour}) => {
     return (
         <>
             <div className="text-black flex gap-5 justify-center items-center flex-col h-full">
-                <h2 className="font-semibold text-4xl">{isTour ? 'Thêm ảnh cho tour của bạn' : 'Thêm ảnh cho điểm lưu trú của bạn'}</h2>
-                <p className="text-center">Bạn cần ít nhất 5 ảnh,bao gồm ảnh phòng ngủ, phòng tắm, bếp, và khu vực xung quanh.</p>
+                <h2 className="font-semibold text-4xl">{isTour ? 'Thêm ảnh cho tour của bạn' : isVehicle ? 'Thêm ảnh cho xe của bạn' : 'Thêm ảnh cho điểm lưu trú của bạn'}</h2>
+                {!isTour && !isVehicle && <p className="text-center">Bạn cần ít nhất 5 ảnh,bao gồm ảnh phòng ngủ, phòng tắm, bếp, và khu vực xung quanh.</p>}
+      
                 <CldUploadButton
                     options={{
                         multiple: true,

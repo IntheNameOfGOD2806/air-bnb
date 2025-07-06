@@ -2,7 +2,7 @@ import { useAppstore } from "@/store/store";
 import { Col, Form, Input, InputNumber, Row } from "antd";
 import { DatePicker } from "antd";
 import FormInput from "../common/FormInput";
-const PlaceDetails = ({ isTour }) => {
+const PlaceDetails = ({ isTour, isVehicle }) => {
   const { locationData, setLocationData } = useAppstore();
   const [form1] = Form.useForm();
   const handleChange = (name, value) => {
@@ -12,7 +12,7 @@ const PlaceDetails = ({ isTour }) => {
     <div className="text-black flex justify-center items-center h-full flex-col gap-2 w-full">
       <div className="flex flex-col gap-3">
         <h2 className="font-semibold text-4xl">
-          {isTour ? "Thông tin TOUR của bạn" : "Thông tin điểm lưu trú của bạn"}
+          {isTour ? "Thông tin TOUR của bạn" : isVehicle ? "Thông tin xe của bạn" : "Thông tin điểm lưu trú của bạn"}
         </h2>
         <p className="text-gray-500">
           Địa điểm của bạn chỉ được chia sẻ với khách hàng sau khi đã tiến hành
@@ -89,6 +89,22 @@ const PlaceDetails = ({ isTour }) => {
                     onChange={(e) => handleChange("district", e.target.value)}
                   />
                 </Form.Item>
+                {/* sdt */}
+                {isVehicle && <Form.Item
+                  initialValue={locationData?.phone}
+                  label="Số điện thoại"
+                  name="phone"
+                  rules={[{
+                    required: true, message: "Vui lòng nhập số điện thoại",
+                  },
+                  // { type: 'number', message: "Vui lòng nhập số điện thoại phải là số" }
+                  ]}
+                >
+                  <Input
+                    placeholder="Nhập số điện thoại"
+                    onChange={(e) => handleChange("phone", e.target.value)}
+                  />
+                </Form.Item>}
                 {
                   isTour && (
                     <>

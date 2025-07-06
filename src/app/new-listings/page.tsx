@@ -61,7 +61,7 @@ export default function NewListings() {
   const steps = [
     {
       title: "",
-      content: <Overview isTour={false} />,
+      content: <Overview isTour={false} isVehicle={false} />,
     },
     {
       title: "",
@@ -77,11 +77,11 @@ export default function NewListings() {
     },
     {
       title: "",
-      content: <PlaceLocation isTour={false} />,
+      content: <PlaceLocation isTour={false} isVehicle={false} />,
     },
     {
       title: "",
-      content: <PlaceDetails isTour={false} />,
+      content: <PlaceDetails isTour={false} isVehicle={false} />,
     },
     {
       title: "",
@@ -97,15 +97,15 @@ export default function NewListings() {
     },
     {
       title: "",
-      content: <Photo isTour={false} />,
+      content: <Photo isTour={false} isVehicle={false} />,
     },
     {
       title: "",
-      content: <Title isTour={false}  />,
+      content: <Title isTour={false} isVehicle={false} />,
     },
     {
       title: "",
-      content: <Description isTour={false} isView={false} />,
+      content: <Description isVehicle={false} isTour={false} isView={false} />,
     },
     {
       title: "",
@@ -114,12 +114,12 @@ export default function NewListings() {
     //price
     {
       title: "",
-      content: <Price isTour={false} />,
+      content: <Price isVehicle={false} isTour={false} />,
     },
     //listingCreated
     {
       title: "",
-      content: <ListingCreated isTour={false} />,
+      content: <ListingCreated isVehicle={false} isTour={false} />,
     },
   ];
 

@@ -29,6 +29,9 @@ export const getAllListingsAPI = async () => {
           isTour: {
             equals: '',
           },
+          isVehicle: {
+            equals: '',
+          },
         },
       },
       {
@@ -80,6 +83,39 @@ export const getTourListings = async () => {
         where: {
           isTour: {
             equals: 1,
+          },
+          isVehicle: {
+            equals: '',
+          },
+        },
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+    const result = await get(createUrl(`api/listings?${query}`));
+
+    if (!result?.data) {
+      toast.error("Không có điểm lưu trú");
+      return null;
+    }
+    return result?.data;
+  } catch (error) {
+    console.log(error?.message ?? error);
+    return null;
+  }
+};
+//get vehicel
+export const getVehicleListings = async () => {
+  try {
+    const query = qs.stringify(
+      {
+        where: {
+          isVehicle: {
+            equals: 1,
+          },
+          isTour: {
+            equals: '',
           },
         },
       },

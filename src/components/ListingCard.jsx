@@ -19,6 +19,7 @@ import {
 import "../app/CometChat/CometChatNoSSR/CometChatNoSSR.css";
 export const ListingCard = ({ data, isMyListing }) => {
     const isTour = data?.isTour;
+    const isVehicle = data?.isVehicle;
     const defaultAvatar =
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ395qcYOPsd3cuhPPIzz871lLgqHr0Di0F5w&s";
     const SignUpnCometChat = async (
@@ -137,6 +138,8 @@ export const ListingCard = ({ data, isMyListing }) => {
                     setCurrentListing(data);
                     if (isTour) {
                         router.push(`/tour-detail/${data.id}`);
+                    } else if (isVehicle) {
+                        router.push(`/vehicle-detail/${data.id}`);
                     } else {
                         router.push(`/listing/${data.id}`);
                     }

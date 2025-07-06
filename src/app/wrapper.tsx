@@ -61,7 +61,7 @@ import MapView from "@/components/views/MapView";
 import SwiperCarousel from "@/components/Carousel/landingCarousel";
 import Carousel from "@/components/Carousel/landingCarousel";
 import ImageCarousel from "@/components/Carousel/landingCarousel";
-import { getAllListingsAPI, getTourListings } from "@/lib/listings";
+import { getAllListingsAPI, getTourListings, getVehicleListings } from "@/lib/listings";
 import { useAppstore } from "@/store/store";
 import { listingTypes } from "@/data/listingTypes";
 import {
@@ -99,7 +99,7 @@ export const COMETCHAT_CONSTANTS = {
 const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname(); // ví dụ: "/listings/abc"
   const dispatch = useAppDispatch();
-  const { setListings, isMapView, setIsMapView, setTourListings } =
+  const { setListings, isMapView, setIsMapView, setTourListings, setVehicleListings } =
     useAppstore();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [openModalAuth, setOpenModalAuth] = useState(false);
@@ -146,9 +146,17 @@ const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       setTourListings(result);
       setLiatingLoading(false);
     };
+    const getVehicleData = async () => {
+      setLiatingLoading(true);
+      const result = await getVehicleListings();
+      console.log("result", result);
+      setVehicleListings(result);
+      setLiatingLoading(false);
+    };
 
     getData();
     getTourData();
+    getVehicleData();
   }, []);
   useEffect(() => {
     setTabIndex(selectedKey);

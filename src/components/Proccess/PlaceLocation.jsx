@@ -5,7 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { Spin } from "antd";
 import { useAppstore } from "@/store/store";
 
-const PlaceLocation = ({isTour}) => {
+const PlaceLocation = ({isTour, isVehicle}) => {
   const { setMapData, setLocationData } = useAppstore();
   const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
@@ -72,7 +72,7 @@ const PlaceLocation = ({isTour}) => {
     <div className="flex text-black flex-col items-center justify-center h-full gap-5">
       <h2 className="font-semibold text-4xl">Bản đồ tương tác</h2>
       <p className="text-center">
-        {isTour ? "Click chuột chọn vị trí tour của bạn" : "Click chuột chọn vị trí điểm lưu trú của bạn"}
+        {isTour ? "Click chuột chọn vị trí tour của bạn" : isVehicle ? "Click chuột chọn vị trí xe của bạn" : "Click chuột chọn vị trí điểm lưu trú của bạn"}
       </p>
       <div className="h-[400px] w-[800px] relative">
         {!loadingLocation ? (

@@ -15,14 +15,54 @@ import ListingPhoto from "../../../components/ListingPhoto";
 import ListingAmeneties from "../../../components/ListingAmeneties";
 import ListingMap from "../../../components/ListingMap";
 import TripScheduler from "../../../components/TripScheduler";
+function getHaversineDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Earth's radius in kilometers
+
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = R * c; // Distance in kilometers
+    return distance;
+}
+
+function getListingsWithinRadius(centerLatitude, centerLongitude, radiusKm, allListingsData) {
+    const listingsInRange = [];
+
+    for (const listing of allListingsData) {
+        // Ensure the listing has mapData and nested latitude/longitude properties
+        if (listing.mapData && typeof listing.mapData.latitude === 'number' && typeof listing.mapData.longitude === 'number') {
+            const distance = getHaversineDistance(
+                centerLatitude,
+                centerLongitude,
+                listing.mapData.latitude, // Accessing latitude from mapData
+                listing.mapData.longitude  // Accessing longitude from mapData
+            );
+
+            if (distance <= radiusKm) {
+                listingsInRange.push(listing);
+            }
+        } else {
+            console.warn('Listing missing valid mapData.latitude or mapData.longitude:', listing);
+        }
+    }
+
+    return listingsInRange;
+}
 
 const Page = () => {
     const params = useParams(); // ✅ Lấy params qua hook
     const listingId = params?.listing;
-
+    const { vehicleListings } = useAppstore();
     const { setTabIndex, currentListing, setCurrentListing } = useAppstore();
     const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
-
+    const foundedVehicleListings = getListingsWithinRadius(currentListing?.mapData.latitude, currentListing?.mapData.longitude, 10, vehicleListings);
     useEffect(() => {
         setTabIndex(0);
     }, []);
@@ -58,7 +98,7 @@ const Page = () => {
         ].filter(Boolean); // loại bỏ phần null/undefined
         return parts.join(", ");
     };
-    
+
     return (
         <div>
             <AppWrapper>
@@ -116,6 +156,41 @@ const Page = () => {
                                 <div className="relative">
                                     <div className="sticky top-20">
                                         <TripScheduler listingId={currentListing?.id} isTour={false} />
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 className="text-5xl font-bold">Danh sách xe</h2>
+                                    <div className="grid grid-cols-2 gap-5">
+                                        {
+                                            foundedVehicleListings?.length === 0 && (
+                                                <p className="mt-32 font-bold text-xl flex items-center justify-center text-center text-gray-500">Không có dữ liệu,hiện tại không có xe nào</p>
+                                            )
+                                        }
+                                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                                            {foundedVehicleListings?.map((listing) => (
+                                                <div
+                                                    key={listing?.id}
+                                                    className="bg-white rounded-2xl min-w-[250px] shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col"
+                                                >
+                                                    <div className="w-full h-40 bg-gray-100 overflow-hidden">
+                                                        <img
+                                                            src={listing?.photos[0]}
+                                                            alt={listing?.title}
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+                                                    <div className="p-4 flex flex-col gap-2">
+                                                        <h3 className="text-lg font-semibold text-gray-800 line-clamp-2">
+                                                            {listing?.title}
+                                                        </h3>
+                                                        <p className="text-gray-500 text-sm">
+                                                            {formatAddress(listing?.locationData)}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

@@ -26,7 +26,7 @@ import { useAppstore } from "@/store/store";
 import { toast } from "react-toastify";
 
 
-export default function NewTour() {
+export default function NewVehicle() {
   const router = useRouter();
   const proccess = useAppstore();
   const [current, setCurrent] = useState(0);
@@ -63,7 +63,7 @@ export default function NewTour() {
   const steps = [
     {
       title: "",
-      content: <Overview  isTour={true} isVehicle={false}/>,
+      content: <Overview isTour={false}  isVehicle={true}/>,
     },
     // {
     //   title: "",
@@ -79,11 +79,11 @@ export default function NewTour() {
     // },
     {
       title: "",
-      content: <PlaceLocation  isTour={true} isVehicle={false}/>,
+      content: <PlaceLocation isTour={false}  isVehicle={true}/>,
     },
     {
       title: "",
-      content: <PlaceDetails isTour={true} isVehicle={false}/>,
+      content: <PlaceDetails isTour={false}  isVehicle={true}/>,
     },
     // {
     //   title: "",
@@ -99,15 +99,15 @@ export default function NewTour() {
     // },
     {
       title: "",
-      content: <Photo isTour={true} isVehicle={false} />,
+      content: <Photo isVehicle={true} isTour={false} />,
     },
     {
       title: "",
-      content: <Title isTour={true} isVehicle={false} />,
+      content: <Title isVehicle={true} isTour={false} />,
     },
     {
       title: "",
-      content: <Description isView={false} isTour={true} isVehicle={false}/>,
+      content: <Description isView={false} isVehicle={true} isTour={false}/>,
     },
     // {
     //   title: "",
@@ -116,12 +116,12 @@ export default function NewTour() {
     //price
     {
       title: "",
-      content: <Price isTour={true} isVehicle={false} />,
+      content: <Price isVehicle={true} isTour={false} />,
     },
     //listingCreated
     {
       title: "",
-      content: <ListingCreated isTour={true} isVehicle={false} />,
+      content: <ListingCreated isVehicle={true} isTour={false} />,
     },
   ];
 
