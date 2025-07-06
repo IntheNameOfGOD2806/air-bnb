@@ -7,16 +7,16 @@ import { selectUserInfo } from "@/lib/features/auth/authSlice";
 
 const ITEMS_PER_PAGE = 10;
 
-export default function ListViewTour({ type }) {
+export default function ListViewVehicle({ type }) {
   const isLoggedIn = !!useAppSelector(selectUserInfo)?.id;
-  const { tourListings } = useAppstore();
+  const { vehicleListings } = useAppstore();
   const [currentPage, setCurrentPage] = useState(1);
 
   // Tính số trang
-  const totalPages = Math.ceil((tourListings?.length || 0) / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil((vehicleListings?.length || 0) / ITEMS_PER_PAGE);
 
   // Lấy dữ liệu trang hiện tại
-  let paginatedListings = tourListings?.slice(
+  let paginatedListings = vehicleListings?.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -36,12 +36,12 @@ export default function ListViewTour({ type }) {
     <div className="px-5 py-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {paginatedListings?.map((listing) => (
-          <ListingCard key={listing.id} data={listing} isMyListing={false} isTour={true} isWishList={false} isVehicle={false} />
+          <ListingCard key={listing.id} data={listing} isMyListing={false} isTour={true} isWishList={false} />
         ))}
         {/* No data */}
         {paginatedListings?.length === 0 && <p className="mt-32 font-bold text-xl flex items-center justify-center text-center text-gray-500">Không có dữ liệu</p>}
       </div>
-      {tourListings?.length === 0 && <p className="mt-32 font-bold text-xl flex items-center justify-center text-center text-gray-500">Không có dữ liệu, hãy sử dụng tính năng "Đăng Bài" để đăng bài</p>}
+      {vehicleListings?.length === 0 && <p className="mt-32 font-bold text-xl flex items-center justify-center text-center text-gray-500">Không có dữ liệu, hãy sử dụng tính năng "Đăng Bài" để đăng bài</p>}
 
       {/* Phân trang */}
       {isLoggedIn && <div className="flex justify-center mt-8 gap-2">

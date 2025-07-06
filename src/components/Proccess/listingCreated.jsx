@@ -7,7 +7,7 @@ import { useAppstore } from "@/store/store";
 import { useAppSelector } from "@/lib/hooks";
 import { createListingAPI } from "@/lib/listings";
 import { selectUserInfo } from "@/lib/features/auth/authSlice";
-const listingCreated = ({ isTour }) => {
+const listingCreated = ({ isTour, isVehicle }) => {
     const router = useRouter();
     const userInfo = useAppSelector(selectUserInfo);
     const [loading, setLoading] = React.useState(false);
@@ -47,7 +47,8 @@ const listingCreated = ({ isTour }) => {
             description : isTour ? JSON.stringify(description) : description,
             placeAmeneties: placeAmenities,
             photos,
-            isTour: !!isTour ? true : false
+            isTour: !!isTour ? true : false,
+            isVehicle: !!isVehicle ? true : false
         })
         if (result?.error) {
             setIsFailed(true);

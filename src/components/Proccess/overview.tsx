@@ -2,7 +2,7 @@
 
 import { Image } from "antd";
 
-export default function Overview({ isTour }: { isTour: boolean }) {
+export default function Overview({ isTour, isVehicle }: { isTour: boolean, isVehicle: boolean }) {
   const MainTitle1 = "Bắt đầu trải nghiệm";
   const MainTitle2 = " với vietrail";
   const data = [
@@ -27,7 +27,7 @@ export default function Overview({ isTour }: { isTour: boolean }) {
   ];
   return (
     <>
-      {!isTour ? (
+      {!isTour && !isVehicle ? (
         <>
           <div className="flex  mt-7 justify-between items-center px-32 ">
             <div>
@@ -63,10 +63,17 @@ export default function Overview({ isTour }: { isTour: boolean }) {
             </ul>
           </div>
         </>
-      ) : (
+      ) :
+      isTour ? (
         <>
           <div className="flex text-center text-4xl font-semibold h-[60vh]   mt-7 justify-center items-center px-32 ">
             Đăng tải tour du lịch của bạn
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="flex text-center text-4xl font-semibold h-[60vh]   mt-7 justify-center items-center px-32 ">
+            Đăng tải xe của bạn
           </div>
         </>
       )}

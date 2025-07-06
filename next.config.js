@@ -1,6 +1,7 @@
 
 
 const nextConfig = {
+  output: 'standalone',
   /* config options here */
   reactStrictMode: false,
   env: {

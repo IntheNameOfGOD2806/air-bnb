@@ -2,7 +2,7 @@ import React from "react";
 import { useAppstore } from "../../store/store";
 import { Input } from "antd";
 import { SimpleEditor } from "../tiptap-templates/simple/simple-editor";
-const Description = ({ isTour, isView }) => {
+const Description = ({ isTour, isView, isVehicle }) => {
     const { description, setDescription } = useAppstore();
     return (
         <>
@@ -16,6 +16,7 @@ const Description = ({ isTour, isView }) => {
             {
                 !isTour ? (
                     <div className="flex flex-col gap-4">
+                          <h2 className="font-semibold text-4xl text-center"> Điền mô tả cho {isTour ?  "tour" : isVehicle ? "xe" : "điểm lưu trú"} của bạn</h2>
                         <Input.TextArea className="border  border-gray-400 h-40 w-[500px] rounded-lg active:border-gray-950 p-6 no-scrollbar text-4xl"
                             value={description}
                             onChange={(e) => { if (e.target.value.length <= 500) { setDescription(e.target.value) } }}
