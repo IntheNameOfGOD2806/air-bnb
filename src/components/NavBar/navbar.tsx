@@ -206,6 +206,18 @@ const Navbar = ({
       <Flex align="center" justify="end" gap={20}>
         <Space align="start">
           <Flex gap={5}>
+          <Typography
+              onClick={() => {
+                if (!isLoggedIn) {
+                  toast.error("Vui lòng đăng nhập để đăng bài");
+                  return;
+                }
+                router.push("/vehicle");
+              }}
+              className="text-center min-w-[120px] text-sm font-semibold cursor-pointer text-gray-800 transition-transform duration-300 hover:scale-105 hover:bg-green-500 px-4 py-2 rounded-xl shadow hover:shadow-lg"
+            >
+              Đăng Phương tiện
+            </Typography>
             <Typography
               onClick={() => {
                 if (!isLoggedIn) {
