@@ -57,7 +57,7 @@ export function BookingsThisWeek({ chartSeries, sx }: any): React.JSX.Element {
             Sync
           </Button>
         }
-        title="Lượt Booking Trong Tuần"
+        title="Lượt Booking Trong Tháng"
       />
       <CardContent>
         <Chart height={350} options={chartOptions} series={chartSeries} type="bar" width="100%" />
@@ -125,7 +125,7 @@ function useBookingChartOptions(): ApexOptions {
     stroke: { colors: ['transparent'], show: true, width: 2 },
     theme: { mode: theme.palette.mode },
     xaxis: {
-      categories: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
+      categories: [ 'Th4', 'Th5', 'Th6', 'Th7'],
       axisBorder: { color: theme.palette.divider, show: true },
       axisTicks: { color: theme.palette.divider, show: true },
       labels: { offsetY: 5, style: { colors: theme.palette.text.secondary } },

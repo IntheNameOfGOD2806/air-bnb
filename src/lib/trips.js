@@ -62,6 +62,17 @@ export const getTripsAPI = async (userId) => {
     return result?.data;
   }
 };
+export const getAllTripsAPI = async () => {
+   const result = await get(createUrl(`api/trips`));
+   console.log("223424424242", result);
+   if (!result?.data?.length) {
+     toast.error("Đã xảy ra lỗi khi lấy danh sách trip");
+     return null;
+   } else {
+     // toast.success("Trip đã được tạo thành công");
+     return result?.data;
+   }
+ };
 //delete
 export const deleteTripByAPI = async (tripId) => {
   const result = await del(createUrl(`api/trips/${tripId}`));
