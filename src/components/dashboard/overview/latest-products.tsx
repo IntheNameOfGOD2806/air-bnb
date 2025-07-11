@@ -1,19 +1,8 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardHeader from '@mui/material/CardHeader';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import type { SxProps } from '@mui/material/styles';
-import { ArrowRightIcon } from '@phosphor-icons/react/dist/ssr/ArrowRight';
-import { DotsThreeVerticalIcon } from '@phosphor-icons/react/dist/ssr/DotsThreeVertical';
+import { Table, Avatar, Typography, Button, Card, Dropdown, Menu, Tag } from 'antd';
+import { MoreOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import { useAppstore } from '@/store/store';
 
 export interface Product {
   id: string;
@@ -24,54 +13,92 @@ export interface Product {
 
 export interface LatestProductsProps {
   products?: Product[];
-  sx?: SxProps;
 }
 
-export function LatestProducts({ products = [], sx }: LatestProductsProps): React.JSX.Element {
-  return (
-    <Card sx={sx}>
-      <CardHeader title="Latest products" />
-      <Divider />
-      <List>
-        {products.map((product, index) => (
-          <ListItem divider={index < products.length - 1} key={product.id}>
-            <ListItemAvatar>
-              {product.image ? (
-                <Box component="img" src={product.image} sx={{ borderRadius: 1, height: '48px', width: '48px' }} />
-              ) : (
-                <Box
-                  sx={{
-                    borderRadius: 1,
-                    backgroundColor: 'var(--mui-palette-neutral-200)',
-                    height: '48px',
-                    width: '48px',
-                  }}
-                />
-              )}
-            </ListItemAvatar>
-            <ListItemText
-              primary={product.name}
-              primaryTypographyProps={{ variant: 'subtitle1' }}
-              secondary={`Updated ${dayjs(product.updatedAt).format('MMM D, YYYY')}`}
-              secondaryTypographyProps={{ variant: 'body2' }}
-            />
-            <IconButton edge="end">
-              <DotsThreeVerticalIcon weight="bold" />
-            </IconButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <CardActions sx={{ justifyContent: 'flex-end' }}>
-        <Button
-          color="inherit"
-          endIcon={<ArrowRightIcon fontSize="var(--icon-fontSize-md)" />}
-          size="small"
-          variant="text"
+export function LatestProducts({ products = [] }: LatestProductsProps): React.JSX.Element {
+  const { tourListings } = useAppstore();
+  const { listings } = useAppstore();
+  const columns = [
+    {
+      title: 'Ảnh',
+      dataIndex: 'image',
+      key: 'image',
+      width: 64,
+      render: (image: string) =>
+        image ? (
+          <Avatar shape="square" size={48} src={image} />
+        ) : (
+          <Avatar shape="square" size={48} style={{ backgroundColor: '#f0f0f0' }} />
+        ),
+    },
+    {
+      title: 'Tên listing',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text: string) => <Typography.Text strong>{text}</Typography.Text>,
+    },
+    {
+      title: 'Ngày đăng',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      render: (date: Date) => (
+        <Typography.Text type="secondary">{`Đăng ngày ${dayjs(date).format('DD/MM/YYYY')}`}</Typography.Text>
+      ),
+    },
+    {
+      title: '',
+      key: 'action',
+      width: 48,
+      render: () => (
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key="1">Hành động 1</Menu.Item>
+              <Menu.Item key="2">Hành động 2</Menu.Item>
+            </Menu>
+          }
+          trigger={['click']}
         >
+          <Button type="text" icon={<MoreOutlined />} />
+        </Dropdown>
+      ),
+    },
+  ];
+
+  const dataSource = products.map((product) => ({
+    key: product.id,
+    ...product,
+  }));
+
+  return (
+    <Card
+      title={
+        <div>
+          <span className="text-2xl font-bold">Danh sách listings</span>
+          <div className="text-base mx-1">Số tour: 
+            <Tag color="blue">{tourListings?.length}</Tag>
+            </div>
+          <div className="text-base mx-1">Số điểm lưu trú: 
+            <Tag color="green">{listings?.length}</Tag>
+            </div>
+        </div>
+      }
+      extra={
+        <Button type="link" icon={<ArrowRightOutlined />} className="text-base">
           View all
         </Button>
-      </CardActions>
+      }
+    >
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        pagination={{
+          pageSize: 5,
+          showSizeChanger: false,
+          showQuickJumper: true,
+        }}
+        rowKey="id"
+      />
     </Card>
   );
 }
