@@ -352,7 +352,7 @@ export default function DashBoard(): React.JSX.Element {
             xs: 12,
           }}
         >
-          <Budget diff={12} trend="up" sx={{ height: "100%" }} value="797" />
+          <Budget diff={12} trend="up" sx={{ height: "100%" }} value="1594" />
         </Grid>
         <Grid
           size={{
@@ -365,7 +365,7 @@ export default function DashBoard(): React.JSX.Element {
             diff={16}
             trend="down"
             sx={{ height: "100%" }}
-            value="65"
+            value="130"
           />
         </Grid>
         <Grid
@@ -377,7 +377,7 @@ export default function DashBoard(): React.JSX.Element {
         >
           <TasksProgress
             sx={{ height: "100%" }}
-            value="20"
+            value="40"
             trend="up"
             diff={16}
           />
@@ -389,7 +389,22 @@ export default function DashBoard(): React.JSX.Element {
             xs: 12,
           }}
         >
-          <TotalProfit sx={{ height: "100%" }} value="50" />
+          <TotalProfit sx={{ height: "100%" }} value="100" />
+        </Grid>
+        <Grid
+          size={{
+            lg: 24,
+            sm: 24,
+            xs: 24,
+          }}
+        >
+          <TotalCustomers
+            isVehicle={true}
+            diff={16}
+            trend="down"
+            sx={{ height: "100%",maxWidth: "300px" }}
+            value="15"
+          />
         </Grid>
         <Grid
           size={{
@@ -414,7 +429,7 @@ export default function DashBoard(): React.JSX.Element {
             chartSeries={[
               {
                 name: "Bookings",
-                data: [10, 20, 20, 15], // Thứ 2 -> Chủ nhật
+                data: [0, 0, 3, 2], // Thứ 2 -> Chủ nhật
               },
             ]}
           />
@@ -427,11 +442,12 @@ export default function DashBoard(): React.JSX.Element {
           }}
         >
           <Traffic
-            chartSeries={[502, 103, 175]}
+            chartSeries={[502*2, 103*2, 175*2]}
             labels={["Desktop", "Tablet", "Phone"]}
             sx={{ height: "100%" }}
           />
         </Grid>
+        
         <Grid
           size={{
             lg: 4,
